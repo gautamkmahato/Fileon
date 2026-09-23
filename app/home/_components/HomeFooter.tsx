@@ -174,16 +174,16 @@ export default function HomeFooter() {
             </p>
             <div className="flex flex-wrap items-center gap-6">
               <Link
-                href="#"
+                href="/privacy"
                 className="font-serif-display text-[13px] text-white/90 transition-opacity hover:opacity-80"
               >
                 Privacy Policy
               </Link>
               <Link
-                href="#"
+                href="/terms"
                 className="font-serif-display text-[13px] text-white/90 transition-opacity hover:opacity-80"
               >
-                Terms And Conditions
+                Terms of Service
               </Link>
             </div>
           </div>
