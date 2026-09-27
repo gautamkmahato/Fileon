@@ -214,23 +214,10 @@ export interface ShareLinkRow {
   revoked_at: string | null;
 }
 
-export type PgRow =
-  | CleanupScanRow
-  | CleanupFileRow
-  | CleanupGroupRow
-  | CleanupFindingRow
-  | CleanupHealthRow
-  | CleanupDecisionRow
-  | CleanupSyncStateRow
-  | SmartSpaceRow
-  | SmartSpaceRuleRow
-  | ShareLinkRow;
-
 export const MAX_FILE_ROWS = 50_000;
 export const MAX_NAME_LEN = 1024;
 export const MAX_ID_LEN = 128;
 export const MAX_ERROR_LEN = 2000;
-export const MAX_REASON_LEN = 500;
 export const MAX_SPACES = 50;
 export const MAX_SPACE_RULES = 12;
 export const MAX_SPACE_NAME_LEN = 80;
@@ -238,4 +225,3 @@ export const MAX_SPACE_EMOJI_LEN = 8;
 export const MAX_SHARE_LINKS = 200;
 export const MAX_SHARE_LINKS_PER_FILE = 20;
 export const INCREMENTAL_STALE_MS = 15 * 60 * 1000;
-export const FULL_SCAN_STALE_MS = 7 * 24 * 60 * 60 * 1000;

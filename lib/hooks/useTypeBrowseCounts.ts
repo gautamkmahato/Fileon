@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useSyncExternalStore } from "react";
-import type { TypeBrowseCategory } from "@/lib/drive/type-browse";
 import {
   type TypeBrowseCount,
   EMPTY_TYPE_BROWSE_COUNTS,

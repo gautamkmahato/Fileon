@@ -16,12 +16,7 @@ export function normalizeCleanupName(name: string): string {
   return stripped.replace(/[^a-z0-9]+/g, "") || withoutExt.replace(/[^a-z0-9]+/g, "");
 }
 
-export function fileExtension(name: string): string {
-  const match = (name ?? "").trim().toLowerCase().match(/\.([a-z0-9]{1,8})$/);
-  return match ? match[1] : "";
-}
-
-export function levenshtein(a: string, b: string): number {
+function levenshtein(a: string, b: string): number {
   const left = a.slice(0, 64);
   const right = b.slice(0, 64);
   if (left === right) return 0;

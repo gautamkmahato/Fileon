@@ -22,7 +22,7 @@ export const TAG_COLORS: TagColorPreset[] = [
   { id: "zinc", hex: "#71717a", pill: "bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300", dot: "bg-zinc-400" },
 ];
 
-export const TAG_ICONS = [
+const TAG_ICONS = [
   "tag", "star", "briefcase", "home", "book", "flag", "heart", "zap",
 ] as const;
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 const DRAG_MIME = "application/x-drive-file-ids";
 
@@ -78,13 +78,4 @@ export function useDragDrop(opts: {
     onFolderDragOver,
     onFolderDrop,
   };
-}
-
-export function useFolderDropHighlight() {
-  const [isOver, setIsOver] = useState(false);
-  const onDragEnter = useCallback((e: React.DragEvent) => {
-    if (e.dataTransfer.types.includes("application/x-drive-file-ids")) setIsOver(true);
-  }, []);
-  const onDragLeave = useCallback(() => setIsOver(false), []);
-  return { isOver, onDragEnter, onDragLeave, setIsOver };
 }

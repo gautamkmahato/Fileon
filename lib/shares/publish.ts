@@ -1,7 +1,7 @@
 import type { ShareLink, ShareLinkCounts } from "./types";
 import { isShareToken } from "./token";
 
-export interface ServerSharePayload {
+interface ServerSharePayload {
   manageKey: string;
   userId: string;
   fileId: string;

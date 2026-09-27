@@ -89,7 +89,7 @@ export async function listTags(): Promise<Tag[]> {
   return all.map(hydrateTag).sort(compareTags);
 }
 
-export async function getTag(id: string): Promise<Tag | null> {
+async function getTag(id: string): Promise<Tag | null> {
   const tag = await withStore(STORE_TAGS, "readonly", (s) => s.get(id)) as Tag | undefined;
   return tag ? hydrateTag(tag) : null;
 }
@@ -278,7 +278,7 @@ export async function deleteTag(id: string): Promise<void> {
   void logTagDeleted(existing.name);
 }
 
-export async function listAllFileTags(): Promise<FileTag[]> {
+async function listAllFileTags(): Promise<FileTag[]> {
   if (typeof window === "undefined") return [];
   return withStore(STORE_FILE_TAGS, "readonly", (s) => s.getAll()) as Promise<FileTag[]>;
 }
@@ -289,10 +289,6 @@ async function listTagsForFileRaw(fileId: string): Promise<Tag[]> {
   ) as FileTag[];
   const tags = await Promise.all(links.map((l) => getTag(l.tagId)));
   return tags.filter((t): t is Tag => t !== null);
-}
-
-export async function getTagsForFile(fileId: string): Promise<Tag[]> {
-  return collapseExclusive((await listTagsForFileRaw(fileId)).sort(compareTags));
 }
 
 export async function getFileIdsForTag(tagId: string): Promise<string[]> {
@@ -401,47 +397,6 @@ export async function removeTagFromFile(fileId: string, tagId: string): Promise<
   notify();
 }
 
-export async function setFileTags(fileId: string, tagIds: string[]): Promise<void> {
-  const unique = [...new Set(tagIds.filter(Boolean))];
-  const resolved = (await Promise.all(unique.map(getTag))).filter((t): t is Tag => t !== null);
-  const kept: Tag[] = [];
-  const seenExclusive = new Set<TagKind>();
-  for (let i = resolved.length - 1; i >= 0; i -= 1) {
-    const tag = resolved[i];
-    const kind = tagKind(tag);
-    if (isExclusiveKind(kind)) {
-      if (seenExclusive.has(kind)) continue;
-      seenExclusive.add(kind);
-    }
-    kept.push(tag);
-  }
-  kept.reverse();
-  if (kept.length > MAX_TAGS_PER_FILE) {
-    throw new Error(`A file can have at most ${MAX_TAGS_PER_FILE} tags`);
-  }
-
-  const db = await openLocalDb();
-  await new Promise<void>((resolve, reject) => {
-    const tx = db.transaction(STORE_FILE_TAGS, "readwrite");
-    const store = tx.objectStore(STORE_FILE_TAGS);
-    const index = store.index("fileId");
-    const req = index.openCursor(IDBKeyRange.only(fileId));
-    req.onsuccess = () => {
-      const cursor = req.result;
-      if (cursor) {
-        cursor.delete();
-        cursor.continue();
-      }
-    };
-    tx.oncomplete = () => resolve();
-    tx.onerror = () => reject(tx.error);
-  });
-  for (const tag of kept) {
-    await putFileTag(fileId, tag.id);
-  }
-  notify();
-}
-
 export async function bulkAddTag(fileIds: string[], tagId: string): Promise<void> {
   const tag = await getTag(tagId);
   if (!tag) return;
@@ -454,16 +409,6 @@ export async function bulkAddTag(fileIds: string[], tagId: string): Promise<void
 export async function bulkRemoveTag(fileIds: string[], tagId: string): Promise<void> {
   for (const fileId of fileIds) {
     await deleteFileTag(fileId, tagId);
-  }
-  notify();
-}
-
-export async function removeAllTagsForFile(fileId: string): Promise<void> {
-  const links = await withStore(STORE_FILE_TAGS, "readonly", (s) =>
-    s.index("fileId").getAll(fileId)
-  ) as FileTag[];
-  for (const l of links) {
-    await deleteFileTag(fileId, l.tagId);
   }
   notify();
 }

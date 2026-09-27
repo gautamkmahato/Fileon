@@ -3,7 +3,6 @@ import type { ViewIconId } from "./view-icons";
 import type { Filters } from "./utils/filter";
 import { DEFAULT_FILTERS } from "./utils/filter";
 import type { SortState } from "./utils/sort";
-import { DEFAULT_FILE_SORT } from "./utils/sort";
 import type { TagFilterMode } from "./tags";
 import type { TypeBrowseCategory } from "./drive/type-browse";
 import { TYPE_BROWSE_META } from "./drive/type-browse";
@@ -55,7 +54,7 @@ export function subscribeViews(fn: ViewsListener): () => void {
   return () => listeners.delete(fn);
 }
 
-export function getBuiltinViews(): SavedView[] {
+function getBuiltinViews(): SavedView[] {
   return [
     {
       id: BUILTIN_VIEW_IDS.MODIFIED_TODAY,
@@ -131,7 +130,7 @@ export async function listViews(): Promise<SavedView[]> {
   return all.sort((a, b) => a.order - b.order || a.name.localeCompare(b.name));
 }
 
-export async function getView(id: string): Promise<SavedView | null> {
+async function getView(id: string): Promise<SavedView | null> {
   if (typeof window === "undefined") return getBuiltinViews().find((v) => v.id === id) ?? null;
   await ensureBuiltinViews();
   const view = await withStore(STORE_VIEWS, "readonly", (s) => s.get(id)) as SavedView | undefined;
@@ -224,14 +223,6 @@ export async function reorderViews(orderedIds: string[]): Promise<void> {
     }).catch(reject);
   });
   notify();
-}
-
-export function filtersAreDefault(filters: Filters): boolean {
-  return filters.type === "all"
-    && filters.modified === "any"
-    && filters.source === "all"
-    && !filters.sharedOnly
-    && !filters.untaggedOnly;
 }
 
 export function describeViewScope(scope: ViewScope, tagNames?: string[]): string {

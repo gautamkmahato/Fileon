@@ -78,7 +78,7 @@ const DOCUMENT_MIMES = [
 
 const NOT_FOLDER = "mimeType != 'application/vnd.google-apps.folder'";
 
-export function buildTypeBrowseQuery(category: TypeBrowseCategory): string {
+function buildTypeBrowseQuery(category: TypeBrowseCategory): string {
   const base = "trashed = false and " + NOT_FOLDER;
   switch (category) {
     case "images":

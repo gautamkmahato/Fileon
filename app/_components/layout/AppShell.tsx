@@ -3,7 +3,7 @@
 import { Bell, ChevronDown, LogOut, Search } from "lucide-react";
 import { AppLogo } from "../brand/AppLogo";
 import { useAuth } from "../auth/AuthProvider";
-import { Sidebar } from "./Sidebar";
+import { Sidebar } from "./sidebar/Sidebar";
 import { ThemeToggle } from "./ThemeProvider";
 import { DriveBrowseProvider, useDriveBrowse } from "../drive/context/DriveBrowseProvider";
 import { DriveModals } from "../drive/shell/DriveModals";

@@ -1,4 +1,4 @@
-import { MAX_ERROR_LEN, MAX_ID_LEN, MAX_NAME_LEN, MAX_REASON_LEN } from "./schema";
+import { MAX_ERROR_LEN, MAX_ID_LEN, MAX_NAME_LEN } from "./schema";
 
 const USER_ID_RE = /^[\w.@:+-]{1,128}$/;
 const FILE_ID_RE = /^[\x21-\x7E]{1,128}$/;
@@ -33,7 +33,7 @@ export function assertUserId(userId: string): string {
   return trimmed;
 }
 
-export function sanitizeUserId(userId: string | null | undefined): string | null {
+function sanitizeUserId(userId: string | null | undefined): string | null {
   const trimmed = (userId ?? "").trim();
   if (!USER_ID_RE.test(trimmed)) return null;
   return trimmed.slice(0, MAX_ID_LEN);
@@ -57,10 +57,6 @@ export function sanitizeText(value: string | null | undefined, max: number): str
 export function sanitizeName(value: string | null | undefined): string {
   const name = sanitizeText(value, MAX_NAME_LEN).trim();
   return name || "Untitled";
-}
-
-export function sanitizeReason(value: string | null | undefined): string {
-  return sanitizeText(value, MAX_REASON_LEN);
 }
 
 export function sanitizeError(value: string | null | undefined): string | null {

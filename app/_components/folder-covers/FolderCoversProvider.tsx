@@ -70,7 +70,3 @@ export function useFolderCovers() {
 export function useFolderCover(folderId: string): FolderCoverRecord | null {
   return useFolderCovers().getCover(folderId);
 }
-
-export function useHasFolderCover(folderId: string): boolean {
-  return useFolderCovers().getCover(folderId) !== null;
-}

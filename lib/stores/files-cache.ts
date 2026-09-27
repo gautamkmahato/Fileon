@@ -7,7 +7,7 @@ export interface FilesCacheEntry {
 }
 
 /** How long cached lists stay fresh without a background refetch. */
-export const FILES_CACHE_STALE_MS = 180_000;
+const FILES_CACHE_STALE_MS = 180_000;
 
 const cache = new Map<string, FilesCacheEntry>();
 
@@ -24,9 +24,4 @@ export function setFilesCache(
 
 export function isFilesCacheFresh(entry: FilesCacheEntry): boolean {
   return Date.now() - entry.fetchedAt < FILES_CACHE_STALE_MS;
-}
-
-export function invalidateFilesCache(key?: string): void {
-  if (key) cache.delete(key);
-  else cache.clear();
 }

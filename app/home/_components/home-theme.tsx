@@ -28,7 +28,3 @@ export const homeSkyGradient =
 
 export const homeIconGradient =
   "bg-gradient-to-br from-[#7BB5E3] to-[#5B9FD4] shadow-[0_10px_24px_-10px_rgba(91,159,212,0.55)]";
-
-export const homeAccentText = "text-[#3D6B1E]";
-export const homeAccentBg = "bg-[#D4F5A8]";
-export const homeAccentSoft = "bg-[#E8F2FA]";

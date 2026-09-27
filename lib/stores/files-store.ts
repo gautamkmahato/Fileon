@@ -131,11 +131,3 @@ export const useFilesStore = create<FilesState>()(
     { name: "FilesStore", enabled: process.env.NODE_ENV === "development" }
   )
 );
-
-/** Fine-grained file lookup for preview sync (optional). */
-export function useFileById(fileId: string | null | undefined): DriveFile | null {
-  return useFilesStore((s) => {
-    if (!fileId) return null;
-    return s.files.find((f) => f.id === fileId) ?? null;
-  });
-}

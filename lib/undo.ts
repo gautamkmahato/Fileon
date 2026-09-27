@@ -13,7 +13,7 @@ export interface UndoEntry {
   activityId?: string;
 }
 
-export const UNDO_WINDOW_MS = 30_000;
+const UNDO_WINDOW_MS = 30_000;
 export const UNDO_TOAST_MS = 10_000;
 
 let stack: UndoEntry[] = [];

@@ -23,12 +23,7 @@ export function subscribePins(fn: PinsListener): () => void {
 /** Global pin scope — pinned items appear on Dashboard only. */
 export const DASHBOARD_PINS_KEY = "dashboard";
 
-/** @deprecated Per-folder pins; use {@link DASHBOARD_PINS_KEY} for new pins. */
-export function pinFolderKey(folderId: string | null): string {
-  return folderId ?? "root";
-}
-
-export function pinRecordKey(folderId: string, fileId: string): string {
+function pinRecordKey(folderId: string, fileId: string): string {
   return `${folderId}:${fileId}`;
 }
 

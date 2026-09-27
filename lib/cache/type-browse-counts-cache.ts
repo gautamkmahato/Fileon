@@ -14,7 +14,7 @@ interface TypeBrowseCountEntry extends TypeBrowseCount {
 }
 
 /** Match other in-memory list caches. */
-export const TYPE_BROWSE_COUNTS_STALE_MS = 180_000;
+const TYPE_BROWSE_COUNTS_STALE_MS = 180_000;
 
 const cache = new Map<TypeBrowseCategory, TypeBrowseCountEntry>();
 const listeners = new Set<() => void>();
@@ -77,7 +77,7 @@ export function getCachedTypeBrowseCounts(): Partial<Record<TypeBrowseCategory, 
   return snapshot;
 }
 
-export function isTypeBrowseCountsCacheFresh(fetchedAt: number): boolean {
+function isTypeBrowseCountsCacheFresh(fetchedAt: number): boolean {
   return Date.now() - fetchedAt < TYPE_BROWSE_COUNTS_STALE_MS;
 }
 

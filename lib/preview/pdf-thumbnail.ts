@@ -1,8 +1,8 @@
 import { downloadFile, exportFile } from "@/lib/drive/drive";
 import { renderPdfPageToPngBlob } from "./render-pdf-page";
 
-export const PDF_MIME = "application/pdf";
-export const GOOGLE_DOC_MIME = "application/vnd.google-apps.document";
+const PDF_MIME = "application/pdf";
+const GOOGLE_DOC_MIME = "application/vnd.google-apps.document";
 
 export function isPdfMime(mimeType: string, fileName?: string): boolean {
   if (mimeType === PDF_MIME) return true;
@@ -12,7 +12,7 @@ export function isPdfMime(mimeType: string, fileName?: string): boolean {
   return false;
 }
 
-export function isGoogleDocMime(mimeType: string): boolean {
+function isGoogleDocMime(mimeType: string): boolean {
   return mimeType === GOOGLE_DOC_MIME;
 }
 

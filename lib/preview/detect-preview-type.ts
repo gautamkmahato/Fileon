@@ -6,7 +6,7 @@ import type { DriveFile } from "@/lib/drive/drive";
  */
 export type PreviewKind = "image" | "fallback";
 
-export function getExtension(name: string): string {
+function getExtension(name: string): string {
   const base = name.split("/").pop() ?? name;
   const dot = base.lastIndexOf(".");
   if (dot <= 0) return "";
@@ -16,10 +16,6 @@ export function getExtension(name: string): string {
 const RASTER_IMAGE_EXTENSIONS = new Set([
   "jpg", "jpeg", "png", "gif", "webp", "bmp", "heic", "heif", "avif", "tiff", "tif",
 ]);
-
-export function isGoogleNative(file: DriveFile): boolean {
-  return !!file.mimeType && file.mimeType.startsWith("application/vnd.google-apps.");
-}
 
 function isRasterImage(file: DriveFile): boolean {
   const mime = file.mimeType ?? "";

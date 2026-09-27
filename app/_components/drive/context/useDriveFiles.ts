@@ -60,10 +60,7 @@ import { usePins } from "@/app/_components/pins/PinsProvider";
 import { useHidden } from "@/app/_components/hidden/HiddenProvider";
 import { useInbox } from "@/app/_components/inbox/InboxProvider";
 import { useSpaces } from "@/app/_components/spaces/SpacesProvider";
-import { getSpace } from "@/lib/spaces/repository";
-import { querySmartSpace } from "@/lib/spaces/query";
-import { updateSpaceStats } from "@/lib/spaces/repository";
-import { fileMatchesSpace } from "@/lib/spaces/rules";
+import { fileMatchesSpace, getSpace, querySmartSpace, updateSpaceStats } from "@/lib/spaces";
 import type { DriveFilesContext, UseDriveFilesParams } from "./drive-files-types";
 
 export function useDriveFiles({

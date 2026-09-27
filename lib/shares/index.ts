@@ -1,13 +1,6 @@
-export type {
-  ShareLink,
-  ShareLinkDraft,
-  PublicShareLink,
-  ShareLinkCounts,
-  ShareLinkEffectiveStatus,
-} from "./types";
+export type { ShareLink, ShareLinkDraft, PublicShareLink, ShareLinkEffectiveStatus } from "./types";
 export {
   effectiveStatus,
-  isLinkAccessible,
   toPublicShareLink,
   formatExpiry,
   formatCount,
@@ -15,12 +8,10 @@ export {
   expiryFromPreset,
 } from "./status";
 export type { ExpiryPresetId } from "./status";
-export { isShareToken, newShareSecret, shareAppPath, shareAppUrl } from "./token";
+export { shareAppUrl } from "./token";
 export {
   subscribeShareLinks,
   listShareLinks,
-  listShareLinksForFile,
-  getShareLink,
   getShareLinkByToken,
   createShareLink,
   revokeShareLink,
@@ -29,9 +20,4 @@ export {
   recordShareHit,
   mergeShareLinkCounts,
 } from "./repository";
-export {
-  publishShareLink,
-  fetchPublicShareLink,
-  postShareHit,
-  fetchShareLinkStats,
-} from "./publish";
+export { fetchPublicShareLink, postShareHit } from "./publish";

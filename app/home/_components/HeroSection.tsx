@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import {
-  Menu,
   ChevronRight,
   Image as ImageIcon,
   Camera,

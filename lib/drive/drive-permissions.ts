@@ -67,17 +67,3 @@ export async function removePermission(token: string, fileId: string, permission
     method: "DELETE",
   });
 }
-
-export async function updatePermissionRole(
-  token: string,
-  fileId: string,
-  permissionId: string,
-  role: "reader" | "commenter" | "writer"
-): Promise<DrivePermission> {
-  const res = await call(token, `${API}/files/${fileId}/permissions/${permissionId}?fields=id,type,role,emailAddress`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ role }),
-  });
-  return res.json();
-}

@@ -1,7 +1,7 @@
 export const GOOGLE_SHEET_MIME = "application/vnd.google-apps.spreadsheet";
-export const CSV_MIME = "text/csv";
-export const TSV_MIME = "text/tab-separated-values";
-export const MARKDOWN_MIME = "text/markdown";
+const CSV_MIME = "text/csv";
+const TSV_MIME = "text/tab-separated-values";
+const MARKDOWN_MIME = "text/markdown";
 
 function extOf(fileName?: string): string {
   if (!fileName) return "";
@@ -10,14 +10,14 @@ function extOf(fileName?: string): string {
   return dot > 0 ? base.slice(dot + 1).toLowerCase() : "";
 }
 
-export function isCsvFile(mimeType: string, fileName?: string): boolean {
+function isCsvFile(mimeType: string, fileName?: string): boolean {
   if (mimeType === GOOGLE_SHEET_MIME) return true;
   if (mimeType === CSV_MIME || mimeType === TSV_MIME) return true;
   const ext = extOf(fileName);
   return ext === "csv" || ext === "tsv";
 }
 
-export function isMarkdownFile(mimeType: string, fileName?: string): boolean {
+function isMarkdownFile(mimeType: string, fileName?: string): boolean {
   if (mimeType === MARKDOWN_MIME) return true;
   const ext = extOf(fileName);
   return ext === "md" || ext === "markdown";

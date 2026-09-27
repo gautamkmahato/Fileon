@@ -91,7 +91,7 @@ export function isSpaceDatePreset(value: string): value is SpaceDatePreset {
   return DATE_PRESET_SET.has(value);
 }
 
-export function classifySpaceType(mime: string): SpaceFileType | "other" {
+function classifySpaceType(mime: string): SpaceFileType | "other" {
   if (mime === FOLDER_MIME) return "folder";
   if (mime === "application/pdf") return "pdf";
   if (mime.startsWith("image/")) return "image";
@@ -200,7 +200,7 @@ export function canSeedQuery(rule: SpaceRule): boolean {
     || rule.field === "name";
 }
 
-export function fileMatchesRule(
+function fileMatchesRule(
   file: DriveFile,
   rule: SpaceRule,
   tagsByFileId: Map<string, Tag[]>,
@@ -319,7 +319,7 @@ export function describeRule(rule: SpaceRule, tags: Tag[]): string {
   }
 }
 
-export function formatSize(bytes: number): string {
+function formatSize(bytes: number): string {
   if (!Number.isFinite(bytes) || bytes < 0) return "0 B";
   if (bytes < 1024) return `${Math.round(bytes)} B`;
   const units = ["KB", "MB", "GB", "TB"];

@@ -112,19 +112,3 @@ async function evictIfNeeded(db: IDBDatabase): Promise<void> {
     }
   });
 }
-
-/** Clear the entire cache. Useful for sign-out. */
-export async function clearCache(): Promise<void> {
-  const db = await openDb();
-  if (!db) return;
-  return new Promise((resolve) => {
-    try {
-      const tx = db.transaction(STORE, "readwrite");
-      tx.objectStore(STORE).clear();
-      tx.oncomplete = () => resolve();
-      tx.onerror = () => resolve();
-    } catch {
-      resolve();
-    }
-  });
-}

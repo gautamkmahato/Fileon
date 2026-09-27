@@ -70,7 +70,3 @@ export function useHidden() {
   if (!ctx) throw new Error("useHidden must be used inside HiddenProvider");
   return ctx;
 }
-
-export function useIsHidden(fileId: string): boolean {
-  return useHidden().isHidden(fileId);
-}

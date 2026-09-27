@@ -27,7 +27,7 @@ import { useAuth } from "../../auth/AuthProvider";
 import { PreviewBody } from "./PreviewBody";
 import { getFileType } from "@/lib/types/file-types";
 import { toast, runAsync } from "@/lib/toast";
-import { logActivity, prepareActivityUndo } from "@/lib/activity-log";
+import { prepareActivityUndo } from "@/lib/activity-log";
 import { recordRecentFolderWork } from "@/lib/recent-folders";
 import { pushUndo } from "@/lib/undo";
 import { TagPills } from "../../tags/TagDisplay";

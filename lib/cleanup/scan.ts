@@ -10,7 +10,7 @@ import {
 } from "@/lib/drive/drive";
 
 export const CLEANUP_SCAN_CAP = 2500;
-export const CLEANUP_PAGE_SIZE = 100;
+const CLEANUP_PAGE_SIZE = 100;
 const SCAN_HALF = 1250;
 const PROBE_CONCURRENCY = 4;
 const MAX_SHORTCUT_PROBES = 80;

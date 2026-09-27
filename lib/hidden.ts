@@ -17,7 +17,7 @@ export function subscribeHidden(fn: HiddenListener): () => void {
   return () => listeners.delete(fn);
 }
 
-export async function listHiddenRecords(): Promise<HiddenRecord[]> {
+async function listHiddenRecords(): Promise<HiddenRecord[]> {
   if (typeof window === "undefined") return [];
   return withStore(STORE_HIDDEN, "readonly", (s) => s.getAll()) as Promise<HiddenRecord[]>;
 }

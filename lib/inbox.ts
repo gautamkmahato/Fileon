@@ -21,7 +21,7 @@ export function subscribeInbox(fn: InboxListener): () => void {
   return () => listeners.delete(fn);
 }
 
-export async function listInboxRecords(): Promise<InboxRecord[]> {
+async function listInboxRecords(): Promise<InboxRecord[]> {
   if (typeof window === "undefined") return [];
   try {
     const rows = await withStore(STORE_INBOX, "readonly", (s) => s.getAll()) as InboxRecord[];
@@ -36,16 +36,6 @@ export async function listInboxRecords(): Promise<InboxRecord[]> {
 export async function listInboxFileIds(): Promise<string[]> {
   const rows = await listInboxRecords();
   return rows.map((r) => r.fileId);
-}
-
-export async function isInInbox(fileId: string): Promise<boolean> {
-  if (!fileId || typeof window === "undefined") return false;
-  try {
-    const row = await withStore(STORE_INBOX, "readonly", (s) => s.get(fileId)) as InboxRecord | undefined;
-    return !!row;
-  } catch {
-    return false;
-  }
 }
 
 export async function addToInbox(fileIds: string[]): Promise<void> {

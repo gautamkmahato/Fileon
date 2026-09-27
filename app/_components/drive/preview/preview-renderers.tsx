@@ -8,7 +8,7 @@ import { Thumbnail } from "./Thumbnail";
 
 export type PreviewVariant = "drawer" | "quicklook" | "pane";
 
-export interface PreviewRenderProps {
+interface PreviewRenderProps {
   file: DriveFile;
   token: string | null;
   variant: PreviewVariant;

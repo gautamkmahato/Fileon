@@ -20,7 +20,7 @@ export function subscribeFavorites(fn: FavoritesListener): () => void {
   return () => listeners.delete(fn);
 }
 
-export async function listFavoriteRecords(): Promise<FavoriteRecord[]> {
+async function listFavoriteRecords(): Promise<FavoriteRecord[]> {
   if (typeof window === "undefined") return [];
   const rows = await withStore(STORE_FOLDER_FAVORITES, "readonly", (s) => s.getAll()) as FavoriteRecord[];
   return rows.sort((a, b) => a.order - b.order);
@@ -31,7 +31,7 @@ export async function listFavoriteFolderIds(): Promise<string[]> {
   return rows.map((r) => r.folderId);
 }
 
-export async function isFavoriteFolder(folderId: string): Promise<boolean> {
+async function isFavoriteFolder(folderId: string): Promise<boolean> {
   const row = await withStore(STORE_FOLDER_FAVORITES, "readonly", (s) => s.get(folderId)) as FavoriteRecord | undefined;
   return !!row;
 }

@@ -1,11 +1,4 @@
-export type {
-  SmartSpace,
-  SpaceDraft,
-  SpaceQueryResult,
-  SpaceRule,
-  SpaceFileType,
-  SpaceDatePreset,
-} from "./types";
+export type { SmartSpace, SpaceDraft, SpaceRule } from "./types";
 export { querySmartSpace } from "./query";
 export {
   listSpaces,
@@ -18,8 +11,11 @@ export {
 } from "./repository";
 export {
   describeRule,
+  defaultOpForField,
+  defaultValueForField,
   fileMatchesSpace,
-  formatSize,
+  opsForField,
+  ruleIsValid,
   FIELD_LABELS,
   SPACE_FILE_TYPES,
   SPACE_DATE_PRESETS,

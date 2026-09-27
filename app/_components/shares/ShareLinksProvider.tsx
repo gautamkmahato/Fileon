@@ -9,7 +9,6 @@ import {
   createShareLink as createRow,
   deleteShareLink as deleteRow,
   listShareLinks,
-  listShareLinksForFile,
   mergeShareLinkCounts,
   revokeShareLink as revokeRow,
   subscribeShareLinks,
@@ -112,8 +111,4 @@ export function useShareLinks() {
   const ctx = useContext(ShareLinksContext);
   if (!ctx) throw new Error("useShareLinks must be used inside ShareLinksProvider");
   return ctx;
-}
-
-export async function loadLinksForFile(userId: string, fileId: string): Promise<ShareLink[]> {
-  return listShareLinksForFile(userId, fileId);
 }

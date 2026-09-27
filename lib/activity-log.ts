@@ -154,7 +154,7 @@ export function subscribeActivity(fn: ActivityListener): () => void {
   return () => listeners.delete(fn);
 }
 
-export function registerActivityUndo(activityId: string, undo: () => Promise<void>): void {
+function registerActivityUndo(activityId: string, undo: () => Promise<void>): void {
   undoRegistry.set(activityId, { undo, expiresAt: Date.now() + HISTORY_UNDO_MS });
 }
 
@@ -264,5 +264,3 @@ export async function prepareActivityUndo(opts: {
   if (id) registerActivityUndo(id, opts.undo);
   return id;
 }
-
-export { HISTORY_UNDO_MS };

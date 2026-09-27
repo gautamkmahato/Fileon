@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 
 /** Detector pages plus the overview dashboard. */
-export const CLEANUP_KINDS = [
+const CLEANUP_KINDS = [
   "overview",
   "duplicates",
   "near-duplicates",
@@ -141,22 +141,6 @@ export const CLEANUP_KIND_META: Record<CleanupKind, CleanupKindMeta> = {
     group: "structure",
   },
 };
-
-export const CLEANUP_NAV_ORDER: CleanupKind[] = [
-  "overview",
-  "duplicates",
-  "near-duplicates",
-  "duplicate-folders",
-  "redundant",
-  "dead",
-  "stale",
-  "unused",
-  "empty-folders",
-  "broken-shortcuts",
-  "inaccessible",
-  "orphaned",
-  "unorganized",
-];
 
 export const CLEANUP_NAV_GROUPS: { id: string; label: string; kinds: CleanupKind[] }[] = [
   { id: "overview", label: "", kinds: ["overview"] },

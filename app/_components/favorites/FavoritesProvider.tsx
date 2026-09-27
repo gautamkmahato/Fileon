@@ -74,8 +74,3 @@ export function useFavorites() {
   if (!ctx) throw new Error("useFavorites must be used inside FavoritesProvider");
   return ctx;
 }
-
-export function useIsFavorite(folderId: string): boolean {
-  const { isFavorite } = useFavorites();
-  return isFavorite(folderId);
-}

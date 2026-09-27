@@ -15,7 +15,7 @@ export interface FolderChildrenCacheEntry {
 }
 
 /** Match files list cache — background refresh after this window. */
-export const FOLDER_CHILDREN_STALE_MS = 180_000;
+const FOLDER_CHILDREN_STALE_MS = 180_000;
 
 const MAX_PARENT_ENTRIES = 128;
 const MAX_SEARCH_ENTRIES = 32;
@@ -129,11 +129,11 @@ export function getFolderChildrenCacheEntry(
   return parentCache.get(normalizeParentCacheKey(parentId));
 }
 
-export function isFolderChildrenCacheFresh(fetchedAt: number): boolean {
+function isFolderChildrenCacheFresh(fetchedAt: number): boolean {
   return Date.now() - fetchedAt < FOLDER_CHILDREN_STALE_MS;
 }
 
-export function setCachedFolderChildren(
+function setCachedFolderChildren(
   parentId: string | null,
   folders: FolderChildRef[],
 ): void {
@@ -219,7 +219,7 @@ export function hasFolderChildrenCache(parentId: string | null): boolean {
   return parentCache.has(normalizeParentCacheKey(parentId));
 }
 
-export function patchFolderNameInCache(folderId: string, name: string): void {
+function patchFolderNameInCache(folderId: string, name: string): void {
   parentCache.forEach((entry) => {
     const idx = entry.folders.findIndex((f) => f.id === folderId);
     if (idx >= 0) {
@@ -234,7 +234,7 @@ export function patchFolderNameInCache(folderId: string, name: string): void {
   });
 }
 
-export function invalidateFolderChildrenCache(parentId?: string | null): void {
+function invalidateFolderChildrenCache(parentId?: string | null): void {
   if (parentId === undefined) {
     parentCache.clear();
     searchCache.clear();

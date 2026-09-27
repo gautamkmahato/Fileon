@@ -9,7 +9,7 @@ interface FolderItemCountEntry extends FolderItemCount {
   fetchedAt: number;
 }
 
-export const FOLDER_ITEM_COUNT_STALE_MS = 180_000;
+const FOLDER_ITEM_COUNT_STALE_MS = 180_000;
 
 const cache = new Map<string, FolderItemCountEntry>();
 const inflight = new Map<string, Promise<FolderItemCount>>();
@@ -47,11 +47,6 @@ export async function loadFolderItemCount(
 
   inflight.set(folderId, promise);
   return promise;
-}
-
-export function invalidateFolderItemCount(folderId: string): void {
-  cache.delete(folderId);
-  inflight.delete(folderId);
 }
 
 export function clearFolderItemCountCache(): void {

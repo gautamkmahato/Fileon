@@ -12,8 +12,10 @@ import {
   ruleIsValid,
   SPACE_DATE_PRESETS,
   SPACE_FILE_TYPES,
-} from "@/lib/spaces/rules";
-import type { SpaceDraft, SpaceRule, SmartSpace } from "@/lib/spaces";
+  type SpaceDraft,
+  type SpaceRule,
+  type SmartSpace,
+} from "@/lib/spaces";
 import type { Tag } from "@/lib/tags";
 import type { SpaceRuleField, SpaceRuleOp, SpaceRuleValue } from "@/lib/db/schema";
 import { MAX_SPACE_RULES } from "@/lib/db/schema";

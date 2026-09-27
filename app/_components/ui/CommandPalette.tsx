@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import {
-  FolderPlus, Grid3x3, HardDrive, List, LogOut, Search, Upload,
-} from "lucide-react";
+import { FolderPlus, Grid3x3, List, LogOut, Search, Upload } from "lucide-react";
 import type { DriveFile } from "@/lib/drive/drive";
 import { isFolder } from "@/lib/drive/drive";
 import { getFileType } from "@/lib/types/file-types";
@@ -246,5 +244,3 @@ export function buildDefaultActions(view: "grid" | "list" | "gallery"): PaletteA
     },
   ];
 }
-
-export { HardDrive };

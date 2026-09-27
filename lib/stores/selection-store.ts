@@ -91,7 +91,7 @@ export const useSelectionStore = create<SelectionState>()(
 
         pruneToValidIds: (validIds) => {
           const valid = new Set(validIds);
-          const { selectedIds, lastSelectedId, selectedSet } = get();
+          const { selectedIds, lastSelectedId } = get();
           const next = selectedIds.filter((id) => valid.has(id));
           if (next.length === selectedIds.length) return;
           const nextSet = new Set<string>();

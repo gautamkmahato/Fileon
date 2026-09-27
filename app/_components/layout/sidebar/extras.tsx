@@ -24,8 +24,8 @@ import {
   EmptyHint, FolderRow, SectionHeader, ShowMoreButton, navRowClass,
 } from "./items";
 
-export const TAGS_VISIBLE_CAP = 5;
-export const FAVORITES_VISIBLE_CAP = 5;
+const TAGS_VISIBLE_CAP = 5;
+const FAVORITES_VISIBLE_CAP = 5;
 const VIEW_DRAG_MIME = "application/x-drive-view-id";
 
 export interface SidebarExtrasProps {

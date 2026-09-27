@@ -5,7 +5,6 @@ import {
 } from "react";
 import {
   listAllPins,
-  DASHBOARD_PINS_KEY,
   migrateRootPinsToDashboard,
   pinItem,
   reorderPins as reorderPinsDb,
@@ -14,7 +13,6 @@ import {
   unpinItem,
   type PinRecord,
 } from "@/lib/pins";
-import { useDriveRoute } from "@/lib/drive/useDriveRoute";
 
 interface PinsContextValue {
   pinsByFolder: Map<string, PinRecord[]>;
@@ -92,16 +90,4 @@ export function usePins() {
   const ctx = useContext(PinsContext);
   if (!ctx) throw new Error("usePins must be used inside PinsProvider");
   return ctx;
-}
-
-/** Dashboard pin scope — pinned items render on Dashboard only. */
-export function usePinFolderKey(): string | null {
-  const { isDashboardView, isTrashView } = useDriveRoute();
-  if (!isDashboardView || isTrashView) return null;
-  return DASHBOARD_PINS_KEY;
-}
-
-export function useIsPinned(fileId: string): boolean {
-  const { isPinned } = usePins();
-  return isPinned(DASHBOARD_PINS_KEY, fileId);
 }

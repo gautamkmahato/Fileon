@@ -1,16 +1,7 @@
 import { fetchTextForThumbnail } from "./fetch-text-content";
 import { buildCsvPreviewHtml, buildMarkdownPreviewHtml } from "./build-preview-html";
 import { snapshotHtmlToPng } from "./snapshot-html-to-png";
-import {
-  needsTextScreenshot,
-  textScreenshotKind,
-} from "./text-thumbnail-detect";
-
-export {
-  needsTextScreenshot,
-  isCsvFile,
-  isMarkdownFile,
-} from "./text-thumbnail-detect";
+import { needsTextScreenshot, textScreenshotKind } from "./text-thumbnail-detect";
 
 /**
  * CSV / Markdown grid thumbnail pipeline:

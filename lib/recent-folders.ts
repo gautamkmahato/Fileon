@@ -27,7 +27,7 @@ export function listRecentFolderIds(): string[] {
   }
 }
 
-export function recordRecentFolder(folderId: string): void {
+function recordRecentFolder(folderId: string): void {
   if (typeof window === "undefined" || !folderId) return;
   const prev = listRecentFolderIds().filter((id) => id !== folderId);
   const next = [folderId, ...prev].slice(0, MAX);

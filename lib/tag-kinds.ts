@@ -10,7 +10,7 @@ interface TagLike {
 export const TAG_KINDS = ["status", "system", "people", "project", "user"] as const;
 export type TagKind = (typeof TAG_KINDS)[number];
 
-export const EXCLUSIVE_TAG_KINDS: ReadonlySet<TagKind> = new Set(["status"]);
+const EXCLUSIVE_TAG_KINDS: ReadonlySet<TagKind> = new Set(["status"]);
 
 export const TAG_KIND_META: Record<TagKind, { label: string; hint: string; creatable: boolean }> = {
   status: { label: "Status", hint: "One status per file", creatable: true },
@@ -66,7 +66,7 @@ export function isBuiltinTag(tag: Pick<TagLike, "builtIn" | "id"> | null | undef
   return !!tag && (tag.builtIn === true || tag.id.startsWith("builtin:"));
 }
 
-export function kindOrder(kind: TagKind): number {
+function kindOrder(kind: TagKind): number {
   return TAG_KINDS.indexOf(kind);
 }
 

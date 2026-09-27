@@ -270,12 +270,6 @@ export function shouldIncrementalSync(sync: CleanupSyncStateRow | null | undefin
   return Date.now() - t >= INCREMENTAL_STALE_MS;
 }
 
-export function shouldFullScan(sync: CleanupSyncStateRow | null | undefined): boolean {
-  if (!sync?.latest_scan_id || !sync.last_full_scan_at) return true;
-  if (sync.schema_version < PG_SCHEMA_VERSION && !sync.last_full_scan_at) return true;
-  return false;
-}
-
 export async function applyIncrementalChanges(opts: {
   userId: string;
   extras: Pick<CleanupScanContext, "inboxIds" | "taggedIds">;

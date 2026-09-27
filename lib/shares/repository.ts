@@ -1,10 +1,4 @@
-import {
-  MAX_SHARE_LINKS,
-  MAX_SHARE_LINKS_PER_FILE,
-  SHARE_LINK_STATUSES,
-  type ShareLinkRow,
-  type ShareLinkStatus,
-} from "@/lib/db/schema";
+import { MAX_SHARE_LINKS, MAX_SHARE_LINKS_PER_FILE } from "@/lib/db/schema";
 import { pgDelete, pgGet, pgGetByIndex, pgSelectByUser, pgUpsert } from "@/lib/db/engine";
 import {
   assertUserId, newId, nowIso, parseIso, sanitizeFileId, sanitizeName, sanitizeText,
@@ -26,20 +20,9 @@ export function subscribeShareLinks(fn: Listener): () => void {
   return () => listeners.delete(fn);
 }
 
-function clampCount(n: unknown): number {
-  const v = typeof n === "number" ? n : Number(n);
-  if (!Number.isFinite(v) || v < 0) return 0;
-  return Math.min(1_000_000_000, Math.floor(v));
-}
-
-function sanitizeStatus(value: string | null | undefined): ShareLinkStatus {
-  return SHARE_LINK_STATUSES.includes(value as ShareLinkStatus) ? (value as ShareLinkStatus) : "active";
-}
-
 function sanitizeExpiry(value: string | null | undefined): string | null {
   if (!value) return null;
-  const iso = parseIso(value);
-  return iso;
+  return parseIso(value);
 }
 
 async function writeLink(link: ShareLink): Promise<ShareLink> {
@@ -57,14 +40,7 @@ export async function listShareLinks(userId: string): Promise<ShareLink[]> {
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 }
 
-export async function listShareLinksForFile(userId: string, fileId: string): Promise<ShareLink[]> {
-  const fid = sanitizeFileId(fileId);
-  if (!fid) return [];
-  const all = await listShareLinks(userId);
-  return all.filter((l) => l.fileId === fid);
-}
-
-export async function getShareLink(userId: string, id: string): Promise<ShareLink | null> {
+async function getShareLink(userId: string, id: string): Promise<ShareLink | null> {
   const uid = assertUserId(userId);
   const row = await pgGet("share_links", id);
   if (!row || row.user_id !== uid) return null;

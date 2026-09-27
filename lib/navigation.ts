@@ -23,8 +23,6 @@ export type SidebarView =
 export const driveRoutes = {
   dashboard: "/dashboard",
   myDrive: "/my-drive",
-  /** @deprecated Use dashboard or myDrive */
-  drive: "/dashboard",
   folder: (folderId: string) => `/my-drive/folders/${folderId}`,
   starred: "/starred",
   recent: "/recent",
@@ -47,43 +45,6 @@ export const driveRoutes = {
   space: (spaceId: string) => `/spaces/${spaceId}`,
   sharedLinks: "/shared-links",
 } as const;
-
-export function routeForView(view: SidebarView, folderId?: string | null): string {
-  switch (view) {
-    case "dashboard":
-      return driveRoutes.dashboard;
-    case "drive":
-      return folderId ? driveRoutes.folder(folderId) : driveRoutes.myDrive;
-    case "starred":
-      return driveRoutes.starred;
-    case "recent":
-      return driveRoutes.recent;
-    case "trash":
-      return driveRoutes.trash;
-    case "activity":
-      return driveRoutes.activity;
-    case "hidden":
-      return driveRoutes.hidden;
-    case "inbox":
-      return driveRoutes.inbox;
-    case "controls":
-      return driveRoutes.controls;
-    case "cleanup":
-      return driveRoutes.cleanup;
-    case "spaces":
-      return driveRoutes.spaces;
-    case "shared-links":
-      return driveRoutes.sharedLinks;
-    case "type":
-      return driveRoutes.typeBrowse("images");
-    case "tags":
-      return driveRoutes.tags;
-    case "saved":
-      return driveRoutes.dashboard;
-    default:
-      return driveRoutes.dashboard;
-  }
-}
 
 export interface ParsedDriveRoute {
   view: SidebarView;

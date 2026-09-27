@@ -7,7 +7,7 @@ import { BUILTIN_VIEW_IDS } from "./views";
 import { driveRoutes, type ParsedDriveRoute, type SidebarView } from "./navigation";
 import { CLEANUP_KIND_META, CLEANUP_NAV_GROUPS } from "./cleanup/kinds";
 
-export const DEFAULT_NAV_SECTION = "home" as const;
+const DEFAULT_NAV_SECTION = "home" as const;
 
 export const NAV_SECTIONS = [
   { id: "home", label: "Home", icon: House },
@@ -79,7 +79,7 @@ export const ORGANIZE_BUILTIN_VIEW_IDS = [
   BUILTIN_VIEW_IDS.UNTAGGED,
 ] as const;
 
-export const SECTION_LINKS: Record<NavSectionId, StaticNavItem[]> = {
+const SECTION_LINKS: Record<NavSectionId, StaticNavItem[]> = {
   home: [
     {
       kind: "link",
@@ -209,7 +209,7 @@ export const SECTION_LINKS: Record<NavSectionId, StaticNavItem[]> = {
   ],
 };
 
-export const SECTION_EXTRAS: Record<NavSectionId, NavExtraId[]> = {
+const SECTION_EXTRAS: Record<NavSectionId, NavExtraId[]> = {
   home: [],
   files: ["favorites", "recent-folders"],
   browse: ["browse"],
@@ -218,7 +218,7 @@ export const SECTION_EXTRAS: Record<NavSectionId, NavExtraId[]> = {
   settings: [],
 };
 
-export function isNavSectionId(value: string | null | undefined): value is NavSectionId {
+function isNavSectionId(value: string | null | undefined): value is NavSectionId {
   return !!value && SECTION_BY_ID.has(value as NavSectionId);
 }
 

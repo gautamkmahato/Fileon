@@ -240,7 +240,7 @@ export async function pgSelectByUser<T extends PgTable>(
   }
 }
 
-export async function pgDeleteByUser(table: PgTable, userId: string): Promise<void> {
+async function pgDeleteByUser(table: PgTable, userId: string): Promise<void> {
   const rows = await pgSelectByUser(table, userId);
   for (const row of rows) {
     await pgDelete(table, rowKey(table, row));
@@ -277,8 +277,4 @@ export async function pgGetByIndex<T extends PgTable>(
   } catch {
     return fromMem ?? null;
   }
-}
-
-export function pgClearMemory(): void {
-  memory.clear();
 }

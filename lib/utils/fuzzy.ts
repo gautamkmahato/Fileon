@@ -1,5 +1,5 @@
 /** Simple fuzzy match — returns score > 0 if query matches, higher = better. */
-export function fuzzyScore(text: string, query: string): number {
+function fuzzyScore(text: string, query: string): number {
   const t = text.toLowerCase();
   const q = query.toLowerCase().trim();
   if (!q) return 1;

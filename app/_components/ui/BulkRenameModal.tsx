@@ -11,7 +11,7 @@ import {
   type BulkRenameConfig,
   type BulkRenameMode,
 } from "@/lib/utils/bulk-rename";
-import { toast, runAsync, updateLoading } from "@/lib/toast";
+import { toast, updateLoading } from "@/lib/toast";
 
 interface BulkRenameModalProps {
   open: boolean;

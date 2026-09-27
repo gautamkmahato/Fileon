@@ -1,5 +1,5 @@
-export const DB_NAME = "gdrive-activity";
-export const DB_VERSION = 8;
+const DB_NAME = "gdrive-activity";
+const DB_VERSION = 8;
 
 export const STORE_ACTIVITY = "activity";
 export const STORE_TAGS = "tags";

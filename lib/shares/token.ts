@@ -18,7 +18,7 @@ export function newShareSecret(): string {
   return [...bytes].map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-export function shareAppPath(token: string): string {
+function shareAppPath(token: string): string {
   return `/s/${encodeURIComponent(token)}`;
 }
 

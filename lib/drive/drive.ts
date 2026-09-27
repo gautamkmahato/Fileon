@@ -176,28 +176,6 @@ export async function getFile(token: string, fileId: string): Promise<DriveFile>
   return res.json();
 }
 
-/**
- * Resolve a Drive thumbnail URL into a blob URL the browser can render.
- * Drive's thumbnailLink requires the Authorization header — embedding it
- * in an <img> tag directly fails because <img> doesn't send auth headers.
- *
- * We fetch with auth, then create an object URL. Caller should revoke it
- * when no longer needed (URL.revokeObjectURL).
- */
-export async function fetchThumbnailAsBlobUrl(
-  token: string,
-  thumbnailLink: string
-): Promise<string> {
-  // Drive's thumbnailLink sometimes includes a size suffix (=s220). We can
-  // request larger by replacing it; here we just use what was returned.
-  const res = await fetch(thumbnailLink, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  if (!res.ok) throw new DriveApiError(res.status, "thumbnail fetch failed");
-  const blob = await res.blob();
-  return URL.createObjectURL(blob);
-}
-
 /** Download file content. For Google Docs/Sheets/Slides, use exportFile instead. */
 export async function downloadFile(token: string, fileId: string): Promise<Blob> {
   const res = await driveFetch(`${API}/files/${fileId}?alt=media`, token);
@@ -276,9 +254,6 @@ export async function restoreFile(token: string, fileId: string): Promise<DriveF
   return res.json();
 }
 
-/** Alias for restoreFile. */
-export const untrashFile = restoreFile;
-
 /** Permanently delete a file (no recovery). */
 export async function deleteForever(token: string, fileId: string): Promise<void> {
   await driveFetch(`${API}/files/${fileId}`, token, { method: "DELETE" });
@@ -312,7 +287,7 @@ export async function listFilesByQuery(opts: {
 }
 
 /** Fetch metadata for specific file IDs (uses files.get — id is not valid in list q). */
-export async function getFilesByIds(
+async function getFilesByIds(
   token: string,
   fileIds: string[]
 ): Promise<DriveListResponse> {
@@ -380,28 +355,6 @@ export async function getStorageQuota(token: string): Promise<StorageQuota> {
   return data.storageQuota || {};
 }
 
-/** List top-level folders (direct children of root). */
-export async function listRootFolders(token: string): Promise<DriveFile[]> {
-  const res = await listFilesByQuery({
-    token,
-    q: "mimeType = 'application/vnd.google-apps.folder' and trashed = false and 'root' in parents",
-    orderBy: "name",
-    pageSize: 100,
-  });
-  return res.files;
-}
-
-/** List folders inside a parent folder. */
-export async function listChildFolders(token: string, parentId: string): Promise<DriveFile[]> {
-  const res = await listFilesByQuery({
-    token,
-    q: `mimeType = 'application/vnd.google-apps.folder' and trashed = false and '${parentId}' in parents`,
-    orderBy: "name",
-    pageSize: 100,
-  });
-  return res.files;
-}
-
 /** Upload a file (multipart). */
 export async function uploadFile(opts: {
   token: string;
@@ -446,7 +399,7 @@ export async function fetchUserProfile(token: string): Promise<UserProfile> {
 // ── MIME type helpers ──────────────────────────────────────────────────────
 
 export const FOLDER_MIME = "application/vnd.google-apps.folder";
-export const SHORTCUT_MIME = "application/vnd.google-apps.shortcut";
+const SHORTCUT_MIME = "application/vnd.google-apps.shortcut";
 
 export function isFolder(file: { mimeType: string }): boolean {
   return file.mimeType === FOLDER_MIME;
@@ -476,10 +429,6 @@ export async function probeFileAccess(
     }
     return "unknown";
   }
-}
-
-export function isImageMime(mimeType: string): boolean {
-  return mimeType.startsWith("image/");
 }
 
 export async function listFolderImages(

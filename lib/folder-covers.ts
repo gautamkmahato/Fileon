@@ -26,12 +26,6 @@ export async function listFolderCovers(): Promise<FolderCoverRecord[]> {
   return withStore(STORE_FOLDER_COVERS, "readonly", (s) => s.getAll()) as Promise<FolderCoverRecord[]>;
 }
 
-export async function getFolderCover(folderId: string): Promise<FolderCoverRecord | null> {
-  if (typeof window === "undefined") return null;
-  const row = await withStore(STORE_FOLDER_COVERS, "readonly", (s) => s.get(folderId));
-  return (row as FolderCoverRecord | undefined) ?? null;
-}
-
 export async function setFolderCover(
   folderId: string,
   coverFileId: string,

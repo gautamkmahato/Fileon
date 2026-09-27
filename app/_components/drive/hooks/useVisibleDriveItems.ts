@@ -10,7 +10,6 @@ import { useHidden } from "@/app/_components/hidden/HiddenProvider";
 import { DASHBOARD_PINS_KEY } from "@/lib/pins";
 import { applyFilters, filtersAreActive } from "@/lib/utils/filter";
 import {
-  DEFAULT_FILE_SORT,
   DEFAULT_FOLDER_SORT,
   DEFAULT_TRASH_SORT,
   sortDriveFiles,
