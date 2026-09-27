@@ -8,7 +8,7 @@ import {
   setEntryToastId,
   UNDO_TOAST_MS,
   type UndoEntry,
-} from "@/lib/undo";
+} from "@/lib/activity/undo";
 import { UndoToastCard } from "./UndoToast";
 
 export function UndoProvider() {

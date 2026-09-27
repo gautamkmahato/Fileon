@@ -8,7 +8,7 @@ import {
   listInboxFileIds,
   removeFromInbox,
   subscribeInbox,
-} from "@/lib/inbox";
+} from "@/lib/collections/inbox";
 
 interface InboxContextValue {
   inboxIds: Set<string>;

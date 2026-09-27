@@ -14,7 +14,7 @@ import { FileListBody } from "./FileListBody";
 import { describeRule } from "@/lib/spaces";
 import { humanFileSize } from "@/lib/drive/drive";
 import { useSpaces } from "../../spaces/SpacesProvider";
-import { driveRoutes } from "@/lib/navigation";
+import { driveRoutes } from "@/lib/navigation/routes";
 import { useRouter } from "next/navigation";
 import type { ViewMode } from "@/lib/drive/types";
 

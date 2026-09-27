@@ -2,10 +2,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Loader2, Plus, Trash2, X } from "lucide-react";
-import type { Tag } from "@/lib/tags";
-import { createTag, deleteTag, updateTag } from "@/lib/tags";
-import { TAG_COLORS } from "@/lib/tag-colors";
-import { getTagColor } from "@/lib/tag-colors";
+import type { Tag } from "@/lib/tags/repository";
+import { createTag, deleteTag, updateTag } from "@/lib/tags/repository";
+import { TAG_COLORS } from "@/lib/tags/colors";
+import { getTagColor } from "@/lib/tags/colors";
 import {
   TAG_KIND_META,
   TAG_KINDS,
@@ -14,9 +14,9 @@ import {
   isBuiltinTag,
   tagKind,
   type TagKind,
-} from "@/lib/tag-kinds";
-import { ConfirmModal } from "../ui/Dialogs";
-import { toast } from "@/lib/toast";
+} from "@/lib/tags/kinds";
+import { ConfirmModal } from "../ui/dialogs";
+import { toast } from "@/lib/ui/toast";
 
 interface TagManageModalProps {
   open: boolean;

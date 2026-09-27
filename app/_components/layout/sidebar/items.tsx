@@ -4,8 +4,8 @@ import Link from "next/link";
 import { ChevronRight, Folder } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { DriveFile } from "@/lib/drive/drive";
-import { driveRoutes } from "@/lib/navigation";
-import { displayLabel } from "@/lib/sidebar-nav";
+import { driveRoutes } from "@/lib/navigation/routes";
+import { displayLabel } from "@/lib/navigation/sidebar";
 
 export function navRowClass(active: boolean, nested = false): string {
   return [

@@ -26,10 +26,10 @@ import {
 import { useAuth } from "../../auth/AuthProvider";
 import { PreviewBody } from "./PreviewBody";
 import { getFileType } from "@/lib/types/file-types";
-import { toast, runAsync } from "@/lib/toast";
-import { prepareActivityUndo } from "@/lib/activity-log";
-import { recordRecentFolderWork } from "@/lib/recent-folders";
-import { pushUndo } from "@/lib/undo";
+import { toast, runAsync } from "@/lib/ui/toast";
+import { prepareActivityUndo } from "@/lib/activity/log";
+import { recordRecentFolderWork } from "@/lib/collections/recent-folders";
+import { pushUndo } from "@/lib/activity/undo";
 import { TagPills } from "../../tags/TagDisplay";
 
 interface FilePreviewProps {
@@ -37,7 +37,7 @@ interface FilePreviewProps {
   onClose: () => void;
   onFileChanged: (file: DriveFile) => void;
   onFileDeleted: (fileId: string) => void;
-  fileTags?: import("@/lib/tags").Tag[];
+  fileTags?: import("@/lib/tags/repository").Tag[];
   onEditTags?: () => void;
 }
 

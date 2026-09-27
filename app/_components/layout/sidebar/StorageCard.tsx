@@ -3,7 +3,7 @@
 import { Sparkles } from "lucide-react";
 import { humanFileSize } from "@/lib/drive/drive";
 import type { StorageQuota } from "@/lib/drive/drive";
-import { parseQuotaBytes } from "@/lib/sidebar-nav";
+import { parseQuotaBytes } from "@/lib/navigation/sidebar";
 
 export function StorageCard({ quota }: { quota: StorageQuota | null }) {
   const used = parseQuotaBytes(quota?.usage);

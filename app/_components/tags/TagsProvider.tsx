@@ -3,12 +3,12 @@
 import {
   createContext, useCallback, useContext, useEffect, useMemo, useState,
 } from "react";
-import type { Tag } from "@/lib/tags";
+import type { Tag } from "@/lib/tags/repository";
 import {
   getTagCounts, getTagsByFileIdMap, listTags, subscribeTags, ensureBuiltinTags,
-} from "@/lib/tags";
-import { invalidateTagFileIdsCache } from "@/lib/cache/tag-file-ids-cache";
-import { EMPTY_TAGS } from "@/lib/constants";
+} from "@/lib/tags/repository";
+import { invalidateTagFileIdsCache } from "@/lib/tags/file-ids-cache";
+import { EMPTY_TAGS } from "@/lib/config/constants";
 
 interface TagsContextValue {
   tags: Tag[];

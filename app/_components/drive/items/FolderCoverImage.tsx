@@ -3,7 +3,7 @@
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import type { DriveFile } from "@/lib/drive/drive";
 import { DriveApiError, getFile } from "@/lib/drive/drive";
-import type { CoverPosition } from "@/lib/folder-covers";
+import type { CoverPosition } from "@/lib/collections/folder-covers";
 import { useAuth } from "../../auth/AuthProvider";
 import { useFilesStore } from "@/lib/stores";
 import { Thumbnail } from "../preview/Thumbnail";

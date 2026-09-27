@@ -4,22 +4,22 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { Bookmark, ChevronRight, GripVertical, Hash, LayoutGrid, Plus } from "lucide-react";
 import { TYPE_BROWSE_CATEGORIES, TYPE_BROWSE_META } from "@/lib/drive/type-browse";
-import { driveRoutes } from "@/lib/navigation";
+import { driveRoutes } from "@/lib/navigation/routes";
 import {
   displayLabel,
   ORGANIZE_BUILTIN_VIEW_IDS,
   type NavExtraId,
-} from "@/lib/sidebar-nav";
-import { getTagBgSoft, getTagTextClass } from "@/lib/tag-colors";
-import { getViewIcon } from "@/lib/view-icons";
-import { BUILTIN_VIEW_IDS, type SavedView } from "@/lib/views";
+} from "@/lib/navigation/sidebar";
+import { getTagBgSoft, getTagTextClass } from "@/lib/tags/colors";
+import { getViewIcon } from "@/lib/views/icons";
+import { BUILTIN_VIEW_IDS, type SavedView } from "@/lib/views/repository";
 import type { TypeBrowseCount } from "@/lib/hooks/useTypeBrowseCounts";
-import type { ParsedDriveRoute } from "@/lib/navigation";
+import type { ParsedDriveRoute } from "@/lib/navigation/routes";
 import type { TypeBrowseCategory } from "@/lib/drive/type-browse";
 import type { DriveFile } from "@/lib/drive/drive";
-import type { Tag } from "@/lib/tags";
+import type { Tag } from "@/lib/tags/repository";
 import type { SmartSpace } from "@/lib/spaces";
-import { displayTagName, groupTagsByKind, TAG_KIND_META, TAG_KINDS } from "@/lib/tag-kinds";
+import { displayTagName, groupTagsByKind, TAG_KIND_META, TAG_KINDS } from "@/lib/tags/kinds";
 import {
   EmptyHint, FolderRow, SectionHeader, ShowMoreButton, navRowClass,
 } from "./items";

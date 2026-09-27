@@ -13,7 +13,7 @@ import {
 } from "@/lib/shares";
 import { StatusPill } from "@/app/_components/shares/StatusPill";
 import { AppLogo } from "@/app/_components/brand/AppLogo";
-import { APP_NAME } from "@/lib/brand";
+import { APP_NAME } from "@/lib/config/brand";
 
 const VIEWED_KEY = "share-link-viewed:";
 

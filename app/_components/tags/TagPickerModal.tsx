@@ -2,10 +2,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Check, Loader2, Plus, X } from "lucide-react";
-import type { Tag } from "@/lib/tags";
-import { addTagToFile, bulkAddTag, bulkRemoveTag, createTag, removeTagFromFile } from "@/lib/tags";
-import { getTagColor } from "@/lib/tag-colors";
-import { logTagFileChanges } from "@/lib/tag-activity";
+import type { Tag } from "@/lib/tags/repository";
+import { addTagToFile, bulkAddTag, bulkRemoveTag, createTag, removeTagFromFile } from "@/lib/tags/repository";
+import { getTagColor } from "@/lib/tags/colors";
+import { logTagFileChanges } from "@/lib/tags/activity";
 import {
   TAG_KIND_META,
   TAG_KINDS,
@@ -15,8 +15,8 @@ import {
   suggestedSystemTagIds,
   tagKind,
   type TagKind,
-} from "@/lib/tag-kinds";
-import { toast } from "@/lib/toast";
+} from "@/lib/tags/kinds";
+import { toast } from "@/lib/ui/toast";
 
 interface TagPickerModalProps {
   open: boolean;

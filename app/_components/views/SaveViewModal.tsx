@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { Loader2, X } from "lucide-react";
-import type { ViewIconId } from "@/lib/view-icons";
-import { VIEW_ICONS, getViewIcon } from "@/lib/view-icons";
-import { createView, describeViewScope, type ViewScope } from "@/lib/views";
+import type { ViewIconId } from "@/lib/views/icons";
+import { VIEW_ICONS, getViewIcon } from "@/lib/views/icons";
+import { createView, describeViewScope, type ViewScope } from "@/lib/views/repository";
 import type { Filters } from "@/lib/utils/filter";
 import type { SortState } from "@/lib/utils/sort";
-import type { ViewLayout } from "@/lib/views";
-import { toast } from "@/lib/toast";
+import type { ViewLayout } from "@/lib/views/repository";
+import { toast } from "@/lib/ui/toast";
 
 const EMOJI_PRESETS = ["📁", "📄", "⭐", "🏷️", "🔍", "📅", "📦", "👥", "💼", "🎯", "✨", "🔥"];
 

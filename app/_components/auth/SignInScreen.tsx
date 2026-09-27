@@ -2,7 +2,7 @@
 
 import { Loader2 } from "lucide-react";
 import { AppLogo } from "@/app/_components/brand/AppLogo";
-import { APP_NAME, APP_TAGLINE } from "@/lib/brand";
+import { APP_NAME, APP_TAGLINE } from "@/lib/config/brand";
 import { useAuth } from "./AuthProvider";
 
 export function SignInScreen() {

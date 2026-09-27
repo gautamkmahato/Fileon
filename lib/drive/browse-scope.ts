@@ -1,4 +1,4 @@
-import type { SidebarView } from "@/lib/navigation";
+import type { SidebarView } from "@/lib/navigation/routes";
 
 /** Folder browsing views — upload, pins, cut/paste, folder grid. */
 export function isFolderBrowseView(view: SidebarView): boolean {

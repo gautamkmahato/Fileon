@@ -16,8 +16,8 @@ import {
   hasSeenActivityOnboarding,
   markActivityOnboardingSeen,
   subscribeActivity,
-} from "@/lib/activity-log";
-import { ConfirmModal } from "../../ui/Dialogs";
+} from "@/lib/activity/log";
+import { ConfirmModal } from "../../ui/dialogs";
 
 interface ActivityViewProps {
   onOpenFile: (fileId: string, fileName: string) => void;

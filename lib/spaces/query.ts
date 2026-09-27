@@ -1,7 +1,7 @@
 import type { DriveFile } from "@/lib/drive/drive";
 import { fetchAllFilesByIds, listFilesByQuery } from "@/lib/drive/drive";
-import { getFileIdsForTag } from "@/lib/tags";
-import type { Tag } from "@/lib/tags";
+import { getFileIdsForTag } from "@/lib/tags/repository";
+import type { Tag } from "@/lib/tags/repository";
 import type { SmartSpace, SpaceQueryResult, SpaceRule } from "./types";
 import {
   canSeedQuery,

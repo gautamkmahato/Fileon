@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Check, Copy, Loader2, Plus } from "lucide-react";
-import { APP_NAME } from "@/lib/brand";
-import { driveRoutes } from "@/lib/navigation";
+import { APP_NAME } from "@/lib/config/brand";
+import { driveRoutes } from "@/lib/navigation/routes";
 import {
   EXPIRY_PRESETS,
   effectiveStatus,
@@ -16,8 +16,8 @@ import {
 } from "@/lib/shares";
 import { enableLinkShare, findLinkPermission } from "@/lib/drive/drive-extras";
 import { useAuth } from "../auth/AuthProvider";
-import { toast } from "@/lib/toast";
-import { logActivity } from "@/lib/activity-log";
+import { toast } from "@/lib/ui/toast";
+import { logActivity } from "@/lib/activity/log";
 import { useShareLinks } from "./ShareLinksProvider";
 import { StatusPill } from "./StatusPill";
 

@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { Loader2, X } from "lucide-react";
-import { updateView } from "@/lib/views";
-import { toast } from "@/lib/toast";
+import { updateView } from "@/lib/views/repository";
+import { toast } from "@/lib/ui/toast";
 
 interface ViewRenameModalProps {
   open: boolean;

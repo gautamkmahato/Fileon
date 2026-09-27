@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Loader2, Plus, Trash2, X } from "lucide-react";
 import { useTags } from "../tags/TagsProvider";
-import { toast } from "@/lib/toast";
+import { toast } from "@/lib/ui/toast";
 import {
   defaultOpForField,
   defaultValueForField,
@@ -16,10 +16,10 @@ import {
   type SpaceRule,
   type SmartSpace,
 } from "@/lib/spaces";
-import type { Tag } from "@/lib/tags";
+import type { Tag } from "@/lib/tags/repository";
 import type { SpaceRuleField, SpaceRuleOp, SpaceRuleValue } from "@/lib/db/schema";
 import { MAX_SPACE_RULES } from "@/lib/db/schema";
-import { TAG_KIND_META, TAG_KINDS, tagKind, tagShortLabel } from "@/lib/tag-kinds";
+import { TAG_KIND_META, TAG_KINDS, tagKind, tagShortLabel } from "@/lib/tags/kinds";
 import { useSpaces } from "./SpacesProvider";
 
 const EMOJI_PRESETS = ["🧾", "📁", "🎬", "🖼️", "⭐", "🔍", "📦", "💼", "🏷️", "⚠️", "✨", "📌"];

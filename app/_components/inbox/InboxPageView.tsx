@@ -8,7 +8,7 @@ import { useDriveBrowse } from "../drive/context/DriveBrowseProvider";
 import { useInbox } from "./InboxProvider";
 import { InboxList } from "./InboxList";
 import { InboxReadingPane } from "./InboxReadingPane";
-import { toast } from "@/lib/toast";
+import { toast } from "@/lib/ui/toast";
 
 export function InboxPageView() {
   const {

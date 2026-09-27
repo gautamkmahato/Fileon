@@ -3,13 +3,13 @@
 import { useState } from "react";
 import Link from "next/link";
 import { LayoutGrid, Pencil, Plus, Trash2 } from "lucide-react";
-import { driveRoutes } from "@/lib/navigation";
+import { driveRoutes } from "@/lib/navigation/routes";
 import { humanFileSize } from "@/lib/drive/drive";
-import { displayLabel } from "@/lib/sidebar-nav";
+import { displayLabel } from "@/lib/navigation/sidebar";
 import { describeRule } from "@/lib/spaces";
 import { useTags } from "../tags/TagsProvider";
-import { ConfirmModal } from "../ui/Dialogs";
-import { toast } from "@/lib/toast";
+import { ConfirmModal } from "../ui/dialogs";
+import { toast } from "@/lib/ui/toast";
 import { useSpaces } from "./SpacesProvider";
 
 export function SmartSpacesHome() {

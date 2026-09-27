@@ -3,13 +3,13 @@
 import {
   createContext, useCallback, useContext, useEffect, useMemo, useState,
 } from "react";
-import type { CoverPosition, FolderCoverRecord } from "@/lib/folder-covers";
+import type { CoverPosition, FolderCoverRecord } from "@/lib/collections/folder-covers";
 import {
   listFolderCovers,
   removeFolderCover as removeFolderCoverDb,
   setFolderCover as setFolderCoverDb,
   subscribeFolderCovers,
-} from "@/lib/folder-covers";
+} from "@/lib/collections/folder-covers";
 
 interface FolderCoversContextValue {
   covers: Map<string, FolderCoverRecord>;

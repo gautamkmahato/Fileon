@@ -1,6 +1,6 @@
 import type { DriveFile, StorageQuota } from "@/lib/drive/drive";
 import type { FolderCrumb } from "@/lib/drive/types";
-import type { Tag } from "@/lib/tags";
+import type { Tag } from "@/lib/tags/repository";
 import type { DriveRouteState } from "./drive-browse-types";
 import type { RefObject, Dispatch, SetStateAction } from "react";
 

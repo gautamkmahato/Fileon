@@ -10,7 +10,7 @@ import { FilePreview } from "../preview/FilePreview";
 import { QuickLook } from "../preview/QuickLook";
 import { useDriveBrowse } from "../context/DriveBrowseProvider";
 import { useHidden } from "../../hidden/HiddenProvider";
-import { toast } from "@/lib/toast";
+import { toast } from "@/lib/ui/toast";
 import { useSelectionCount, useSelectionStore, useClipboardActive, getSelectedDriveFiles } from "@/lib/stores";
 
 function DriveSelectionBar() {

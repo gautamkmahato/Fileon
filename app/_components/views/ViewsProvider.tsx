@@ -3,8 +3,8 @@
 import {
   createContext, useCallback, useContext, useEffect, useMemo, useState,
 } from "react";
-import type { SavedView } from "@/lib/views";
-import { listViews, subscribeViews } from "@/lib/views";
+import type { SavedView } from "@/lib/views/repository";
+import { listViews, subscribeViews } from "@/lib/views/repository";
 
 interface ViewsContextValue {
   views: SavedView[];

@@ -5,7 +5,7 @@ import { Loader2 } from "lucide-react";
 import { isFolder } from "@/lib/drive/drive";
 import { DEFAULT_FILTERS } from "@/lib/utils/filter";
 import { driveActions } from "@/lib/drive/drive-actions-bridge";
-import { useDriveRoute } from "@/lib/drive/useDriveRoute";
+import { useDriveRoute } from "@/app/_hooks/useDriveRoute";
 import { useBrowseStore, useFilesStore } from "@/lib/stores";
 import { FileCard } from "../items/FileCard";
 import { FileRow } from "../items/FileRow";

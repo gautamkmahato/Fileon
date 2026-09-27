@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { toast as sonner } from "sonner";
 import { Undo2 } from "lucide-react";
-import { UNDO_TOAST_MS } from "@/lib/undo";
+import { UNDO_TOAST_MS } from "@/lib/activity/undo";
 
 const R = 9;
 const CIRC = 2 * Math.PI * R;

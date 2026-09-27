@@ -15,10 +15,10 @@ import {
   type ShareLinkEffectiveStatus,
   type ShareLink,
 } from "@/lib/shares";
-import { ConfirmModal } from "../ui/Dialogs";
-import { toast } from "@/lib/toast";
-import { logActivity } from "@/lib/activity-log";
-import { APP_NAME } from "@/lib/brand";
+import { ConfirmModal } from "../ui/dialogs";
+import { toast } from "@/lib/ui/toast";
+import { logActivity } from "@/lib/activity/log";
+import { APP_NAME } from "@/lib/config/brand";
 import { useShareLinks } from "./ShareLinksProvider";
 import { StatusPill } from "./StatusPill";
 

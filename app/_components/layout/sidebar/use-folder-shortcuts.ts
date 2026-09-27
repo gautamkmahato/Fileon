@@ -3,8 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import type { DriveFile } from "@/lib/drive/drive";
 import { fetchAllFilesByIds, isFolder } from "@/lib/drive/drive";
-import { listFavoriteFolderIds, subscribeFavorites } from "@/lib/favorites";
-import { listRecentFolderIds, subscribeRecentFolders } from "@/lib/recent-folders";
+import { listFavoriteFolderIds, subscribeFavorites } from "@/lib/collections/favorites";
+import { listRecentFolderIds, subscribeRecentFolders } from "@/lib/collections/recent-folders";
 
 const RECENT_CAP = 3;
 

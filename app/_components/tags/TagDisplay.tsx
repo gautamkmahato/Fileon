@@ -1,8 +1,8 @@
 "use client";
 
-import type { Tag } from "@/lib/tags";
-import { getTagColor } from "@/lib/tag-colors";
-import { displayTagName } from "@/lib/tag-kinds";
+import type { Tag } from "@/lib/tags/repository";
+import { getTagColor } from "@/lib/tags/colors";
+import { displayTagName } from "@/lib/tags/kinds";
 
 interface TagPillsProps {
   tags: Tag[];

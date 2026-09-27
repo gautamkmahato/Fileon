@@ -11,7 +11,7 @@ import {
   toggleHidden as toggleHiddenDb,
   unhideFile,
   unhideFiles,
-} from "@/lib/hidden";
+} from "@/lib/collections/hidden";
 
 interface HiddenContextValue {
   hiddenIds: Set<string>;

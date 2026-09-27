@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { driveRoutes } from "@/lib/navigation";
+import { driveRoutes } from "@/lib/navigation/routes";
 import {
   TYPE_BROWSE_CATEGORIES,
   TYPE_BROWSE_META,

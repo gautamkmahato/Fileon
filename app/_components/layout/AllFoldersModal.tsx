@@ -13,7 +13,7 @@ import {
   searchFoldersCached,
   subscribeFolderTreeInvalidation,
 } from "@/lib/cache/folder-children-cache";
-import { driveRoutes } from "@/lib/navigation";
+import { driveRoutes } from "@/lib/navigation/routes";
 
 interface TreeNode {
   folder: DriveFile;

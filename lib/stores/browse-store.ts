@@ -7,7 +7,7 @@ import {
 import {
   DEFAULT_FILE_SORT, loadFileSort, saveFileSort, type SortState,
 } from "@/lib/utils/sort";
-import type { SavedView } from "@/lib/views";
+import type { SavedView } from "@/lib/views/repository";
 
 export interface BrowseState {
   search: string;

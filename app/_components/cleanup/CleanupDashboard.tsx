@@ -2,10 +2,10 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { driveRoutes } from "@/lib/navigation";
+import { driveRoutes } from "@/lib/navigation/routes";
 import { CLEANUP_KIND_META, type CleanupKind } from "@/lib/cleanup/kinds";
 import type { CleanupAnalysis } from "@/lib/cleanup/types";
-import { useCleanupScan } from "@/lib/cleanup/useCleanupScan";
+import { useCleanupScan } from "@/app/_components/cleanup/useCleanupScan";
 import { CleanupScanBanner } from "./CleanupScanBanner";
 import { CleanupFindingsList } from "./CleanupFindingsList";
 import { useCleanupStore } from "@/lib/cleanup/store";

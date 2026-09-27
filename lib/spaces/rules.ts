@@ -1,7 +1,7 @@
 import type { DriveFile } from "@/lib/drive/drive";
 import { FOLDER_MIME } from "@/lib/drive/drive";
-import type { Tag } from "@/lib/tags";
-import { tagShortLabel } from "@/lib/tag-kinds";
+import type { Tag } from "@/lib/tags/repository";
+import { tagShortLabel } from "@/lib/tags/kinds";
 import type {
   SpaceDatePreset,
   SpaceFileType,

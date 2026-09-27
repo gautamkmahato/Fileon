@@ -15,13 +15,13 @@ import {
   listTrashFiles,
 } from "@/lib/drive/drive";
 import { listFilesByType, TYPE_BROWSE_META, type TypeBrowseCategory } from "@/lib/drive/type-browse";
-import { toast } from "@/lib/toast";
-import { driveRoutes } from "@/lib/navigation";
+import { toast } from "@/lib/ui/toast";
+import { driveRoutes } from "@/lib/navigation/routes";
 import { rootCrumbLabel, isDashboardRoot } from "@/lib/drive/browse-scope";
 import type { FolderCrumb } from "@/lib/drive/types";
-import { getFileIdsForTags, fileMatchesTagScope } from "@/lib/tags";
-import { displayTagName } from "@/lib/tag-kinds";
-import { getTagFileIdsCache, setTagFileIdsCache } from "@/lib/cache/tag-file-ids-cache";
+import { getFileIdsForTags, fileMatchesTagScope } from "@/lib/tags/repository";
+import { displayTagName } from "@/lib/tags/kinds";
+import { getTagFileIdsCache, setTagFileIdsCache } from "@/lib/tags/file-ids-cache";
 import {
   cacheFolderName,
   cacheFolderNamesFromFiles,
@@ -53,9 +53,9 @@ import {
   useSelectionStore,
 } from "@/lib/stores";
 import { filterRecentFiles } from "@/lib/utils/recent-files";
-import { DASHBOARD_PINS_KEY } from "@/lib/pins";
-import { listHiddenFileIds } from "@/lib/hidden";
-import { listInboxFileIds, removeFromInbox } from "@/lib/inbox";
+import { DASHBOARD_PINS_KEY } from "@/lib/collections/pins";
+import { listHiddenFileIds } from "@/lib/collections/hidden";
+import { listInboxFileIds, removeFromInbox } from "@/lib/collections/inbox";
 import { usePins } from "@/app/_components/pins/PinsProvider";
 import { useHidden } from "@/app/_components/hidden/HiddenProvider";
 import { useInbox } from "@/app/_components/inbox/InboxProvider";

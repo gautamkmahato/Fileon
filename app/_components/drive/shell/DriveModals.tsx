@@ -2,11 +2,11 @@
 
 import { useRouter } from "next/navigation";
 import { isFolder, type DriveFile } from "@/lib/drive/drive";
-import { DASHBOARD_PINS_KEY } from "@/lib/pins";
-import { driveRoutes } from "@/lib/navigation";
+import { DASHBOARD_PINS_KEY } from "@/lib/collections/pins";
+import { driveRoutes } from "@/lib/navigation/routes";
 import {
   ConfirmModal, MoveModal, NewFolderModal, RenameModal, ShareModal,
-} from "../../ui/Dialogs";
+} from "../../ui/dialogs";
 import { FileMenu } from "../menu/FileMenu";
 import { TagManageModal } from "../../tags/TagManageModal";
 import { TagPickerModal } from "../../tags/TagPickerModal";
@@ -20,11 +20,11 @@ import { useHidden } from "../../hidden/HiddenProvider";
 import { useInbox } from "../../inbox/InboxProvider";
 import { useFolderCovers } from "../../folder-covers/FolderCoversProvider";
 import { SetFolderCoverModal } from "../../folder-covers/SetFolderCoverModal";
-import { recordRecentFolderWork } from "@/lib/recent-folders";
+import { recordRecentFolderWork } from "@/lib/collections/recent-folders";
 import { getSelectedDriveFiles, useFilesStore } from "@/lib/stores";
 import { useDriveBrowse } from "../context/DriveBrowseProvider";
-import { toast } from "@/lib/toast";
-import { displayTagName } from "@/lib/tag-kinds";
+import { toast } from "@/lib/ui/toast";
+import { displayTagName } from "@/lib/tags/kinds";
 
 /** All drive-related modals — mounted once at app shell level. */
 export function DriveModals() {

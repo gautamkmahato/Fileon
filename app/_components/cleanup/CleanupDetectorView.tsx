@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { CleanupKindMeta, CleanupDetectorKind } from "@/lib/cleanup/kinds";
 import type { NearDupFamily, StaleWindow } from "@/lib/cleanup/types";
 import { findingsForKind, type CleanupFinding, type CleanupGroup } from "@/lib/cleanup/types";
-import { useCleanupScan } from "@/lib/cleanup/useCleanupScan";
+import { useCleanupScan } from "@/app/_components/cleanup/useCleanupScan";
 import { useCleanupStore } from "@/lib/cleanup/store";
 import { useSelectionStore } from "@/lib/stores";
 import { CleanupScanBanner } from "./CleanupScanBanner";

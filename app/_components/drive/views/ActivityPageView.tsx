@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { ActivityView } from "./ActivityView";
 import { useDriveBrowse } from "../context/DriveBrowseProvider";
-import { isLoggingPaused, setLoggingPaused } from "@/lib/activity-log";
+import { isLoggingPaused, setLoggingPaused } from "@/lib/activity/log";
 
 export function ActivityPageView() {
   const { handleOpenFileFromActivity } = useDriveBrowse();

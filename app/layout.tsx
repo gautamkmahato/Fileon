@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { APP_LOGO_SRC, APP_NAME, APP_TAGLINE } from "@/lib/brand";
+import { APP_LOGO_SRC, APP_NAME, APP_TAGLINE } from "@/lib/config/brand";
 import "./globals.css";
 import { AuthProvider } from "./_components/auth/AuthProvider";
 import { ThemeProvider } from "./_components/layout/ThemeProvider";

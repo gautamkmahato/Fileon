@@ -2,12 +2,12 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { fetchAllFilesByIds, isFolder, type DriveFile } from "@/lib/drive/drive";
-import { useDriveRoute } from "@/lib/drive/useDriveRoute";
+import { useDriveRoute } from "@/app/_hooks/useDriveRoute";
 import { useAuth } from "@/app/_components/auth/AuthProvider";
 import { useTags } from "@/app/_components/tags/TagsProvider";
 import { usePins } from "@/app/_components/pins/PinsProvider";
 import { useHidden } from "@/app/_components/hidden/HiddenProvider";
-import { DASHBOARD_PINS_KEY } from "@/lib/pins";
+import { DASHBOARD_PINS_KEY } from "@/lib/collections/pins";
 import { applyFilters, filtersAreActive } from "@/lib/utils/filter";
 import {
   DEFAULT_FOLDER_SORT,

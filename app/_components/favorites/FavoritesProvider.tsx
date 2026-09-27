@@ -10,7 +10,7 @@ import {
   subscribeFavorites,
   toggleFavoriteFolder,
   unfavoriteFolder,
-} from "@/lib/favorites";
+} from "@/lib/collections/favorites";
 import { useAuth } from "../auth/AuthProvider";
 
 interface FavoritesContextValue {

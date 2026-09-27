@@ -2,11 +2,11 @@ import type { DriveFile, StorageQuota } from "@/lib/drive/drive";
 import type { ViewMode, FolderCrumb } from "@/lib/drive/types";
 import type { Filters } from "@/lib/utils/filter";
 import type { SortState } from "@/lib/utils/sort";
-import type { TagFilterMode } from "@/lib/tags";
-import type { ViewScope } from "@/lib/views";
+import type { TagFilterMode } from "@/lib/tags/repository";
+import type { ViewScope } from "@/lib/views/repository";
 import type { MenuPointer } from "../menu/FileMenu";
 import type { PaletteActionId } from "../../ui/CommandPalette";
-import type { useDriveRoute } from "@/lib/drive/useDriveRoute";
+import type { useDriveRoute } from "@/app/_hooks/useDriveRoute";
 
 export type DriveRouteState = ReturnType<typeof useDriveRoute>;
 
@@ -114,7 +114,7 @@ export interface DriveBrowseContextValue extends DriveRouteState {
   handleTogglePin: (targets?: DriveFile[]) => Promise<void>;
   handleToggleFavorite: (targets?: DriveFile[]) => Promise<void>;
   handleToggleHidden: (targets?: DriveFile[]) => Promise<void>;
-  handleSetFolderCover: (folderId: string, coverFileId: string, position?: import("@/lib/folder-covers").CoverPosition) => Promise<void>;
+  handleSetFolderCover: (folderId: string, coverFileId: string, position?: import("@/lib/collections/folder-covers").CoverPosition) => Promise<void>;
   handleRemoveFolderCover: (folderId: string) => Promise<void>;
   handleUploadFolderCover: (folder: DriveFile, file: File) => Promise<void>;
   handleCut: () => void;
@@ -133,7 +133,7 @@ export interface DriveBrowseContextValue extends DriveRouteState {
   handleBulkDownload: () => Promise<void>;
 
   dragDrop: ReturnType<typeof import("@/lib/hooks/useDragDrop").useDragDrop>;
-  tagsByFileId: Map<string, import("@/lib/tags").Tag[]>;
-  tags: import("@/lib/tags").Tag[];
+  tagsByFileId: Map<string, import("@/lib/tags/repository").Tag[]>;
+  tags: import("@/lib/tags/repository").Tag[];
   counts: Map<string, number>;
 }

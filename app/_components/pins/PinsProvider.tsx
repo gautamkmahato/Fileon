@@ -12,7 +12,7 @@ import {
   togglePin as togglePinDb,
   unpinItem,
   type PinRecord,
-} from "@/lib/pins";
+} from "@/lib/collections/pins";
 
 interface PinsContextValue {
   pinsByFolder: Map<string, PinRecord[]>;

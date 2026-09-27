@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useTypeBrowseCounts } from "@/lib/hooks/useTypeBrowseCounts";
-import { driveRoutes, parseDriveRoute } from "@/lib/navigation";
+import { driveRoutes, parseDriveRoute } from "@/lib/navigation/routes";
 import {
   getNavSection,
   NAV_SECTIONS,
@@ -12,17 +12,17 @@ import {
   sectionLinks,
   type NavActionId,
   type NavSectionId,
-} from "@/lib/sidebar-nav";
-import { deleteView, reorderViews, type SavedView } from "@/lib/views";
+} from "@/lib/navigation/sidebar";
+import { deleteView, reorderViews, type SavedView } from "@/lib/views/repository";
 import type { SmartSpace } from "@/lib/spaces";
-import { toast } from "@/lib/toast";
+import { toast } from "@/lib/ui/toast";
 import type { StorageQuota } from "@/lib/drive/drive";
 import { useTags } from "../../tags/TagsProvider";
 import { useViews } from "../../views/ViewsProvider";
 import { useSpaces } from "../../spaces/SpacesProvider";
 import { ViewContextMenu } from "../../views/ViewContextMenu";
 import { ViewRenameModal } from "../../views/ViewRenameModal";
-import { ConfirmModal } from "../../ui/Dialogs";
+import { ConfirmModal } from "../../ui/dialogs";
 import { AllFoldersModal } from "../AllFoldersModal";
 import { CollapseToggle, EmptyHint, NavButton, NavLink } from "./items";
 import { renderNavExtra, type SidebarExtrasProps } from "./extras";
