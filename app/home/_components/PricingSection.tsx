@@ -77,7 +77,7 @@ export default function PricingSection() {
                   </p>
                 </div>
 
-                <Link href="/" className={`${homeCta} mt-10 w-full sm:mt-12`}>
+                <Link href="/signin" className={`${homeCta} mt-10 w-full sm:mt-12`}>
                   Get Started
                 </Link>
               </div>

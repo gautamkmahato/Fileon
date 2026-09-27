@@ -1,6 +1,7 @@
 "use client";
 
-import { HardDrive, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
+import { AppLogo } from "@/app/_components/brand/AppLogo";
 import { APP_NAME, APP_TAGLINE } from "@/lib/brand";
 import { useAuth } from "./AuthProvider";
 
@@ -11,8 +12,8 @@ export function SignInScreen() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-zinc-50 via-zinc-50 to-blue-50 p-6">
       <div className="max-w-md w-full">
         <div className="text-center mb-10">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-zinc-900 text-white mb-5">
-            <HardDrive className="w-7 h-7" strokeWidth={1.5} />
+          <div className="flex justify-center mb-5">
+            <AppLogo size="lg" priority />
           </div>
           <h1 className="text-3xl font-semibold tracking-tight text-zinc-900">
             {APP_NAME}

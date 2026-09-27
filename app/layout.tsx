@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { APP_NAME, APP_TAGLINE } from "@/lib/brand";
+import { APP_LOGO_SRC, APP_NAME, APP_TAGLINE } from "@/lib/brand";
 import "./globals.css";
 import { AuthProvider } from "./_components/auth/AuthProvider";
 import { ThemeProvider } from "./_components/layout/ThemeProvider";
@@ -21,6 +21,10 @@ export const metadata: Metadata = {
   title: APP_NAME,
   description: APP_TAGLINE,
   applicationName: APP_NAME,
+  icons: {
+    icon: APP_LOGO_SRC,
+    apple: APP_LOGO_SRC,
+  },
 };
 
 export default function RootLayout({

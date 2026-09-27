@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   Menu,
   ChevronRight,
@@ -7,7 +8,7 @@ import {
   Camera,
   User,
 } from "lucide-react";
-import { APP_NAME } from "@/lib/brand";
+import { AppLogo } from "@/app/_components/brand/AppLogo";
 import {
   HomeThemeStyles,
   homeBadge,
@@ -34,7 +35,7 @@ export default function HeroSection() {
   return (
     <section
       className="relative min-h-screen w-full overflow-hidden bg-[#E8F2FA] bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: "url('/hero-bg.png')" }}
+      style={{ backgroundImage: "url('/hero-bg.jpg')" }}
     >
       <HomeThemeStyles />
 
@@ -42,15 +43,14 @@ export default function HeroSection() {
         {/* ---------------- NAVBAR ---------------- */}
         <nav className="mx-auto flex w-full max-w-[1440px] items-center justify-between px-6 pt-8 sm:px-10 lg:px-[72px]">
           <div className="flex items-center gap-3">
-            <button
-              aria-label="Open menu"
-              className="rounded-md p-1 text-[#1A1A1A] transition-opacity hover:opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5B9FD4]"
-            >
-              <Menu className="h-7 w-7" strokeWidth={2} />
-            </button>
-            <span className="font-serif-display text-[22px] font-semibold tracking-[-0.02em] text-white sm:text-[24px]">
-              {APP_NAME}
-            </span>
+            <AppLogo
+              href="/home"
+              size="md"
+              showName
+              priority
+              nameClassName="font-serif-display text-[22px] font-semibold tracking-[-0.02em] text-white sm:text-[24px]"
+              imageClassName="ring-1 ring-white/25"
+            />
           </div>
 
           <button className="group relative flex items-center gap-2 rounded-full bg-gradient-to-b from-[#5B9FD4] to-[#3D7AB0] py-[5px] pl-[5px] pr-4 ring-[3px] ring-[#D4E8F7]/80 shadow-[0_10px_24px_-10px_rgba(91,159,212,0.55)] transition-transform hover:-translate-y-[1px] focus:outline-none focus-visible:ring-[#5B9FD4]">
@@ -80,14 +80,12 @@ export default function HeroSection() {
           </p>
 
           <div className="mt-7 flex flex-wrap items-center justify-center gap-4">
-            <button
-              className={`${homeCta} gap-2 py-2.5 pl-6 pr-2`}
-            >
+            <Link href="/signin" className={`${homeCta} gap-2 py-2.5 pl-6 pr-2`}>
               <span>Get Started</span>
               <span className="flex h-[24px] w-[24px] items-center justify-center rounded-full bg-[#1A1A1A]/10">
                 <ChevronRight className="h-[13px] w-[13px] text-[#1A1A1A]" strokeWidth={3} />
               </span>
-            </button>
+            </Link>
 
             <span className="text-[13px] font-medium text-[#D4F5A8]">
               Free Trial — No Card Required

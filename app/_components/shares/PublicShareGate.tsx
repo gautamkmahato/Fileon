@@ -12,6 +12,7 @@ import {
   type PublicShareLink,
 } from "@/lib/shares";
 import { StatusPill } from "@/app/_components/shares/StatusPill";
+import { AppLogo } from "@/app/_components/brand/AppLogo";
 import { APP_NAME } from "@/lib/brand";
 
 const VIEWED_KEY = "share-link-viewed:";
@@ -137,6 +138,9 @@ function Shell({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 flex items-center justify-center p-6">
       <div className="w-full max-w-md rounded-2xl border border-zinc-200/80 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-8 shadow-sm text-center">
+        <div className="mb-6 flex justify-center">
+          <AppLogo href="/home" size="sm" />
+        </div>
         {children}
       </div>
     </div>

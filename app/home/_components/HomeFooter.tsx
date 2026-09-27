@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { HardDrive, Inspect, Link2 } from "lucide-react";
+import { AppLogo } from "@/app/_components/brand/AppLogo";
 import { APP_NAME } from "@/lib/brand";
 
 const PRODUCT_LINKS = [
   { label: "Features", href: "/home#features" },
   { label: "Pricing", href: "/home#pricing" },
-  { label: "Get Started", href: "/" },
+  { label: "Get Started", href: "/signin" },
 ];
 
 const COMPANY_LINKS = [
@@ -21,21 +22,6 @@ const RESOURCE_LINKS = [
   { label: "Help Center", href: "#" },
   { label: "API Docs", href: "#" },
 ];
-
-function LogoMark() {
-  return (
-    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/20 ring-1 ring-white/30">
-      <div className="grid grid-cols-2 gap-[3px]">
-        {Array.from({ length: 4 }).map((_, i) => (
-          <span
-            key={i}
-            className="h-[7px] w-[7px] rounded-[2px] bg-white"
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -77,12 +63,13 @@ export default function HomeFooter() {
           <div className="flex flex-col gap-12 lg:flex-row lg:justify-between lg:gap-16">
             {/* Left column */}
             <div className="max-w-[380px]">
-              <div className="flex items-center gap-3">
-                <LogoMark />
-                <span className="font-serif-display text-[28px] font-semibold tracking-[-0.02em] text-white sm:text-[32px]">
-                  {APP_NAME}
-                </span>
-              </div>
+              <AppLogo
+                href="/home"
+                size={36}
+                showName
+                imageClassName="ring-1 ring-white/30 bg-white/10"
+                nameClassName="font-serif-display text-[28px] font-semibold tracking-[-0.02em] text-white sm:text-[32px]"
+              />
 
               <p className="font-serif-display mt-4 text-[14px] leading-[1.65] text-white/90 sm:text-[15px]">
                 Built for faster browsing and smarter file management on top of

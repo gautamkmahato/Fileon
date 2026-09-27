@@ -1,6 +1,7 @@
 "use client";
 
-import { Bell, Box, ChevronDown, LogOut, Search } from "lucide-react";
+import { Bell, ChevronDown, LogOut, Search } from "lucide-react";
+import { AppLogo } from "../brand/AppLogo";
 import { useAuth } from "../auth/AuthProvider";
 import { Sidebar } from "./Sidebar";
 import { ThemeToggle } from "./ThemeProvider";
@@ -14,8 +15,6 @@ import { InboxPageView } from "../inbox/InboxPageView";
 import { CleanupPageView } from "../cleanup/CleanupPageView";
 import { SmartSpacesHome } from "../spaces/SmartSpacesHome";
 import { ShareLinksHome } from "../shares/ShareLinksHome";
-import { APP_NAME } from "@/lib/brand";
-
 function profileInitials(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
   if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
@@ -40,15 +39,14 @@ function AppShellInner() {
       onDrop={dragDrop.onWindowDrop}
     >
       <header className="shrink-0 z-40 h-14 bg-white/90 dark:bg-zinc-900 backdrop-blur-md border-b border-zinc-200/80 dark:border-zinc-800 transition-colors">
-        <div className="h-full px-4 sm:px-6 flex items-center gap-4 sm:gap-6">
-          <div className="flex items-center gap-2.5 shrink-0">
-            <div className="w-8 h-8 rounded-lg bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 flex items-center justify-center">
-              <Box className="w-4 h-4" strokeWidth={1.75} />
-            </div>
-            <span className="font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 hidden sm:inline">
-              {APP_NAME}
-            </span>
-          </div>
+        <div className="h-full px-2 sm:px-4 flex items-center gap-4 sm:gap-6">
+          <AppLogo
+            href="/dashboard"
+            size="xs"
+            showName
+            className="shrink-0"
+            nameClassName="font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 hidden sm:inline"
+          />
 
           <div className="flex-1 max-w-lg mx-auto min-w-0">
             <button

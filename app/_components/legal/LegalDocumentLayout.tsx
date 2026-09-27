@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { APP_NAME } from "@/lib/brand";
+import { AppLogo } from "@/app/_components/brand/AppLogo";
 import {
   HomeThemeStyles,
   homeSectionSubtitle,
@@ -20,12 +20,12 @@ export function LegalDocumentLayout({
       <HomeThemeStyles />
       <header className="border-b border-[#E0EBF5] px-6 py-5 sm:px-10 lg:px-[72px]">
         <div className="font-display mx-auto flex max-w-[720px] items-center justify-between gap-4">
-          <Link
+          <AppLogo
             href="/home"
-            className="font-serif-display text-[22px] font-semibold tracking-[-0.02em] text-[#1A1A1A]"
-          >
-            {APP_NAME}
-          </Link>
+            size="md"
+            showName
+            nameClassName="font-serif-display text-[22px] font-semibold tracking-[-0.02em] text-[#1A1A1A]"
+          />
           <Link
             href="/home"
             className="text-[13px] font-medium text-[#5B9FD4] hover:underline"
