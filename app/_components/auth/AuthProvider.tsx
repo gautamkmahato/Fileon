@@ -14,6 +14,7 @@ import { fetchUserProfile, setDriveTokenRefresh, UserProfile } from "@/lib/drive
 import { clearFolderChildrenCache } from "@/lib/cache/folder-children-cache";
 import { clearTypeBrowseCountsCache } from "@/lib/cache/type-browse-counts-cache";
 import { clearFolderItemCountCache } from "@/lib/cache/folder-item-count-cache";
+import { clearFilesListSnapshot, openFilesListSnapshot, setFilesCacheUser } from "@/lib/stores/files-cache";
 
 /**
  * Scopes:
@@ -141,6 +142,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, [isReady, clientId]);
 
+  useEffect(() => {
+    if (token) openFilesListSnapshot();
+  }, [token]);
+
+  useEffect(() => {
+    setFilesCacheUser(profile?.sub ?? null);
+  }, [profile]);
+
   // Fetch user profile whenever we get a new token
   useEffect(() => {
     if (!token) {
@@ -174,6 +183,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       window.google.accounts.oauth2.revoke(token);
     }
     sessionStorage.removeItem(TOKEN_STORAGE_KEY);
+    clearFilesListSnapshot();
     clearFolderChildrenCache();
     clearTypeBrowseCountsCache();
     clearFolderItemCountCache();

@@ -47,6 +47,7 @@ import {
   buildSelectionScopeKey,
   getFilesCache,
   isFilesCacheFresh,
+  filesCacheRestoredFromSession,
   setFilesCache,
   useBrowseStore,
   useFilesStore,
@@ -173,15 +174,18 @@ export function useDriveFiles({
 
     const cached = getFilesCache(cacheKey);
     const cacheFresh = cached ? isFilesCacheFresh(cached) : false;
+    // A homepage reload restores metadata from this tab. Show it now, then
+    // refresh so fields we do not persist (owner email) fill back in.
+    const restored = cached ? filesCacheRestoredFromSession(cacheKey) : false;
 
     if (cached) {
       useFilesStore.getState().hydrateFromCache(
         cached.files,
         cached.nextPageToken,
         cacheKey,
-        !cacheFresh
+        !cacheFresh || restored
       );
-      if (cacheFresh && dataView !== "inbox" && dataView !== "spaces") return;
+      if (cacheFresh && !restored && dataView !== "inbox" && dataView !== "spaces") return;
     } else {
       useFilesStore.getState().beginLoad(cacheKey);
     }
@@ -314,6 +318,8 @@ export function useDriveFiles({
     } catch (err) {
       if (loadId !== loadIdRef.current) return;
       console.error(err);
+      // Keep a snapshot on screen if Drive fails. An empty list still shows the error.
+      if (useFilesStore.getState().files.length > 0) return;
       useFilesStore.getState().setLoadError(err instanceof Error ? err.message : "Failed to load files");
     } finally {
       if (loadId === loadIdRef.current) {
