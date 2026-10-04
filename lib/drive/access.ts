@@ -15,12 +15,41 @@ export interface PickerConfig {
   appId: string;
 }
 
-/** Picker credentials from the environment, or null when not configured. */
-export function getPickerConfig(): PickerConfig | null {
-  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
-  const appId = process.env.NEXT_PUBLIC_GOOGLE_APP_ID;
-  if (!apiKey || !appId) return null;
-  return { apiKey, appId };
+export type PickerConfigResult =
+  | { status: "ready"; config: PickerConfig }
+  | { status: "unconfigured" }
+  | { status: "error" };
+
+let configRequest: { token: string; pending: Promise<PickerConfigResult> } | null = null;
+
+/**
+ * Ask the server for Picker credentials. The server checks the Google access
+ * token first and reads GOOGLE_PICKER_* from its own environment.
+ */
+export function loadPickerConfig(token: string): Promise<PickerConfigResult> {
+  if (configRequest?.token === token) return configRequest.pending;
+
+  const pending = fetch("/api/picker-config", {
+    headers: { Authorization: `Bearer ${token}` },
+    cache: "no-store",
+  })
+    .then(async (res): Promise<PickerConfigResult> => {
+      if (res.status === 503) return { status: "unconfigured" };
+      if (!res.ok) return { status: "error" };
+      const data = (await res.json()) as { apiKey?: unknown; appId?: unknown };
+      if (typeof data.apiKey === "string" && data.apiKey && typeof data.appId === "string" && data.appId) {
+        return { status: "ready", config: { apiKey: data.apiKey, appId: data.appId } };
+      }
+      return { status: "unconfigured" };
+    })
+    .catch((): PickerConfigResult => ({ status: "error" }))
+    .then((result) => {
+      if (result.status !== "ready" && configRequest?.pending === pending) configRequest = null;
+      return result;
+    });
+
+  configRequest = { token, pending };
+  return pending;
 }
 
 function readDoneList(): string[] {

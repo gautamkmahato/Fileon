@@ -28,8 +28,8 @@ fileon uses the non-restricted `drive.file` scope: it only sees files the user g
 1. In [Google Cloud Console](https://console.cloud.google.com/) create a project and enable the **Google Drive API** and the **Google Picker API**.
 2. Under **APIs & Services → Credentials** create an **OAuth client ID** of type *Web application*.
    Add `http://localhost:3000` (and your production origin) to **Authorized JavaScript origins**.
-3. Under **APIs & Services → Credentials** create an **API key**. Restrict it to the Google Picker API and to your origins (HTTP referrers).
-4. Note the **project number** from the Cloud Console dashboard; the picker needs it as the app ID.
+3. Under **APIs & Services → Credentials** create an **API key**. Restrict it to the Google Picker API and to your origins (HTTP referrers). This key stays on the server.
+4. Note the **project number** from the Cloud Console dashboard; the picker needs it as the app ID. It stays on the server too.
 5. Under **OAuth consent screen**, add the scopes the app requests: `openid`, `email`, `profile`, and `https://www.googleapis.com/auth/drive.file`.
    `drive.file` is not a sensitive or restricted scope, so publishing the consent screen is enough — no verification review is needed.
 
@@ -37,7 +37,7 @@ fileon uses the non-restricted `drive.file` scope: it only sees files the user g
 
 ```bash
 cp .env.example .env
-# edit .env and set NEXT_PUBLIC_GOOGLE_CLIENT_ID, NEXT_PUBLIC_GOOGLE_API_KEY, NEXT_PUBLIC_GOOGLE_APP_ID
+# edit .env and set NEXT_PUBLIC_GOOGLE_CLIENT_ID, GOOGLE_PICKER_API_KEY, GOOGLE_PICKER_APP_ID
 
 npm install
 npm run dev

@@ -5,7 +5,6 @@ import { Loader2 } from "lucide-react";
 import { AppLogo } from "@/app/_components/brand/AppLogo";
 import {
   anyAccessSetupCompleted,
-  getPickerConfig,
   hasAnyGrantedFile,
   hasCompletedAccessSetup,
   markAccessSetupDone,
@@ -72,7 +71,6 @@ export function DriveAccessGate({ children }: { children: React.ReactNode }) {
       <main className="flex-1 flex items-center justify-center p-6">
         <DriveAccessSetup
           token={token}
-          config={getPickerConfig()}
           mode="onboarding"
           onFinished={() => {
             if (userId) markAccessSetupDone(userId);

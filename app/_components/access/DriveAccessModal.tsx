@@ -4,7 +4,6 @@ import { useCallback } from "react";
 import { Modal } from "../ui/Modal";
 import { useAuth } from "../auth/AuthProvider";
 import { useDriveBrowse } from "../drive/context/DriveBrowseProvider";
-import { getPickerConfig } from "@/lib/drive/access";
 import { invalidateFilesCache, useAccessStore } from "@/lib/stores";
 import { clearFolderChildrenCache } from "@/lib/cache/folder-children-cache";
 import { invalidateTypeBrowseCountsCache } from "@/lib/cache/type-browse-counts-cache";
@@ -36,7 +35,7 @@ export function DriveAccessModal() {
 
   return (
     <Modal open={open} onClose={close} title="Add from Google Drive" width="max-w-lg">
-      <DriveAccessSetup token={token} config={getPickerConfig()} mode="add" onFinished={handleFinished} />
+      <DriveAccessSetup token={token} mode="add" onFinished={handleFinished} />
     </Modal>
   );
 }

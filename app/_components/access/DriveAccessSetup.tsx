@@ -1,14 +1,14 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { CheckCircle2, FolderOpen, Keyboard, Loader2, MousePointerClick, Pause, SkipForward, Square } from "lucide-react";
 import { APP_NAME } from "@/lib/config/brand";
-import type { PickerConfig } from "@/lib/drive/access";
+import { loadPickerConfig, type PickerConfig, type PickerConfigResult } from "@/lib/drive/access";
 import type { PickedDoc } from "@/lib/types/google-types";
 import { useGuidedDriveAccess, type GuidedProgress } from "./useGuidedDriveAccess";
 
 interface DriveAccessSetupProps {
   token: string | null;
-  config: PickerConfig | null;
   /** First sign-in shows "Skip for now"; adding later shows "Cancel". */
   mode: "onboarding" | "add";
   onGranted?: (docs: PickedDoc[]) => void;
@@ -21,19 +21,54 @@ interface DriveAccessSetupProps {
  * The Google Picker does the picking; this screen sequences it so every
  * folder costs the user two actions: Ctrl+A, then Select.
  */
-export function DriveAccessSetup({ token, config, mode, onGranted, onFinished }: DriveAccessSetupProps) {
+export function DriveAccessSetup({ token, mode, onGranted, onFinished }: DriveAccessSetupProps) {
+  const [configState, setConfigState] = useState<PickerConfigResult | null>(null);
+  const [attempt, setAttempt] = useState(0);
+  const config: PickerConfig | null = configState?.status === "ready" ? configState.config : null;
   const { progress, start, resume, stop, reset } = useGuidedDriveAccess({ token, config, onGranted });
   const isMac = typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigator.platform);
   const selectAll = isMac ? "⌘A" : "Ctrl+A";
 
-  if (!config) {
+  useEffect(() => {
+    if (!token) {
+      setConfigState({ status: "error" });
+      return;
+    }
+    let cancelled = false;
+    setConfigState(null);
+    loadPickerConfig(token).then((result) => {
+      if (!cancelled) setConfigState(result);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [token, attempt]);
+
+  if (!configState) {
+    return (
+      <Panel>
+        <div className="flex justify-center">
+          <Loader2 className="w-5 h-5 animate-spin text-zinc-400" />
+        </div>
+      </Panel>
+    );
+  }
+
+  if (configState.status !== "ready") {
     return (
       <Panel>
         <Heading
-          title="Google Picker is not configured"
-          text={`Set NEXT_PUBLIC_GOOGLE_API_KEY and NEXT_PUBLIC_GOOGLE_APP_ID so ${APP_NAME} can ask Google which files it may open.`}
+          title={configState.status === "unconfigured" ? "Google Picker is not configured" : "Could not open Google Picker"}
+          text={
+            configState.status === "unconfigured"
+              ? `Set GOOGLE_PICKER_API_KEY and GOOGLE_PICKER_APP_ID on the server so ${APP_NAME} can ask Google which files it may open.`
+              : "The Picker credentials could not be loaded. Try again in a moment."
+          }
         />
-        <div className="mt-8 flex justify-center">
+        <div className="mt-8 flex justify-center gap-3">
+          {configState.status === "error" && (
+            <SecondaryButton onClick={() => setAttempt((n) => n + 1)}>Try again</SecondaryButton>
+          )}
           <SecondaryButton onClick={() => onFinished({ filesGranted: 0, foldersGranted: 0 })}>
             {mode === "onboarding" ? "Continue without files" : "Close"}
           </SecondaryButton>
