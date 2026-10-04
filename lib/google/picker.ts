@@ -101,8 +101,12 @@ export function openDrivePicker(opts: OpenPickerOptions): PickerHandle {
       return;
     }
 
-    const viewId = opts.view.viewId ? picker.ViewId[opts.view.viewId] : undefined;
-    const view = new picker.DocsView(viewId).setMode(picker.DocsViewMode.LIST);
+    // Omit the view id entirely. Passing undefined makes the Picker treat it as
+    // an unknown view and render an empty list.
+    const view = (opts.view.viewId
+      ? new picker.DocsView(picker.ViewId[opts.view.viewId])
+      : new picker.DocsView()
+    ).setMode(picker.DocsViewMode.LIST);
     if (opts.view.selectFolders) {
       view.setIncludeFolders(true).setSelectFolderEnabled(true);
     }
@@ -125,6 +129,9 @@ export function openDrivePicker(opts: OpenPickerOptions): PickerHandle {
         }
       });
     if (opts.hideNav) builder.enableFeature(picker.Feature.NAV_HIDDEN);
+    if (opts.view.enableDrives && !opts.view.fileIds) {
+      builder.enableFeature(picker.Feature.SUPPORT_DRIVES);
+    }
 
     instance = builder.build();
     instance.setVisible(true);

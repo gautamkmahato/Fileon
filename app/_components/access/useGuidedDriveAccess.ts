@@ -64,16 +64,17 @@ const OTHER_MIME = [
 
 /** One Ctrl+A per list, however many folders the Drive has. */
 const GRANT_STEPS: GuidedStep[] = [
-  { id: "folders", label: "Folders", view: { viewId: "FOLDERS", selectFolders: true, enableDrives: true } },
-  { id: "photos", label: "Photos", view: { viewId: "DOCS_IMAGES", enableDrives: true } },
-  { id: "videos", label: "Videos", view: { viewId: "DOCS_VIDEOS", enableDrives: true } },
-  { id: "documents", label: "Documents", view: { viewId: "DOCUMENTS", enableDrives: true } },
-  { id: "spreadsheets", label: "Spreadsheets", view: { viewId: "SPREADSHEETS", enableDrives: true } },
-  { id: "presentations", label: "Presentations", view: { viewId: "PRESENTATIONS", enableDrives: true } },
-  { id: "pdfs", label: "PDFs", view: { viewId: "PDFS", enableDrives: true } },
-  { id: "forms", label: "Forms", view: { viewId: "FORMS", enableDrives: true } },
-  { id: "drawings", label: "Drawings", view: { viewId: "DRAWINGS", enableDrives: true } },
-  { id: "other", label: "Other files", view: { mimeTypes: OTHER_MIME, enableDrives: true } },
+  // ViewId.FOLDERS renders "No folders" for My Drive. A mime filter is the flat list.
+  { id: "folders", label: "Folders", view: { mimeTypes: FOLDER_MIME, selectFolders: true } },
+  { id: "photos", label: "Photos", view: { viewId: "DOCS_IMAGES" } },
+  { id: "videos", label: "Videos", view: { viewId: "DOCS_VIDEOS" } },
+  { id: "documents", label: "Documents", view: { viewId: "DOCUMENTS" } },
+  { id: "spreadsheets", label: "Spreadsheets", view: { viewId: "SPREADSHEETS" } },
+  { id: "presentations", label: "Presentations", view: { viewId: "PRESENTATIONS" } },
+  { id: "pdfs", label: "PDFs", view: { viewId: "PDFS" } },
+  { id: "forms", label: "Forms", view: { viewId: "FORMS" } },
+  { id: "drawings", label: "Drawings", view: { viewId: "DRAWINGS" } },
+  { id: "other", label: "Other files", view: { mimeTypes: OTHER_MIME } },
 ];
 
 /** setFileIds takes a comma-separated string; keep each picker URL small. */
