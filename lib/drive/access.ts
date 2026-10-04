@@ -8,7 +8,8 @@ import { listFilesByQuery } from "./drive";
  * browser so the onboarding screen appears once, not on every sign-in.
  */
 
-const SETUP_DONE_KEY = "fileon.driveAccess.setupDone";
+// v2: v1 could be set while a token still carried the old full drive scope.
+const SETUP_DONE_KEY = "fileon.driveAccess.setupDone.v2";
 
 export interface PickerConfig {
   apiKey: string;

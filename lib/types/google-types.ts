@@ -18,6 +18,8 @@ export interface GoogleNamespace {
         client_id: string;
         scope: string;
         prompt?: string;
+        /** Defaults to true, which would re-attach older, broader grants. */
+        include_granted_scopes?: boolean;
         callback: (response: TokenResponse) => void;
         error_callback?: (error: TokenError) => void;
       }) => TokenClient;

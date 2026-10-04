@@ -34,7 +34,8 @@ const SCOPES = [
     "profile",
   ].join(" ");
 
-const TOKEN_STORAGE_KEY = "drive_ui_token";
+// v2: tokens saved before the drive.file switch carried the full drive scope.
+const TOKEN_STORAGE_KEY = "drive_ui_token_v2";
 
 interface StoredToken {
   access_token: string;
@@ -101,6 +102,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     tokenClientRef.current = window.google.accounts.oauth2.initTokenClient({
       client_id: clientId,
       scope: SCOPES,
+      // Accounts that consented to the old full `drive` scope would otherwise
+      // keep receiving it; the token must carry drive.file only.
+      include_granted_scopes: false,
       callback: (response: TokenResponse) => {
         const expiresAt = Date.now() + response.expires_in * 1000;
         const stored: StoredToken = {
