@@ -68,6 +68,9 @@ interface PickerDocsView {
   setMimeTypes: (types: string) => PickerDocsView;
   setMode: (mode: string) => PickerDocsView;
   setParent: (parentId: string) => PickerDocsView;
+  /** Flat list limited to these ids. Do not combine with setEnableDrives or setParent. */
+  setFileIds: (fileIds: string) => PickerDocsView;
+  setEnableDrives: (enabled: boolean) => PickerDocsView;
 }
 
 interface PickerBuilder {

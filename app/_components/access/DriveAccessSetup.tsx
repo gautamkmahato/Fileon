@@ -18,14 +18,14 @@ interface DriveAccessSetupProps {
 
 /**
  * Guided grant flow for the `drive.file` scope.
- * The Google Picker does the picking; this screen sequences it so every
- * folder costs the user two actions: Ctrl+A, then Select.
+ * Each flat list (folders, photos, documents, …) costs two actions:
+ * Ctrl+A, then Select. The next list opens on its own.
  */
 export function DriveAccessSetup({ token, mode, onGranted, onFinished }: DriveAccessSetupProps) {
   const [configState, setConfigState] = useState<PickerConfigResult | null>(null);
   const [attempt, setAttempt] = useState(0);
   const config: PickerConfig | null = configState?.status === "ready" ? configState.config : null;
-  const { progress, start, resume, stop, reset } = useGuidedDriveAccess({ token, config, onGranted });
+  const { progress, start, resume, retry, stop, reset, addMissingFolders } = useGuidedDriveAccess({ token, config, onGranted });
   const isMac = typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigator.platform);
   const selectAll = isMac ? "⌘A" : "Ctrl+A";
 
@@ -89,11 +89,19 @@ export function DriveAccessSetup({ token, mode, onGranted, onFinished }: DriveAc
           title={progress.filesGranted + progress.foldersGranted > 0 ? "You're set" : "Nothing selected"}
           text={
             progress.filesGranted + progress.foldersGranted > 0
-              ? `${APP_NAME} can now see ${plural(progress.filesGranted, "file")} in ${plural(progress.foldersGranted, "folder")}. Add more any time from the sidebar.`
+              ? `${APP_NAME} can now see ${plural(progress.filesGranted, "file")} and ${plural(progress.foldersGranted, "folder")}. Add more any time from the sidebar.`
               : `No files were granted. You can add them later from the sidebar.`
           }
         />
-        <div className="mt-8 flex justify-center gap-3">
+        {progress.unplacedFiles > 0 && (
+          <p className="mt-4 text-sm leading-relaxed text-amber-700 dark:text-amber-400">
+            {plural(progress.unplacedFiles, "file")} {progress.unplacedFiles === 1 ? "is" : "are"} in a folder that was not selected, so {progress.unplacedFiles === 1 ? "it shows" : "they show"} in search and type views but not inside that folder.
+          </p>
+        )}
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          {progress.unplacedFiles > 0 && (
+            <SecondaryButton onClick={() => void addMissingFolders()}>Add their folders</SecondaryButton>
+          )}
           <SecondaryButton onClick={reset}>Pick more</SecondaryButton>
           <PrimaryButton onClick={() => onFinished({ filesGranted: progress.filesGranted, foldersGranted: progress.foldersGranted })}>
             {mode === "onboarding" ? `Open ${APP_NAME}` : "Done"}
@@ -107,12 +115,15 @@ export function DriveAccessSetup({ token, mode, onGranted, onFinished }: DriveAc
     return (
       <Panel>
         <WalkProgress progress={progress} selectAll={selectAll} />
-        <div className="mt-8 flex justify-center gap-3">
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
           <SecondaryButton onClick={stop}>
             <Square className="w-3.5 h-3.5" /> Stop here
           </SecondaryButton>
+          <SecondaryButton onClick={retry}>
+            Try this list again
+          </SecondaryButton>
           <PrimaryButton onClick={resume}>
-            <SkipForward className="w-4 h-4" /> Next folder
+            <SkipForward className="w-4 h-4" /> Skip this list
           </PrimaryButton>
         </div>
       </Panel>
@@ -138,18 +149,18 @@ export function DriveAccessSetup({ token, mode, onGranted, onFinished }: DriveAc
       </div>
       <Heading
         title={mode === "onboarding" ? `Choose what ${APP_NAME} can see` : "Add from Google Drive"}
-        text={`${APP_NAME} only sees the files you pick. Google's picker opens at My Drive, then reopens inside each folder you chose, so you never have to navigate.`}
+        text={`${APP_NAME} only sees what you pick. Google opens one list for the whole Drive at a time — folders, then photos, videos, documents, and the other types. A hundred folders is still one list.`}
       />
 
       <ol className="mt-8 space-y-3 text-left">
         <Step icon={Keyboard} n={1}>
-          Press <Kbd>{selectAll}</Kbd> to select everything on screen.
+          Scroll to the bottom so the whole list loads, then press <Kbd>{selectAll}</Kbd>.
         </Step>
         <Step icon={MousePointerClick} n={2}>
-          Click <strong>Select</strong>. The picker reopens in the next folder.
+          Click <strong>Select</strong>. The next list opens on its own.
         </Step>
         <Step icon={SkipForward} n={3}>
-          Repeat for each folder. Close the Google window to skip a folder or stop early.
+          Repeat for each list. Close the Google window to skip one.
         </Step>
       </ol>
 
@@ -171,9 +182,9 @@ export function DriveAccessSetup({ token, mode, onGranted, onFinished }: DriveAc
 
 function WalkProgress({ progress, selectAll }: { progress: GuidedProgress; selectAll: string }) {
   const paused = progress.phase === "paused";
-  // While paused the current folder is already counted in foldersDone.
-  const total = progress.foldersDone + (progress.current && !paused ? 1 : 0) + progress.queue.length;
-  const pct = total > 0 ? Math.round((progress.foldersDone / total) * 100) : 0;
+  const total = progress.stepsDone + (progress.current ? 1 : 0) + progress.queue.length;
+  const pct = total > 0 ? Math.round((progress.stepsDone / total) * 100) : 0;
+  const stepNo = progress.stepsDone + 1;
 
   return (
     <div>
@@ -185,19 +196,17 @@ function WalkProgress({ progress, selectAll }: { progress: GuidedProgress; selec
       <Heading
         title={
           paused
-            ? `Skipped “${progress.current?.name ?? "folder"}”`
+            ? `Closed “${progress.current?.label ?? "this list"}”`
             : progress.phase === "loading"
             ? "Opening Google Drive…"
             : progress.current
-            ? `Folder ${progress.foldersDone + 1} of ${total}`
-            : "Start at My Drive"
+            ? `${progress.current.label} · ${stepNo} of ${total}`
+            : "Opening the next list…"
         }
         text={
           paused
-            ? `${plural(progress.queue.length, "folder")} left. Continue to the next one, or stop and keep what you have granted so far.`
-            : progress.current
-            ? `Inside “${progress.current.name}”. Press ${selectAll}, then Select. Close the window to skip this folder.`
-            : `In the Google window, press ${selectAll} to select every folder and file, then click Select.`
+            ? `${plural(progress.queue.length, "list")} left. Open this list again if it had not finished loading, skip it, or stop and keep what you have granted.`
+            : `In the Google window, scroll to the bottom, press ${selectAll}, then Select. Close the window to skip this list.`
         }
       />
       {total > 0 && (
@@ -207,7 +216,7 @@ function WalkProgress({ progress, selectAll }: { progress: GuidedProgress; selec
           </div>
           <div className="mt-3 flex items-center justify-between text-xs text-zinc-500">
             <span>{plural(progress.filesGranted, "file")} · {plural(progress.foldersGranted, "folder")} granted</span>
-            {progress.queue.length > 0 && <span>{plural(progress.queue.length, "folder")} left</span>}
+            {progress.queue.length > 0 && <span>{plural(progress.queue.length, "list")} left</span>}
           </div>
         </div>
       )}
@@ -215,7 +224,7 @@ function WalkProgress({ progress, selectAll }: { progress: GuidedProgress; selec
         <ul className="mt-4 max-h-32 overflow-y-auto rounded-xl border border-zinc-200 dark:border-zinc-800 divide-y divide-zinc-100 dark:divide-zinc-800 text-left">
           {progress.queue.slice(0, 12).map((f) => (
             <li key={f.id} className="px-3 py-1.5 text-xs text-zinc-600 dark:text-zinc-400 truncate">
-              {f.name}
+              {f.label}
             </li>
           ))}
           {progress.queue.length > 12 && (

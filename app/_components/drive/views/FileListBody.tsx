@@ -79,6 +79,16 @@ export const FileListBody = memo(function FileListBody({
         />
       );
     }
+    if (!isSavedView && !isTypeView && sidebarView === "drive" && routeFolderId) {
+      return (
+        <EmptyState
+          label="Nothing in this folder yet"
+          hint="Only files you select in Google Drive show up here. Add the folder if it was missed, and its files line up underneath."
+          actionLabel="Add from Google Drive"
+          onAction={() => useAccessStore.getState().openSetup()}
+        />
+      );
+    }
     return (
       <EmptyState label={
         isTrashView ? "Trash is empty"

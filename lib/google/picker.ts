@@ -55,15 +55,25 @@ type PickerResult =
   | { action: "picked"; docs: PickedDoc[] }
   | { action: "cancel" };
 
+export interface PickerViewSpec {
+  /** Key of `google.picker.ViewId`, e.g. "FOLDERS" or "DOCS_IMAGES". */
+  viewId?: string;
+  mimeTypes?: string;
+  /** Comma-separated ids. Limits the view to those items. */
+  fileIds?: string;
+  selectFolders?: boolean;
+  /** Shared drives. Ignored when fileIds is set; the Picker forbids combining them. */
+  enableDrives?: boolean;
+}
+
 export interface OpenPickerOptions {
   token: string;
   apiKey: string;
   /** Google Cloud project number. Required for `drive.file` grants. */
   appId: string;
-  /** Open the Picker inside this folder instead of My Drive. */
-  parentId?: string | null;
   title: string;
-  /** Hide the left navigation so the user stays in the opened folder. */
+  view: PickerViewSpec;
+  /** Hide the left navigation so the user stays on this flat list. */
   hideNav?: boolean;
 }
 
@@ -91,11 +101,14 @@ export function openDrivePicker(opts: OpenPickerOptions): PickerHandle {
       return;
     }
 
-    const view = new picker.DocsView(picker.ViewId.DOCS)
-      .setIncludeFolders(true)
-      .setSelectFolderEnabled(true)
-      .setMode(picker.DocsViewMode.LIST);
-    if (opts.parentId) view.setParent(opts.parentId);
+    const viewId = opts.view.viewId ? picker.ViewId[opts.view.viewId] : undefined;
+    const view = new picker.DocsView(viewId).setMode(picker.DocsViewMode.LIST);
+    if (opts.view.selectFolders) {
+      view.setIncludeFolders(true).setSelectFolderEnabled(true);
+    }
+    if (opts.view.mimeTypes) view.setMimeTypes(opts.view.mimeTypes);
+    if (opts.view.fileIds) view.setFileIds(opts.view.fileIds);
+    else if (opts.view.enableDrives && view.setEnableDrives) view.setEnableDrives(true);
 
     const builder = new picker.PickerBuilder()
       .addView(view)
