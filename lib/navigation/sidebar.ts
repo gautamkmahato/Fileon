@@ -1,6 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import {
-  Clock, EyeOff, Folder, HardDrive, History, House, Inbox, Keyboard, Layers,
+  Clock, EyeOff, Folder, FolderPlus, HardDrive, History, House, Inbox, Keyboard, Layers,
   LayoutDashboard, LayoutGrid, Link2, Settings, Sparkles, Star, Tag, Trash2, Users,
 } from "lucide-react";
 import { BUILTIN_VIEW_IDS } from "@/lib/views/repository";
@@ -21,7 +21,7 @@ export const NAV_SECTIONS = [
 export type NavSectionId = (typeof NAV_SECTIONS)[number]["id"];
 export type NavSection = (typeof NAV_SECTIONS)[number];
 
-export type NavActionId = "open-all-folders";
+export type NavActionId = "open-all-folders" | "add-from-drive";
 export type NavExtraId = "browse" | "tags" | "views" | "spaces" | "favorites" | "recent-folders";
 
 export type StaticNavItem =
@@ -145,6 +145,12 @@ const SECTION_LINKS: Record<NavSectionId, StaticNavItem[]> = {
       label: "All folders",
       icon: Folder,
       trailing: "chevron",
+    },
+    {
+      kind: "action",
+      id: "add-from-drive",
+      label: "Add from Drive",
+      icon: FolderPlus,
     },
     {
       kind: "link",

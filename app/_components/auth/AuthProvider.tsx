@@ -19,15 +19,16 @@ import { clearFilesListSnapshot, openFilesListSnapshot, setFilesCacheUser } from
 /**
  * Scopes:
  *
- *  - drive.file: only files YOUR APP creates, or files the user explicitly
- *    opens via Google Picker. No verification needed.
- *  - drive.readonly: read all the user's Drive. Requires Google review.
+ *  - drive.file: files this app created plus files the user picked in the
+ *    Google Picker (see `app/_components/access`). Not a restricted scope, so
+ *    no Google verification or CASA assessment is needed.
+ *  - openid / email / profile: who is signed in.
  *
- * Default: drive.file + ability to open via Picker. Swap to drive.readonly
- * if you want to list every file the user owns without explicit picking.
+ * `https://www.googleapis.com/auth/drive` would list the whole Drive without
+ * picking, but it is restricted and requires a paid yearly security review.
  */
 const SCOPES = [
-    "https://www.googleapis.com/auth/drive",
+    "https://www.googleapis.com/auth/drive.file",
     "openid",
     "email",
     "profile",

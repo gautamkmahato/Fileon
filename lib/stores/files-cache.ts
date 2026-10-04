@@ -113,6 +113,15 @@ export function setFilesCacheUser(userId: string | null): void {
   }
 }
 
+/** Forget every cached list but keep writing. Used after the user grants more files. */
+export function invalidateFilesCache(): void {
+  ensureSessionLoaded();
+  cache.clear();
+  order.length = 0;
+  restoredFromSession.clear();
+  schedulePersist();
+}
+
 /** Drop the in-memory lists and the session snapshot. */
 export function clearFilesListSnapshot(): void {
   persistGen += 1;

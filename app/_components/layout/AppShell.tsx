@@ -1,6 +1,7 @@
 "use client";
 
 import { Bell, ChevronDown, LogOut, Search } from "lucide-react";
+import Link from "next/link";
 import { AppLogo } from "../brand/AppLogo";
 import { useAuth } from "../auth/AuthProvider";
 import { Sidebar } from "./sidebar/Sidebar";
@@ -15,6 +16,8 @@ import { InboxPageView } from "../inbox/InboxPageView";
 import { CleanupPageView } from "../cleanup/CleanupPageView";
 import { SmartSpacesHome } from "../spaces/SmartSpacesHome";
 import { ShareLinksHome } from "../shares/ShareLinksHome";
+import { DriveAccessModal } from "../access/DriveAccessModal";
+
 function profileInitials(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
   if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
@@ -91,6 +94,12 @@ function AppShellInner() {
                 <ChevronDown className="w-3.5 h-3.5 text-zinc-400 shrink-0" strokeWidth={2} />
               </button>
             )}
+            <Link
+              href="/privacy"
+              className="hidden sm:inline text-xs font-medium text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-100 px-2"
+            >
+              Privacy
+            </Link>
             <button
               onClick={signOut}
               className="w-9 h-9 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-400"
@@ -135,6 +144,7 @@ function AppShellInner() {
 
       <DriveOverlays />
       <DriveModals />
+      <DriveAccessModal />
     </div>
   );
 }

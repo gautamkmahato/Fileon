@@ -30,13 +30,33 @@ export function ErrorState({ error, onRetry }: { error: string; onRetry: () => v
   );
 }
 
-export function EmptyState({ label }: { label: string }) {
+export function EmptyState({
+  label,
+  hint,
+  actionLabel,
+  onAction,
+}: {
+  label: string;
+  hint?: string;
+  actionLabel?: string;
+  onAction?: () => void;
+}) {
   return (
     <div className="text-center py-20 max-w-md mx-auto">
       <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-400 mb-4">
         <HardDrive className="w-5 h-5" />
       </div>
       <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">{label}</p>
+      {hint && <p className="text-xs text-zinc-500 mt-1">{hint}</p>}
+      {actionLabel && onAction && (
+        <button
+          type="button"
+          onClick={onAction}
+          className="mt-4 text-xs font-medium px-3 py-1.5 rounded-lg bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 hover:opacity-90"
+        >
+          {actionLabel}
+        </button>
+      )}
     </div>
   );
 }

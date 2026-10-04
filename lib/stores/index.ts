@@ -1,5 +1,8 @@
 export { buildSelectionScopeKey } from "./scope-key";
-export { getFilesCache, setFilesCache, isFilesCacheFresh, filesCacheRestoredFromSession } from "./files-cache";
+export {
+  getFilesCache, setFilesCache, isFilesCacheFresh, filesCacheRestoredFromSession, invalidateFilesCache,
+} from "./files-cache";
+export { useAccessStore } from "./access-store";
 export {
   useSelectionStore,
   useIsSelected,

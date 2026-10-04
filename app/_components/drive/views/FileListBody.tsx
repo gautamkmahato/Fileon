@@ -6,7 +6,8 @@ import { isFolder } from "@/lib/drive/drive";
 import { DEFAULT_FILTERS } from "@/lib/utils/filter";
 import { driveActions } from "@/lib/drive/drive-actions-bridge";
 import { useDriveRoute } from "@/app/_hooks/useDriveRoute";
-import { useBrowseStore, useFilesStore } from "@/lib/stores";
+import { useAccessStore, useBrowseStore, useFilesStore } from "@/lib/stores";
+import { APP_NAME } from "@/lib/config/brand";
 import { FileCard } from "../items/FileCard";
 import { FileRow } from "../items/FileRow";
 import { FolderCard } from "../items/FolderCard";
@@ -31,6 +32,7 @@ export const FileListBody = memo(function FileListBody({
   const {
     isTrashView, isTagsView, isSavedView, activeSavedView, scopeTagIds,
     isTypeView, typeCategory, isSpacesView, activeSpace, spacesLoading,
+    sidebarView, routeFolderId,
   } = useDriveRoute();
   const { isHidden: checkHidden } = useHidden();
   const { isFavorite: checkFavorite } = useFavorites();
@@ -65,6 +67,18 @@ export const FileListBody = memo(function FileListBody({
   }
   if (files.length === 0) {
     const typeEmpty = isTypeView && typeCategory ? TYPE_BROWSE_META[typeCategory].emptyLabel : null;
+    const isGrantRoot = !isSavedView
+      && (isDashboardView || (sidebarView === "drive" && !routeFolderId));
+    if (isGrantRoot) {
+      return (
+        <EmptyState
+          label="No files yet"
+          hint={`${APP_NAME} only sees the files you choose in Google Drive.`}
+          actionLabel="Add from Google Drive"
+          onAction={() => useAccessStore.getState().openSetup()}
+        />
+      );
+    }
     return (
       <EmptyState label={
         isTrashView ? "Trash is empty"
