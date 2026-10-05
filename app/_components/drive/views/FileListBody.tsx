@@ -19,6 +19,7 @@ import { useFavorites } from "../../favorites/FavoritesProvider";
 import { PinnedSection } from "../browse/PinnedSection";
 import { TypeBrowseStrip } from "../browse/TypeBrowseStrip";
 import { TYPE_BROWSE_META } from "@/lib/drive/type-browse";
+import { LIST_VIEW_HEADER_CLASS } from "@/lib/drive/list-view-layout";
 
 /** File grid/list — store subscriptions only; immune to modal/context churn. */
 export const FileListBody = memo(function FileListBody({
@@ -178,7 +179,7 @@ export const FileListBody = memo(function FileListBody({
               </div>
             ) : (
               <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200/80 dark:border-zinc-700 overflow-hidden shadow-sm dark:shadow-none">
-                <div className="grid grid-cols-[1fr_180px_160px_120px_40px] gap-4 px-5 py-2.5 border-b border-zinc-200 dark:border-zinc-700 text-[11px] uppercase tracking-wider font-medium text-zinc-500 bg-zinc-50/40 dark:bg-zinc-800/40">
+                <div className={LIST_VIEW_HEADER_CLASS}>
                   <span className="pl-7">Name</span>
                   <span>Owner</span>
                   <span>Modified</span>
@@ -204,7 +205,7 @@ export const FileListBody = memo(function FileListBody({
             </div>
           ) : (
             <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200/80 dark:border-zinc-700 overflow-hidden shadow-sm dark:shadow-none">
-              <div className="grid grid-cols-[1fr_180px_160px_120px_40px] gap-4 px-5 py-2.5 border-b border-zinc-200 dark:border-zinc-700 text-[11px] uppercase tracking-wider font-medium text-zinc-500 bg-zinc-50/40 dark:bg-zinc-800/40">
+              <div className={LIST_VIEW_HEADER_CLASS}>
                 <span className="pl-7">Name</span>
                 <span>Owner</span>
                 <span>Modified</span>
@@ -234,7 +235,7 @@ export const FileListBody = memo(function FileListBody({
             </div>
           ) : (
             <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200/80 dark:border-zinc-700 overflow-hidden shadow-sm dark:shadow-none">
-              <div className="grid grid-cols-[1fr_180px_160px_120px_40px] gap-4 px-5 py-2.5 border-b border-zinc-200 dark:border-zinc-700 text-[11px] uppercase tracking-wider font-medium text-zinc-500 bg-zinc-50/40 dark:bg-zinc-800/40">
+              <div className={LIST_VIEW_HEADER_CLASS}>
                 <span className="pl-7">Name</span>
                 <span>Owner</span>
                 <span>Modified</span>
@@ -256,7 +257,7 @@ export const FileListBody = memo(function FileListBody({
             </div>
           ) : (
             <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200/80 dark:border-zinc-700 overflow-hidden shadow-sm dark:shadow-none">
-              <div className="grid grid-cols-[1fr_180px_160px_120px_40px] gap-4 px-5 py-2.5 border-b border-zinc-200 dark:border-zinc-700 text-[11px] uppercase tracking-wider font-medium text-zinc-500 bg-zinc-50/40 dark:bg-zinc-800/40">
+              <div className={LIST_VIEW_HEADER_CLASS}>
                 <span className="pl-7">Name</span>
                 <span>Owner</span>
                 <span>Modified</span>

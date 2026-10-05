@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { ChevronDown, ChevronRight, Folder, Loader2, Search, X } from "lucide-react";
 import type { DriveFile } from "@/lib/drive/drive";
@@ -278,13 +279,25 @@ export function AllFoldersModal({ open, token, onClose }: AllFoldersModalProps) 
     onClose();
   }
 
-  if (!open) return null;
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-20 px-4">
-      <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={onClose} />
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
+  if (!open || !mounted) return null;
+
+  return createPortal(
+    <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-3 sm:p-6">
+      <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={onClose} aria-hidden />
       <div
-        className="relative w-full max-w-xl bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-200/80 dark:border-zinc-700 overflow-hidden flex flex-col max-h-[70vh]"
+        className="relative w-full max-w-xl bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-200/80 dark:border-zinc-700 overflow-hidden flex flex-col max-h-[min(92dvh,720px)] sm:max-h-[min(85vh,720px)]"
         role="dialog"
         aria-modal="true"
         aria-labelledby="all-folders-title"
@@ -365,10 +378,11 @@ export function AllFoldersModal({ open, token, onClose }: AllFoldersModalProps) 
           <span className="text-[11px] text-zinc-500">
             {visibleCount} folder{visibleCount === 1 ? "" : "s"}
           </span>
-          <span className="text-[11px] text-zinc-400">Click any folder to navigate</span>
+          <span className="text-[11px] text-zinc-400 hidden sm:inline">Click any folder to navigate</span>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 

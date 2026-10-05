@@ -10,6 +10,7 @@ import { useBulkSelectionActive, useIsSelected, useIsCut } from "@/lib/stores";
 import { useFileTags } from "../../tags/TagsProvider";
 import { TagPills } from "../../tags/TagDisplay";
 import { HiddenBadge } from "./HiddenBadge";
+import { LIST_VIEW_ROW_GRID } from "@/lib/drive/list-view-layout";
 
 interface FileRowProps {
   file: DriveFile;
@@ -40,6 +41,8 @@ export const FileRow = memo(function FileRow({
   const type = getFileType(file.mimeType);
   const Icon = type.icon;
   const owner = file.owners?.[0];
+  const sizeLabel = file.size ? humanFileSize(file.size) : "—";
+  const modifiedLabel = formatRelative(file.modifiedTime);
 
   return (
     <div
@@ -66,7 +69,7 @@ export const FileRow = memo(function FileRow({
           driveActions.openQuickLook(file);
         }
       }}
-      className={`group grid grid-cols-[1fr_180px_160px_120px_40px] gap-4 items-center px-5 py-3 cursor-pointer focus:outline-none border-b border-zinc-100 dark:border-zinc-800 last:border-b-0 transition-colors ${
+      className={`group ${LIST_VIEW_ROW_GRID} items-center px-3 py-3 lg:px-5 cursor-pointer focus:outline-none border-b border-zinc-100 dark:border-zinc-800 last:border-b-0 transition-colors ${
         isCut
           ? "opacity-55 bg-amber-50/40 dark:bg-amber-950/20"
           : isHidden
@@ -94,15 +97,20 @@ export const FileRow = memo(function FileRow({
           <Pin className="w-3.5 h-3.5 text-blue-600 shrink-0" fill="currentColor" strokeWidth={2} aria-label="Pinned" />
         )}
         {isHidden && <HiddenBadge className="shrink-0" />}
-        <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate flex-1" title={file.name}>
-          {file.name}
-        </p>
+        <div className="min-w-0 flex-1">
+          <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate" title={file.name}>
+            {file.name}
+          </p>
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 truncate mt-0.5 lg:hidden">
+            {modifiedLabel} · {sizeLabel}
+          </p>
+        </div>
         <TagPills tags={fileTags} max={2} className="shrink-0 hidden lg:flex" />
         {file.shared && (
-          <Users className="w-4 h-4 text-zinc-400 shrink-0" strokeWidth={2} />
+          <Users className="w-4 h-4 text-zinc-400 shrink-0 hidden lg:block" strokeWidth={2} />
         )}
       </div>
-      <div className="flex items-center">
+      <div className="hidden lg:flex items-center">
         {owner?.photoLink ? (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img
@@ -117,8 +125,8 @@ export const FileRow = memo(function FileRow({
           </div>
         )}
       </div>
-      <span className="text-sm text-zinc-600 dark:text-zinc-400">{formatRelative(file.modifiedTime)}</span>
-      <span className="text-sm text-zinc-600 dark:text-zinc-400">{file.size ? humanFileSize(file.size) : "—"}</span>
+      <span className="hidden lg:block text-sm text-zinc-600 dark:text-zinc-400">{modifiedLabel}</span>
+      <span className="hidden lg:block text-sm text-zinc-600 dark:text-zinc-400">{sizeLabel}</span>
       <div className="flex items-center justify-end gap-1">
         {isTrash && !bulkSelectionActive ? (
           <>
@@ -140,7 +148,7 @@ export const FileRow = memo(function FileRow({
           <button
             onClick={(e) => { e.stopPropagation(); onMenu(file, e.currentTarget); }}
             className={`w-7 h-7 rounded-full text-zinc-400 hover:text-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center ${
-              selected ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+              selected ? "opacity-100" : "opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
             }`}
             aria-label="More actions"
           >
