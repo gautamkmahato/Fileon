@@ -11,9 +11,7 @@ import {
 } from "react";
 import type { CodeClient, TokenClient, TokenResponse } from "@/lib/types/google-types";
 import { fetchUserProfile, setDriveTokenRefresh, UserProfile } from "@/lib/drive/drive";
-import { clearFolderChildrenCache } from "@/lib/cache/folder-children-cache";
-import { clearTypeBrowseCountsCache } from "@/lib/cache/type-browse-counts-cache";
-import { clearFolderItemCountCache } from "@/lib/cache/folder-item-count-cache";
+import { clearAllSessionCaches } from "@/lib/cache/session-cache";
 import { clearFilesListSnapshot, openFilesListSnapshot, setFilesCacheUser } from "@/lib/stores/files-cache";
 
 /**
@@ -322,9 +320,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
       sessionStorage.removeItem(TOKEN_STORAGE_KEY);
       clearFilesListSnapshot();
-      clearFolderChildrenCache();
-      clearTypeBrowseCountsCache();
-      clearFolderItemCountCache();
+      clearAllSessionCaches();
       clearLocalAuth();
     })();
   }, [token, clearLocalAuth]);

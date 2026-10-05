@@ -1,23 +1,16 @@
 import { listFiles } from "@/lib/drive/drive";
+import { folderItemCountCache } from "@/lib/cache/drive-memory";
+import { InflightDeduper } from "./memory-cache";
 
 export interface FolderItemCount {
   count: number;
   hasMore: boolean;
 }
 
-interface FolderItemCountEntry extends FolderItemCount {
-  fetchedAt: number;
-}
-
-const FOLDER_ITEM_COUNT_STALE_MS = 180_000;
-
-const cache = new Map<string, FolderItemCountEntry>();
-const inflight = new Map<string, Promise<FolderItemCount>>();
+const inflight = new InflightDeduper<FolderItemCount>();
 
 export function getCachedFolderItemCount(folderId: string): FolderItemCount | undefined {
-  const entry = cache.get(folderId);
-  if (!entry) return undefined;
-  return { count: entry.count, hasMore: entry.hasMore };
+  return folderItemCountCache.get(folderId);
 }
 
 export async function loadFolderItemCount(
@@ -25,32 +18,28 @@ export async function loadFolderItemCount(
   folderId: string,
   opts?: { force?: boolean },
 ): Promise<FolderItemCount> {
-  const cached = cache.get(folderId);
-  if (cached && !opts?.force && Date.now() - cached.fetchedAt < FOLDER_ITEM_COUNT_STALE_MS) {
-    return { count: cached.count, hasMore: cached.hasMore };
+  const cached = folderItemCountCache.get(folderId);
+  if (cached && !opts?.force) {
+    return cached;
   }
 
-  if (inflight.has(folderId)) {
-    return inflight.get(folderId)!;
-  }
+  return inflight.run(folderId, async () => {
+    const again = folderItemCountCache.get(folderId);
+    if (again && !opts?.force) return again;
 
-  const promise = listFiles({ token, folderId, pageSize: 100 })
-    .then((res) => {
-      const value = { count: res.files.length, hasMore: !!res.nextPageToken };
-      cache.set(folderId, { ...value, fetchedAt: Date.now() });
+    try {
+      const res = await listFiles({ token, folderId, pageSize: 100 });
+      const value: FolderItemCount = { count: res.files.length, hasMore: !!res.nextPageToken };
+      folderItemCountCache.set(folderId, value);
       return value;
-    })
-    .catch(() => cached ?? { count: 0, hasMore: false })
-    .finally(() => {
-      inflight.delete(folderId);
-    });
-
-  inflight.set(folderId, promise);
-  return promise;
+    } catch {
+      return cached ?? { count: 0, hasMore: false };
+    }
+  });
 }
 
 export function clearFolderItemCountCache(): void {
-  cache.clear();
+  folderItemCountCache.clear();
   inflight.clear();
 }
 

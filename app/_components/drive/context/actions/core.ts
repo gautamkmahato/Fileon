@@ -5,6 +5,8 @@ import { recordRecentFolderWork } from "@/lib/collections/recent-folders";
 import { isFolderBrowseView } from "@/lib/drive/browse-scope";
 import { useCleanupStore } from "@/lib/cleanup/store";
 import { patchCleanupFile, removeCleanupFile } from "@/lib/cleanup/repository";
+import { patchDriveFileInCache } from "@/lib/cache/drive-memory";
+import { invalidateCachesForFileMutation } from "@/lib/cache/session-cache";
 import { useFilesStore, useSelectionStore } from "@/lib/stores";
 import type { DriveActionContext } from "./types";
 
@@ -81,6 +83,7 @@ export function createCoreActions(base: CoreBase) {
     const userId = useCleanupStore.getState().hydratedUserId;
     if (userId) void patchCleanupFile(userId, updated).catch(() => {});
     if (previewFile?.id === updated.id) setPreviewFile(updated);
+    patchDriveFileInCache(updated);
   }
 
   function onFileDeleted(id: string) {
@@ -89,6 +92,7 @@ export function createCoreActions(base: CoreBase) {
     useCleanupStore.getState().removeFile(id);
     const userId = useCleanupStore.getState().hydratedUserId;
     if (userId) void removeCleanupFile(userId, id).catch(() => {});
+    invalidateCachesForFileMutation(id);
   }
 
   return { markFolderWork, recordUndoAction, onFileChanged, onFileDeleted };

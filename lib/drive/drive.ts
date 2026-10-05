@@ -2,8 +2,25 @@
  * Thin wrapper around the Google Drive v3 REST API.
  * Stateless — pass the access token in to every call.
  *
+ * Hot paths use in-memory LRU/TTL caches (`lib/cache/drive-memory.ts`).
+ *
  * Docs: https://developers.google.com/drive/api/v3/reference
  */
+
+import {
+  cacheDriveFile,
+  cacheDriveFiles,
+  driveFileCache,
+  driveListQueryCache,
+  driveSearchCache,
+  fileInflight,
+  invalidateDriveFile,
+  invalidateDriveListQueries,
+  listInflight,
+  stableQueryKey,
+  storageQuotaCache,
+  userProfileCache,
+} from "@/lib/cache/drive-memory";
 
 export interface DriveFile {
   id: string;
@@ -144,6 +161,27 @@ export async function listFiles(opts: {
   });
   if (pageToken) params.set("pageToken", pageToken);
 
+  if (!pageToken) {
+    const key = stableQueryKey({
+      kind: "listFiles",
+      folderId: folderId ?? "root",
+      query: query ?? "",
+      orderBy,
+      pageSize,
+    });
+    const cached = driveListQueryCache.get(key);
+    if (cached) return cached;
+    return listInflight.run(key, async () => {
+      const again = driveListQueryCache.get(key);
+      if (again) return again;
+      const res = await driveFetch(`${API}/files?${params}`, token);
+      const data = (await res.json()) as DriveListResponse;
+      cacheDriveFiles(data.files);
+      driveListQueryCache.set(key, data);
+      return data;
+    });
+  }
+
   const res = await driveFetch(`${API}/files?${params}`, token);
   return res.json();
 }
@@ -165,15 +203,44 @@ export async function searchFiles(opts: {
     spaces: "drive",
   });
   if (pageToken) params.set("pageToken", pageToken);
+
+  if (!pageToken) {
+    const key = stableQueryKey({
+      kind: "search",
+      query: safe,
+      pageSize,
+    });
+    const cached = driveSearchCache.get(key);
+    if (cached) return cached;
+    return listInflight.run(`search:${key}`, async () => {
+      const again = driveSearchCache.get(key);
+      if (again) return again;
+      const res = await driveFetch(`${API}/files?${params}`, token);
+      const data = (await res.json()) as DriveListResponse;
+      cacheDriveFiles(data.files);
+      driveSearchCache.set(key, data);
+      return data;
+    });
+  }
+
   const res = await driveFetch(`${API}/files?${params}`, token);
   return res.json();
 }
 
 /** Get a single file's full metadata. */
 export async function getFile(token: string, fileId: string): Promise<DriveFile> {
-  const params = new URLSearchParams({ fields: DEFAULT_FILE_FIELDS });
-  const res = await driveFetch(`${API}/files/${fileId}?${params}`, token);
-  return res.json();
+  const cached = driveFileCache.get(fileId);
+  if (cached) return cached;
+
+  return fileInflight.run(fileId, async () => {
+    const again = driveFileCache.get(fileId);
+    if (again) return again;
+    const params = new URLSearchParams({ fields: DEFAULT_FILE_FIELDS });
+    const res = await driveFetch(`${API}/files/${fileId}?${params}`, token);
+    const file = (await res.json()) as DriveFile;
+    cacheDriveFile(file);
+    return file;
+  });
 }
 
 /** Download file content. For Google Docs/Sheets/Slides, use exportFile instead. */
@@ -212,7 +279,10 @@ export async function createFolder(
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
-  return res.json();
+  const created = (await res.json()) as DriveFile;
+  cacheDriveFile(created);
+  invalidateDriveListQueries();
+  return created;
 }
 
 /** Rename a file. */
@@ -222,7 +292,10 @@ export async function renameFile(token: string, fileId: string, newName: string)
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name: newName }),
   });
-  return res.json();
+  const updated = (await res.json()) as DriveFile;
+  cacheDriveFile(updated);
+  invalidateDriveListQueries();
+  return updated;
 }
 
 /** Star / unstar a file. */
@@ -232,7 +305,9 @@ export async function setStarred(token: string, fileId: string, starred: boolean
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ starred }),
   });
-  return res.json();
+  const updated = (await res.json()) as DriveFile;
+  cacheDriveFile(updated);
+  return updated;
 }
 
 /** Trash a file (move to trash, not permanent delete). */
@@ -242,6 +317,8 @@ export async function trashFile(token: string, fileId: string): Promise<void> {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ trashed: true }),
   });
+  invalidateDriveFile(fileId);
+  invalidateDriveListQueries();
 }
 
 /** Restore a file from trash. */
@@ -251,17 +328,23 @@ export async function restoreFile(token: string, fileId: string): Promise<DriveF
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ trashed: false }),
   });
-  return res.json();
+  const updated = (await res.json()) as DriveFile;
+  cacheDriveFile(updated);
+  invalidateDriveListQueries();
+  return updated;
 }
 
 /** Permanently delete a file (no recovery). */
 export async function deleteForever(token: string, fileId: string): Promise<void> {
   await driveFetch(`${API}/files/${fileId}`, token, { method: "DELETE" });
+  invalidateDriveFile(fileId);
+  invalidateDriveListQueries();
 }
 
 /** Empty the trash — permanently deletes all trashed files. */
 export async function emptyTrash(token: string): Promise<void> {
   await driveFetch(`${API}/files/trash`, token, { method: "DELETE" });
+  invalidateDriveListQueries();
 }
 
 /** List files matching an arbitrary Drive query. */
@@ -282,6 +365,28 @@ export async function listFilesByQuery(opts: {
     spaces: "drive",
   });
   if (pageToken) params.set("pageToken", pageToken);
+
+  if (!pageToken) {
+    const key = stableQueryKey({
+      kind: "listByQuery",
+      q,
+      orderBy,
+      pageSize,
+      fields: fileFields ?? "",
+    });
+    const cached = driveListQueryCache.get(key);
+    if (cached) return cached;
+    return listInflight.run(key, async () => {
+      const again = driveListQueryCache.get(key);
+      if (again) return again;
+      const res = await driveFetch(`${API}/files?${params}`, token);
+      const data = (await res.json()) as DriveListResponse;
+      cacheDriveFiles(data.files);
+      driveListQueryCache.set(key, data);
+      return data;
+    });
+  }
+
   const res = await driveFetch(`${API}/files?${params}`, token);
   return res.json();
 }
@@ -304,15 +409,28 @@ async function getFilesByIds(
 /** Fetch all files for a set of IDs (parallel files.get, skips missing/deleted). */
 export async function fetchAllFilesByIds(token: string, fileIds: string[]): Promise<DriveFile[]> {
   if (!fileIds.length) return [];
-  const CHUNK = 20;
-  const files: DriveFile[] = [];
-  for (let i = 0; i < fileIds.length; i += CHUNK) {
-    const chunk = fileIds.slice(i, i + CHUNK);
-    const res = await getFilesByIds(token, chunk);
-    files.push(...res.files);
+
+  const resolved = new Map<string, DriveFile>();
+  const missing: string[] = [];
+  for (const id of fileIds) {
+    const hit = driveFileCache.get(id);
+    if (hit) resolved.set(id, hit);
+    else missing.push(id);
   }
-  const byId = new Map(files.map((f) => [f.id, f]));
-  return fileIds.map((id) => byId.get(id)).filter((f): f is DriveFile => !!f);
+
+  if (missing.length) {
+    const CHUNK = 20;
+    for (let i = 0; i < missing.length; i += CHUNK) {
+      const chunk = missing.slice(i, i + CHUNK);
+      const res = await getFilesByIds(token, chunk);
+      for (const f of res.files) {
+        cacheDriveFile(f);
+        resolved.set(f.id, f);
+      }
+    }
+  }
+
+  return fileIds.map((id) => resolved.get(id)).filter((f): f is DriveFile => !!f);
 }
 
 export function listStarredFiles(token: string, pageToken?: string) {
@@ -350,9 +468,13 @@ export interface StorageQuota {
 }
 
 export async function getStorageQuota(token: string): Promise<StorageQuota> {
+  const cached = storageQuotaCache.get("default");
+  if (cached) return cached;
   const res = await driveFetch(`${API}/about?fields=storageQuota`, token);
   const data = await res.json();
-  return data.storageQuota || {};
+  const quota = (data.storageQuota || {}) as StorageQuota;
+  storageQuotaCache.set("default", quota);
+  return quota;
 }
 
 /** Upload a file (multipart). */
@@ -376,7 +498,10 @@ export async function uploadFile(opts: {
     body: form,
   });
   if (!res.ok) throw new DriveApiError(res.status, await res.text());
-  return res.json();
+  const uploaded = (await res.json()) as DriveFile;
+  cacheDriveFile(uploaded);
+  invalidateDriveListQueries();
+  return uploaded;
 }
 
 /** Fetch the user's profile info (name, email, picture). Uses the OpenID UserInfo endpoint. */
@@ -389,11 +514,15 @@ export interface UserProfile {
 }
 
 export async function fetchUserProfile(token: string): Promise<UserProfile> {
+  const cached = userProfileCache.get("me");
+  if (cached) return cached;
   const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
     headers: { Authorization: `Bearer ${token}` },
   });
   if (!res.ok) throw new DriveApiError(res.status, "userinfo fetch failed");
-  return res.json();
+  const profile = (await res.json()) as UserProfile;
+  userProfileCache.set("me", profile);
+  return profile;
 }
 
 // ── MIME type helpers ──────────────────────────────────────────────────────

@@ -1,11 +1,11 @@
-const names = new Map<string, string>();
+import { folderNameCache } from "@/lib/cache/drive-memory";
 
 export function cacheFolderName(id: string, name: string): void {
-  if (id && name) names.set(id, name);
+  if (id && name) folderNameCache.set(id, name);
 }
 
 export function cacheFolderNamesFromFiles(
-  files: Array<{ id: string; name: string; mimeType?: string }>
+  files: Array<{ id: string; name: string; mimeType?: string }>,
 ): void {
   for (const f of files) {
     if (f.mimeType === "application/vnd.google-apps.folder") {
@@ -15,5 +15,9 @@ export function cacheFolderNamesFromFiles(
 }
 
 export function getCachedFolderName(id: string): string | undefined {
-  return names.get(id);
+  return folderNameCache.get(id);
+}
+
+export function clearFolderNameCache(): void {
+  folderNameCache.clear();
 }
