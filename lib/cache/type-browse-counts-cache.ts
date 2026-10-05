@@ -90,21 +90,32 @@ function allCategoriesFresh(): boolean {
   return TYPE_BROWSE_CATEGORIES.every(isCategoryFresh);
 }
 
+async function fetchCategoryTotalCount(
+  token: string,
+  category: TypeBrowseCategory,
+): Promise<TypeBrowseCount | null> {
+  try {
+    let count = 0;
+    let pageToken: string | undefined;
+    do {
+      const res = await listFilesByType(token, category, pageToken);
+      count += res.files.length;
+      pageToken = res.nextPageToken;
+    } while (pageToken);
+    return { count, hasMore: false };
+  } catch {
+    return null;
+  }
+}
+
 async function fetchAllTypeBrowseCounts(
   token: string,
 ): Promise<Partial<Record<TypeBrowseCategory, TypeBrowseCount>>> {
   const rows = await Promise.all(
     TYPE_BROWSE_CATEGORIES.map(async (category) => {
-      try {
-        const res = await listFilesByType(token, category);
-        return {
-          category,
-          count: res.files.length,
-          hasMore: !!res.nextPageToken,
-        };
-      } catch {
-        return null;
-      }
+      const result = await fetchCategoryTotalCount(token, category);
+      if (!result) return null;
+      return { category, ...result };
     }),
   );
 

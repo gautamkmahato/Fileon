@@ -14,6 +14,7 @@ import { getTagBgSoft, getTagTextClass } from "@/lib/tags/colors";
 import { getViewIcon } from "@/lib/views/icons";
 import { BUILTIN_VIEW_IDS, type SavedView } from "@/lib/views/repository";
 import type { TypeBrowseCount } from "@/lib/hooks/useTypeBrowseCounts";
+import { formatCompactCount } from "@/lib/utils/format-count";
 import type { ParsedDriveRoute } from "@/lib/navigation/routes";
 import type { TypeBrowseCategory } from "@/lib/drive/type-browse";
 import type { DriveFile } from "@/lib/drive/drive";
@@ -75,7 +76,7 @@ function BrowseExtra({ route, typeCounts }: SidebarExtrasProps) {
         const isActive = route.view === "type" && route.typeCategory === category;
         const countInfo = typeCounts[category];
         const countLabel = countInfo
-          ? countInfo.hasMore ? `${countInfo.count}+` : String(countInfo.count)
+          ? formatCompactCount(countInfo.count)
           : "—";
         return (
           <li key={category}>

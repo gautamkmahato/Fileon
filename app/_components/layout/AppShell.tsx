@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { Bell, ChevronDown, LogOut, Menu, Search } from "lucide-react";
+import { useRef, useState } from "react";
+import { Bell, ChevronDown, LogOut, Menu, Search, User } from "lucide-react";
 import Link from "next/link";
+import { driveRoutes } from "@/lib/navigation/routes";
+import { AnchorDropdownMenu } from "../drive/browse/AnchorDropdownMenu";
 import { AppLogo } from "../brand/AppLogo";
 import { useAuth } from "../auth/AuthProvider";
 import { Sidebar } from "./sidebar/Sidebar";
@@ -33,6 +35,8 @@ function AppShellInner() {
 
   const displayName = profile?.given_name || profile?.name || "Account";
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const profileMenuRef = useRef<HTMLButtonElement>(null);
 
   return (
     <div
@@ -85,37 +89,59 @@ function AppShellInner() {
             </button>
             <ThemeToggle />
             {profile && (
-              <button
-                type="button"
-                className="hidden sm:flex items-center gap-2 h-9 pl-1 pr-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-              >
-                {profile.picture ? (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img src={profile.picture} alt="" className="w-7 h-7 rounded-full" />
-                ) : (
-                  <div className="w-7 h-7 rounded-full bg-amber-700 flex items-center justify-center text-[11px] font-bold text-white">
-                    {profileInitials(displayName)}
-                  </div>
-                )}
-                <span className="text-sm font-medium text-zinc-900 dark:text-zinc-100 max-w-[96px] truncate">
-                  {displayName}
-                </span>
-                <ChevronDown className="w-3.5 h-3.5 text-zinc-400 shrink-0" strokeWidth={2} />
-              </button>
+              <>
+                <button
+                  ref={profileMenuRef}
+                  type="button"
+                  onClick={() => setProfileMenuOpen((o) => !o)}
+                  className="flex items-center gap-1.5 sm:gap-2 h-9 pl-1 pr-1.5 sm:pr-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                  aria-expanded={profileMenuOpen}
+                  aria-haspopup="menu"
+                >
+                  {profile.picture ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img src={profile.picture} alt="" className="w-7 h-7 rounded-full" />
+                  ) : (
+                    <div className="w-7 h-7 rounded-full bg-amber-700 flex items-center justify-center text-[11px] font-bold text-white">
+                      {profileInitials(displayName)}
+                    </div>
+                  )}
+                  <span className="hidden sm:inline text-sm font-medium text-zinc-900 dark:text-zinc-100 max-w-[96px] truncate">
+                    {displayName}
+                  </span>
+                  <ChevronDown
+                    className={`w-3.5 h-3.5 text-zinc-400 shrink-0 transition-transform ${profileMenuOpen ? "rotate-180" : ""}`}
+                    strokeWidth={2}
+                  />
+                </button>
+                <AnchorDropdownMenu
+                  open={profileMenuOpen}
+                  onClose={() => setProfileMenuOpen(false)}
+                  anchorRef={profileMenuRef}
+                  minWidth={200}
+                >
+                  <Link
+                    href={driveRoutes.controls}
+                    onClick={() => setProfileMenuOpen(false)}
+                    className="w-full flex items-center gap-2.5 px-3 py-2.5 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-left"
+                  >
+                    <User className="w-4 h-4 text-zinc-500 shrink-0" strokeWidth={1.75} />
+                    Profile
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setProfileMenuOpen(false);
+                      signOut();
+                    }}
+                    className="w-full flex items-center gap-2.5 px-3 py-2.5 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-left border-t border-zinc-100 dark:border-zinc-800"
+                  >
+                    <LogOut className="w-4 h-4 text-zinc-500 shrink-0" strokeWidth={1.75} />
+                    Sign out
+                  </button>
+                </AnchorDropdownMenu>
+              </>
             )}
-            <Link
-              href="/privacy"
-              className="hidden sm:inline text-xs font-medium text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-100 px-2"
-            >
-              Privacy
-            </Link>
-            <button
-              onClick={signOut}
-              className="w-9 h-9 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-400"
-              title="Sign out"
-            >
-              <LogOut className="w-4 h-4" />
-            </button>
           </div>
         </div>
       </header>

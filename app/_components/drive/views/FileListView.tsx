@@ -134,7 +134,7 @@ export function FileListView() {
               Show hidden
             </button>
           )}
-          {b.isViewSavable && (
+          {b.isViewSavable && !b.isDashboardView && (
             <button
               onClick={() => b.setSaveViewOpen(true)}
               className="inline-flex items-center gap-1.5 text-sm font-medium px-3.5 py-2 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 shadow-sm dark:shadow-none"

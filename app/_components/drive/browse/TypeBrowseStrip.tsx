@@ -10,6 +10,7 @@ import {
 } from "@/lib/drive/type-browse";
 import { useAuth } from "../../auth/AuthProvider";
 import { useTypeBrowseCounts, type TypeBrowseCount } from "@/lib/hooks/useTypeBrowseCounts";
+import { formatCompactCount } from "@/lib/utils/format-count";
 
 const ICON_SOLID: Record<TypeBrowseCategory, string> = {
   images: "bg-violet-500",
@@ -30,8 +31,8 @@ const COUNT_UNITS: Record<TypeBrowseCategory, [string, string]> = {
 function formatTypeCount(category: TypeBrowseCategory, info?: TypeBrowseCount): string {
   if (!info) return "…";
   const [singular, plural] = COUNT_UNITS[category];
-  const n = info.hasMore ? `${info.count}+` : info.count;
-  const word = info.count === 1 && !info.hasMore ? singular : plural;
+  const n = formatCompactCount(info.count);
+  const word = info.count === 1 ? singular : plural;
   return `${n} ${word}`;
 }
 
@@ -46,7 +47,7 @@ export function TypeBrowseStrip() {
   return (
     <section className="mb-10">
       <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mb-3">Browse by type</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-3">
         {TYPE_BROWSE_CATEGORIES.map((category) => {
           const meta = TYPE_BROWSE_META[category];
           const Icon = meta.icon;
@@ -57,7 +58,7 @@ export function TypeBrowseStrip() {
             <Link
               key={category}
               href={href}
-              className={`group flex items-center gap-3 px-4 py-3.5 rounded-2xl border transition-all ${
+              className={`group flex flex-col items-start gap-2 px-3 py-3 sm:flex-row sm:items-center sm:gap-3 sm:px-4 sm:py-3.5 rounded-2xl border transition-all min-w-0 ${
                 isActive
                   ? "border-blue-500 ring-2 ring-blue-400 bg-blue-50/50 dark:bg-blue-950/30"
                   : `${meta.bgSoft} border-zinc-200/60 dark:border-zinc-700/80 hover:border-zinc-300 dark:hover:border-zinc-600 hover:shadow-md dark:hover:shadow-none`
