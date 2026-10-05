@@ -46,8 +46,8 @@ export function BrowseFilterBar({
   const isFiltering = filtersAreActive(filters, search);
 
   return (
-    <div className="flex items-center gap-3 mb-8">
-      <div className="flex-1 max-w-md">
+    <div className="flex flex-col gap-3 mb-8 lg:flex-row lg:items-center">
+      <div className="w-full lg:flex-1 lg:max-w-md">
         <div className="relative">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
           <input
@@ -62,8 +62,8 @@ export function BrowseFilterBar({
           />
         </div>
       </div>
-      <div className="flex-1" />
-      <div className="flex items-center gap-2">
+      <div className="hidden lg:block lg:flex-1" />
+      <div className="flex items-center gap-2 overflow-x-auto max-w-full pb-0.5 lg:pb-0 [-webkit-overflow-scrolling:touch]">
         <FilterDropdown
           label="Type"
           value={filters.type}

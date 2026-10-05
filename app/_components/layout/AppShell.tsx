@@ -1,6 +1,7 @@
 "use client";
 
-import { Bell, ChevronDown, LogOut, Search } from "lucide-react";
+import { useState } from "react";
+import { Bell, ChevronDown, LogOut, Menu, Search } from "lucide-react";
 import Link from "next/link";
 import { AppLogo } from "../brand/AppLogo";
 import { useAuth } from "../auth/AuthProvider";
@@ -31,6 +32,7 @@ function AppShellInner() {
   } = useDriveBrowse();
 
   const displayName = profile?.given_name || profile?.name || "Account";
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   return (
     <div
@@ -41,7 +43,15 @@ function AppShellInner() {
       onDrop={dragDrop.onWindowDrop}
     >
       <header className="shrink-0 z-40 h-14 bg-white/90 dark:bg-zinc-900 backdrop-blur-md border-b border-zinc-200/80 dark:border-zinc-800 transition-colors">
-        <div className="h-full px-2 sm:px-4 flex items-center gap-4 sm:gap-6">
+        <div className="h-full px-2 sm:px-4 flex items-center gap-2 sm:gap-6">
+          <button
+            type="button"
+            onClick={() => setMobileNavOpen(true)}
+            className="lg:hidden w-9 h-9 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-300 shrink-0"
+            aria-label="Open menu"
+          >
+            <Menu className="w-5 h-5" strokeWidth={1.75} />
+          </button>
           <AppLogo
             href="/dashboard"
             size="xs"
@@ -110,7 +120,15 @@ function AppShellInner() {
         </div>
       </header>
 
-      <div className="flex-1 flex min-h-0 min-w-0 overflow-hidden">
+      <div className="flex-1 flex min-h-0 min-w-0 overflow-hidden relative">
+        {mobileNavOpen && (
+          <button
+            type="button"
+            aria-label="Close menu"
+            className="fixed inset-0 z-40 bg-black/40 lg:hidden"
+            onClick={() => setMobileNavOpen(false)}
+          />
+        )}
         <Sidebar
           collapsed={sidebarCollapsed}
           quota={quota}
@@ -118,10 +136,14 @@ function AppShellInner() {
           onFolderDrop={dragDrop.onFolderDrop}
           onToggleCollapse={() => setSidebarCollapsed((c) => !c)}
           onManageTags={() => setTagManageOpen(true)}
+          mobileOpen={mobileNavOpen}
+          onMobileClose={() => setMobileNavOpen(false)}
         />
 
         <main className={`flex-1 min-h-0 min-w-0 ${
-          isInboxView ? "p-3 overflow-hidden flex flex-col" : "px-6 py-6 overflow-auto"
+          isInboxView
+            ? "p-2 sm:p-3 overflow-hidden flex flex-col"
+            : "px-3 py-4 lg:px-6 lg:py-6 overflow-auto"
         }`}>
           {isActivityView ? (
             <ActivityPageView />

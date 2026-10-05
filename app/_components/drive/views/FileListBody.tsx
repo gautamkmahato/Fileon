@@ -31,7 +31,6 @@ export const FileListBody = memo(function FileListBody({
   const {
     isTrashView, isTagsView, isSavedView, activeSavedView, scopeTagIds,
     isTypeView, typeCategory, isSpacesView, activeSpace, spacesLoading,
-    sidebarView, routeFolderId,
   } = useDriveRoute();
   const { isHidden: checkHidden } = useHidden();
   const { isFavorite: checkFavorite } = useFavorites();

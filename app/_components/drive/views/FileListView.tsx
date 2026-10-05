@@ -55,8 +55,8 @@ export function FileListView() {
 
   return (
     <>
-      <div className="flex items-center justify-between mb-4 gap-3">
-        <div className="flex items-center gap-2 min-w-0 flex-1">
+      <div className="flex flex-col gap-3 mb-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex items-center gap-2 min-w-0 w-full lg:flex-1">
           {showBackButton && (
             <button
               onClick={() => {
@@ -115,7 +115,7 @@ export function FileListView() {
             </div>
           )}
         </div>
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex items-center gap-2 shrink-0 overflow-x-auto max-w-full pb-0.5 lg:pb-0 [-webkit-overflow-scrolling:touch]">
           <ClipboardStatus />
           {revalidating && (
             <Loader2 className="w-4 h-4 animate-spin text-zinc-400" aria-label="Refreshing" />

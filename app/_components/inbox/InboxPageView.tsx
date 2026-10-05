@@ -93,8 +93,8 @@ export function InboxPageView() {
   }, [items, selectedId]);
 
   return (
-    <div className="flex-1 min-h-0 flex border border-zinc-200/80 dark:border-zinc-800 rounded-xl overflow-hidden bg-white dark:bg-zinc-950">
-      <div className="w-[340px] shrink-0 border-r border-zinc-200/80 dark:border-zinc-800 flex flex-col min-h-0">
+    <div className="flex-1 min-h-0 flex flex-col lg:flex-row border border-zinc-200/80 dark:border-zinc-800 rounded-xl overflow-hidden bg-white dark:bg-zinc-950">
+      <div className="w-full lg:w-[340px] shrink-0 lg:border-r border-zinc-200/80 dark:border-zinc-800 border-b lg:border-b-0 flex flex-col min-h-0 max-lg:max-h-[min(48vh,420px)]">
         <div className="shrink-0 px-3 pt-4 pb-3 border-b border-zinc-200/80 dark:border-zinc-800">
           <div className="flex items-baseline justify-between gap-2">
             <h1 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Inbox</h1>

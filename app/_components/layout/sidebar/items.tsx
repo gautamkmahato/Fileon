@@ -18,16 +18,17 @@ export function navRowClass(active: boolean, nested = false): string {
 }
 
 export function NavLink({
-  href, label, icon: Icon, active, nested,
+  href, label, icon: Icon, active, nested, onNavigate,
 }: {
   href: string;
   label: string;
   icon: LucideIcon;
   active: boolean;
   nested?: boolean;
+  onNavigate?: () => void;
 }) {
   return (
-    <Link href={href} className={navRowClass(active, nested)}>
+    <Link href={href} onClick={() => onNavigate?.()} className={navRowClass(active, nested)}>
       <Icon className="w-4 h-4 shrink-0" strokeWidth={active ? 2 : 1.75} />
       <span className="truncate">{label}</span>
     </Link>

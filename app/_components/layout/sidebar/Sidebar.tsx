@@ -36,10 +36,13 @@ interface SidebarProps {
   onFolderDrop?: (e: React.DragEvent, folderId: string) => void;
   onToggleCollapse: () => void;
   onManageTags: () => void;
+  mobileOpen?: boolean;
+  onMobileClose?: () => void;
 }
 
 export function Sidebar({
   collapsed, quota, token, onFolderDrop, onToggleCollapse, onManageTags,
+  mobileOpen = false, onMobileClose,
 }: SidebarProps) {
   const pathname = usePathname() || "/";
   const search = useSearchParams()?.toString() ?? "";
@@ -63,6 +66,10 @@ export function Sidebar({
   useEffect(() => {
     setActiveSection(routeSection);
   }, [routeSection]);
+
+  useEffect(() => {
+    onMobileClose?.();
+  }, [pathname, search]);
 
   const section = getNavSection(activeSection);
 
@@ -164,9 +171,14 @@ export function Sidebar({
 
   const links = sectionLinks(section.id);
   const extras = sectionExtras(section.id);
+  const showSecondary = !collapsed || mobileOpen;
 
   return (
-    <aside className="h-full shrink-0 flex">
+    <aside
+      className={`h-full shrink-0 flex bg-white dark:bg-zinc-950 max-lg:fixed max-lg:inset-y-0 max-lg:left-0 max-lg:z-50 max-lg:shadow-xl max-lg:transition-transform max-lg:duration-200 ${
+        mobileOpen ? "max-lg:translate-x-0" : "max-lg:-translate-x-full"
+      } lg:relative lg:translate-x-0`}
+    >
       <div className="h-full w-[60px] shrink-0 border-r border-zinc-200/80 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex flex-col">
         <nav className="flex-1 overflow-y-auto py-4 px-2 space-y-1" aria-label="Primary">
           {NAV_SECTIONS.map((item) => {
@@ -192,10 +204,12 @@ export function Sidebar({
             );
           })}
         </nav>
-        <CollapseToggle collapsed={collapsed} onClick={onToggleCollapse} />
+        <div className="hidden lg:block">
+          <CollapseToggle collapsed={collapsed} onClick={onToggleCollapse} />
+        </div>
       </div>
 
-      {!collapsed && (
+      {showSecondary && (
         <div className="h-full w-[220px] shrink-0 border-r border-zinc-200/80 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 flex flex-col">
           <div className="px-4 pt-5 pb-3">
             <h2 className="text-sm font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
@@ -225,6 +239,7 @@ export function Sidebar({
                           label={item.label}
                           icon={item.icon}
                           active={item.match(route)}
+                          onNavigate={onMobileClose}
                         />
                       </li>
                     );

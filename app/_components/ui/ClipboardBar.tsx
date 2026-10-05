@@ -16,8 +16,8 @@ export function ClipboardBar({ onCancel, elevated }: ClipboardBarProps) {
   if (!mode || count === 0) return null;
 
   return (
-    <div className={`fixed left-1/2 -translate-x-1/2 z-50 ${elevated ? "bottom-24" : "bottom-6"}`}>
-      <div className="flex items-center gap-3 px-4 py-2.5 bg-zinc-900/95 dark:bg-zinc-900 text-white rounded-xl shadow-2xl border border-amber-500/40 backdrop-blur-md">
+    <div className={`fixed left-1/2 -translate-x-1/2 z-50 w-[calc(100%-1.5rem)] max-w-xl ${elevated ? "bottom-24 sm:bottom-24" : "bottom-4 sm:bottom-6"}`}>
+      <div className="flex items-center gap-3 px-4 py-2.5 bg-zinc-900/95 dark:bg-zinc-900 text-white rounded-xl shadow-2xl border border-amber-500/40 backdrop-blur-md overflow-x-auto">
         <span className="text-sm font-medium text-amber-100">
           {count} file{count !== 1 ? "s" : ""} in clipboard · {mode === "cut" ? "Cut" : "Copy"} · ⌘V to paste
         </span>

@@ -130,7 +130,7 @@ export function CommandPalette({
   return (
     <>
       <div className="fixed inset-0 bg-black/40 z-[80] backdrop-blur-sm" onClick={onClose} />
-      <div className="fixed left-1/2 top-[18%] -translate-x-1/2 w-full max-w-lg z-[81]">
+      <div className="fixed left-1/2 top-[8%] sm:top-[18%] -translate-x-1/2 w-[calc(100%-1.5rem)] max-w-lg z-[81]">
         <div className="bg-white dark:bg-zinc-900 rounded-xl shadow-2xl border border-zinc-200 dark:border-zinc-700 overflow-hidden">
           <div className="flex items-center gap-3 px-4 py-3 border-b border-zinc-200 dark:border-zinc-700">
             <Search className="w-5 h-5 text-zinc-400 shrink-0" />
