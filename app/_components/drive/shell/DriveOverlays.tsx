@@ -69,6 +69,15 @@ export function DriveOverlays() {
 
   return (
     <>
+      <input
+        ref={b.uploadInputRef}
+        type="file"
+        className="hidden"
+        multiple
+        onChange={(e) => { void b.handleUpload(e.target.files); e.target.value = ""; }}
+        aria-hidden
+        tabIndex={-1}
+      />
       <DropOverlay
         visible={b.dragDrop.isWindowDragOver || b.uploading}
         folderName={b.currentFolder.name}

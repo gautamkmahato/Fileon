@@ -21,7 +21,7 @@ import { useInbox } from "../../inbox/InboxProvider";
 import { useFolderCovers } from "../../folder-covers/FolderCoversProvider";
 import { SetFolderCoverModal } from "../../folder-covers/SetFolderCoverModal";
 import { recordRecentFolderWork } from "@/lib/collections/recent-folders";
-import { getSelectedDriveFiles, useFilesStore } from "@/lib/stores";
+import { getSelectedDriveFiles, invalidateFilesCacheKey, useFilesStore } from "@/lib/stores";
 import { useDriveBrowse } from "../context/DriveBrowseProvider";
 import { toast } from "@/lib/ui/toast";
 import { displayTagName } from "@/lib/tags/kinds";
@@ -164,6 +164,7 @@ export function DriveModals() {
         onAddToInbox={() => {
           if (!b.menu || isFolder(b.menu.file)) return;
           void addToInbox([b.menu.file.id]).then(() => {
+            invalidateFilesCacheKey("inbox");
             toast.success(`Added "${b.menu!.file.name}" to Inbox`);
           }).catch(() => toast.error("Couldn't add to Inbox"));
         }}

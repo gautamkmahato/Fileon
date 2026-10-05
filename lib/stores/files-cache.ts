@@ -122,6 +122,16 @@ export function invalidateFilesCache(): void {
   schedulePersist();
 }
 
+/** Drop one cached list so the next navigation refetches (e.g. inbox after upload). */
+export function invalidateFilesCacheKey(key: string): void {
+  ensureSessionLoaded();
+  if (!cache.delete(key)) return;
+  const idx = order.indexOf(key);
+  if (idx >= 0) order.splice(idx, 1);
+  restoredFromSession.delete(key);
+  schedulePersist();
+}
+
 /** Drop the in-memory lists and the session snapshot. */
 export function clearFilesListSnapshot(): void {
   persistGen += 1;

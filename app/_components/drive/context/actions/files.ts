@@ -5,8 +5,8 @@ import { logActivity } from "@/lib/activity/log";
 import { addToInbox } from "@/lib/collections/inbox";
 import { invalidateFolderTreeForMutation } from "@/lib/cache/folder-children-cache";
 import { invalidateTypeBrowseCountsCache } from "@/lib/cache/type-browse-counts-cache";
-import { isFolderBrowseView } from "@/lib/drive/browse-scope";
-import { getSelectedDriveFiles, useFilesStore, useSelectionStore } from "@/lib/stores";
+import { canUploadToDrive, resolveUploadParentId } from "@/lib/drive/browse-scope";
+import { getSelectedDriveFiles, invalidateFilesCacheKey, useFilesStore, useSelectionStore } from "@/lib/stores";
 import { downloadToBrowser } from "./core";
 import type { DriveActionContext } from "./types";
 
@@ -47,7 +47,26 @@ export function createFileActions(ctx: DriveActionContext, deps: FileActionDeps)
   }
 
   async function handleUpload(fileList: FileList | null) {
-    if (!token || !fileList?.length || !isFolderBrowseView(sidebarView) || deps.uploading) return;
+    const {
+      isTrashView, isActivityView, isInboxView, isControlsView, isCleanupView,
+      isSpacesHome, isSharedLinksView, routeFolderId, isSavedView, activeSavedView,
+    } = route;
+    if (
+      !token
+      || !fileList?.length
+      || deps.uploading
+      || !canUploadToDrive({
+        isTrashView, isActivityView, isInboxView, isControlsView, isCleanupView, isSpacesHome, isSharedLinksView,
+      })
+    ) {
+      return;
+    }
+    const parentId = resolveUploadParentId({
+      sidebarView,
+      routeFolderId,
+      isSavedView,
+      savedFolderId: activeSavedView?.scope.folderId ?? null,
+    });
     const toUpload = Array.from(fileList);
     useFilesStore.getState().setUploading(true);
     const toastId = toast.loading(
@@ -66,7 +85,7 @@ export function createFileActions(ctx: DriveActionContext, deps: FileActionDeps)
         useFilesStore.getState().setUploading(true, label);
         updateLoading(label, toastId);
         try {
-          const uploaded = await uploadFile({ token, file: f, parentId: currentFolder.id });
+          const uploaded = await uploadFile({ token, file: f, parentId });
           useFilesStore.getState().prependFile(uploaded);
           uploadedFiles.push(uploaded);
           succeeded++;
@@ -90,7 +109,12 @@ export function createFileActions(ctx: DriveActionContext, deps: FileActionDeps)
         invalidateTypeBrowseCountsCache({ refreshToken: token });
         const inboxIds = uploadedFiles.filter((f) => !isFolder(f)).map((f) => f.id);
         if (inboxIds.length) {
-          try { await addToInbox(inboxIds); } catch { /* inbox is best-effort */ }
+          try {
+            await addToInbox(inboxIds);
+            invalidateFilesCacheKey("inbox");
+          } catch (err) {
+            console.error("Failed to add upload to inbox", err);
+          }
         }
         toast.success(
           succeeded === 1 && toUpload.length === 1

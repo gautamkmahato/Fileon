@@ -165,17 +165,15 @@ export function FileListView() {
           )}
           {!b.isTrashView && (b.sidebarView === "drive" || b.sidebarView === "dashboard") && !b.isTagsView && (
             <>
-              <label className={`inline-flex items-center gap-1.5 text-sm font-medium px-3.5 py-2 rounded-lg btn-primary border border-zinc-900 dark:border-zinc-700 shadow-sm dark:shadow-none ${b.uploading ? "opacity-60 pointer-events-none" : "cursor-pointer"}`}>
+              <button
+                type="button"
+                disabled={b.uploading}
+                onClick={() => b.uploadInputRef.current?.click()}
+                className={`inline-flex items-center gap-1.5 text-sm font-medium px-3.5 py-2 rounded-lg btn-primary border border-zinc-900 dark:border-zinc-700 shadow-sm dark:shadow-none ${b.uploading ? "opacity-60 pointer-events-none" : ""}`}
+              >
                 {b.uploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
                 {b.uploading ? "Uploading…" : "Upload"}
-                <input
-                  ref={b.uploadInputRef}
-                  type="file"
-                  className="hidden"
-                  multiple
-                  onChange={(e) => { b.handleUpload(e.target.files); e.target.value = ""; }}
-                />
-              </label>
+              </button>
               <button
                 onClick={() => b.setShowNewFolder(true)}
                 className="inline-flex items-center gap-1.5 text-sm font-medium px-3.5 py-2 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 shadow-sm dark:shadow-none"
