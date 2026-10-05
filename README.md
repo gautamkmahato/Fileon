@@ -6,7 +6,7 @@ fileon is a Next.js client for Google Drive that adds an application layer on to
 
 Nothing is uploaded to a fileon server. Files stay in Google Drive; app-level metadata (tags, pins, views, cleanup scans, share links) is stored in the browser's IndexedDB, scoped to the signed-in Google account.
 
-fileon uses the non-restricted `drive.file` scope: it only sees files the user grants through Google's file picker (plus files it uploads itself). A guided first-run flow chains the picker folder by folder so granting a whole Drive takes Ctrl+A → Select per folder. No Google verification or CASA security assessment is required to deploy it.
+The app uses the Google Drive API with the `drive` scope so your library syncs automatically after sign-in. That scope is **restricted** by Google: production use beyond test users typically requires OAuth app verification and a CASA security assessment.
 
 ## Features
 
@@ -25,19 +25,17 @@ fileon uses the non-restricted `drive.file` scope: it only sees files the user g
 
 ### 1. Create Google credentials
 
-1. In [Google Cloud Console](https://console.cloud.google.com/) create a project and enable the **Google Drive API** and the **Google Picker API**.
+1. In [Google Cloud Console](https://console.cloud.google.com/) create a project and enable the **Google Drive API**.
 2. Under **APIs & Services → Credentials** create an **OAuth client ID** of type *Web application*.
    Add `http://localhost:3000` (and your production origin) to **Authorized JavaScript origins**.
-3. Under **APIs & Services → Credentials** create an **API key**. Restrict it to the Google Picker API and to your origins (HTTP referrers). This key stays on the server.
-4. Note the **project number** from the Cloud Console dashboard; the picker needs it as the app ID. It stays on the server too.
-5. Under **OAuth consent screen**, add the scopes the app requests: `openid`, `email`, `profile`, and `https://www.googleapis.com/auth/drive.file`.
-   `drive.file` is not a sensitive or restricted scope, so publishing the consent screen is enough — no verification review is needed.
+3. Under **OAuth consent screen**, add the scopes the app requests: `openid`, `email`, `profile`, and `https://www.googleapis.com/auth/drive`.
+   The `drive` scope is restricted; plan for Google's verification process before launching to the public.
 
 ### 2. Configure and run
 
 ```bash
 cp .env.example .env
-# edit .env and set NEXT_PUBLIC_GOOGLE_CLIENT_ID, GOOGLE_PICKER_API_KEY, GOOGLE_PICKER_APP_ID
+# edit .env and set NEXT_PUBLIC_GOOGLE_CLIENT_ID
 
 npm install
 npm run dev
@@ -65,9 +63,8 @@ app/
   api/share-links/    Public share-link endpoints (view, hit, manage, stats)
   s/[token]/          Public share-link landing page
   _components/        Feature-organized React components
-    access/ auth/ brand/ cleanup/ drive/ favorites/ folder-covers/ hidden/
+    auth/ brand/ cleanup/ drive/ favorites/ folder-covers/ hidden/
     inbox/ layout/ pins/ shares/ spaces/ tags/ ui/ views/
-    access/           drive.file onboarding — guided Google Picker walk
     drive/context/    DriveBrowseProvider + hooks; actions/ holds the
                       action groups (files, trash, move, clipboard, …)
   _hooks/             Cross-feature hooks that depend on providers
@@ -80,9 +77,7 @@ lib/
   config/             Brand + shared constants
   db/                 IndexedDB engines (local-db for app metadata, engine/schema
                       for the table-shaped cleanup / spaces / share-link stores)
-  drive/              Google Drive REST client and helpers; access.ts tracks
-                      drive.file onboarding
-  google/             Google Picker loader
+  drive/              Google Drive REST client and helpers
   navigation/         Route definitions, route parsing, sidebar model
   preview/            Thumbnail + preview pipelines (PDF, CSV, Markdown)
   shares/             Share-link domain: types, status, tokens, repository, API client
@@ -99,7 +94,6 @@ lib/
 - **Two persistence layers.** `lib/db/local-db.ts` is a simple key/value IndexedDB for tags, pins, views, activity, etc. `lib/db/engine.ts` + `schema.ts` is a table-shaped IndexedDB (with an in-memory fallback) used by cleanup, smart spaces, and share links; every row is scoped by the Google account `sub`.
 - **Share links.** Owners keep links in IndexedDB. Public view/download counts are served by the API routes under `app/api/share-links`, backed by a JSON file in `.data/` (gitignored) so a self-hosted instance works without a database. Swap `lib/shares/server-store.ts` for a real store when deploying at scale.
 - **Drive stays authoritative.** fileon never mirrors file content; hiding, pinning, tagging, and inboxing are app-level metadata only.
-- **`drive.file` access model.** The app can only list files the user granted. `DriveAccessGate` runs once per account and opens a short sequence of flat Picker lists (folders, photos, videos, documents, and the other types) — Ctrl+A → Select per list, however many folders the Drive has. Files remember their parent id; any parent folder that was not selected is offered in a follow-up list so the tree still resolves. Grants are permanent for that Google account, so returning users skip the gate. "Add from Drive" in the sidebar reopens the flow.
 
 ## Contributing
 

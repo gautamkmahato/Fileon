@@ -16,7 +16,6 @@ import {
 import { deleteView, reorderViews, type SavedView } from "@/lib/views/repository";
 import type { SmartSpace } from "@/lib/spaces";
 import { toast } from "@/lib/ui/toast";
-import { useAccessStore } from "@/lib/stores";
 import type { StorageQuota } from "@/lib/drive/drive";
 import { useTags } from "../../tags/TagsProvider";
 import { useViews } from "../../views/ViewsProvider";
@@ -77,9 +76,6 @@ export function Sidebar({
     switch (id) {
       case "open-all-folders":
         setAllFoldersOpen(true);
-        return;
-      case "add-from-drive":
-        useAccessStore.getState().openSetup();
         return;
       default:
         return;

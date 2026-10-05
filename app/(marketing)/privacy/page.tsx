@@ -19,15 +19,13 @@ export default function PrivacyPolicyPage() {
       </p>
       <p>
         {APP_NAME} accesses the Google user data you authorize at sign-in: your
-        name, email address, profile photo, and Google account ID, plus — for
-        the Google Drive files and folders you choose in Google&apos;s file
-        picker — their names, types, sizes, dates, parents, sharing state,
-        starred and trashed state, owner names and email addresses, and the
-        contents of files you preview, open, or download. {APP_NAME} uses the
-        limited <code className="text-[13px]">drive.file</code> permission, so
-        it cannot see files you did not pick. The app can also create, upload,
-        rename, move, star, trash, restore, permanently delete, and change
-        sharing on those files when you take that action.
+        name, email address, profile photo, and Google account ID, plus your
+        Google Drive files and folders: names, types, sizes, dates, parents,
+        sharing state, starred and trashed state, owner names and email
+        addresses when Google includes them, and the contents of files you
+        preview, open, or download. The app can also create, upload, rename,
+        move, star, trash, restore, permanently delete, and change sharing on
+        files in your Drive when you take that action.
       </p>
       <p>
         {APP_NAME} uses that data only to provide the file manager you requested.
@@ -89,14 +87,15 @@ export default function PrivacyPolicyPage() {
           identifies the signed-in user inside the app.
         </li>
         <li>
-          <strong>Google Drive files and folders you pick</strong> (
-          <code className="text-[13px]">drive.file</code> scope): for those items,
-          file and folder names, types, sizes, created and modified dates, parent
-          folders, starred and trashed state, sharing state, and owner names and
-          email addresses when Google includes them. {APP_NAME} also reads file content when you preview, open, or
-          download a file, and it can create, upload, rename, move, star, trash,
-          restore, delete, and change sharing on files in your Drive when you do
-          those actions yourself.
+          <strong>Google Drive</strong> (
+          <code className="text-[13px]">https://www.googleapis.com/auth/drive</code>
+          ): file and folder names, types, sizes, created and modified dates,
+          parent folders, starred and trashed state, sharing state, and owner
+          names and email addresses when Google includes them. {APP_NAME} also
+          reads file content when you preview, open, or download a file, and it
+          can create, upload, rename, move, star, trash, restore, delete, and
+          change sharing on files in your Drive when you do those actions
+          yourself.
         </li>
       </ul>
       <p>

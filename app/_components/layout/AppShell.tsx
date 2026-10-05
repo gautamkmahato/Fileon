@@ -16,7 +16,6 @@ import { InboxPageView } from "../inbox/InboxPageView";
 import { CleanupPageView } from "../cleanup/CleanupPageView";
 import { SmartSpacesHome } from "../spaces/SmartSpacesHome";
 import { ShareLinksHome } from "../shares/ShareLinksHome";
-import { DriveAccessModal } from "../access/DriveAccessModal";
 
 function profileInitials(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
@@ -144,7 +143,6 @@ function AppShellInner() {
 
       <DriveOverlays />
       <DriveModals />
-      <DriveAccessModal />
     </div>
   );
 }

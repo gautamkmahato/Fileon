@@ -19,23 +19,19 @@ import { clearFilesListSnapshot, openFilesListSnapshot, setFilesCacheUser } from
 /**
  * Scopes:
  *
- *  - drive.file: files this app created plus files the user picked in the
- *    Google Picker (see `app/_components/access`). Not a restricted scope, so
- *    no Google verification or CASA assessment is needed.
+ *  - drive: list and manage the user's Google Drive (restricted; Google OAuth
+ *    verification and CASA may be required for production use).
  *  - openid / email / profile: who is signed in.
- *
- * `https://www.googleapis.com/auth/drive` would list the whole Drive without
- * picking, but it is restricted and requires a paid yearly security review.
  */
 const SCOPES = [
-    "https://www.googleapis.com/auth/drive.file",
-    "openid",
-    "email",
-    "profile",
-  ].join(" ");
+  "https://www.googleapis.com/auth/drive",
+  "openid",
+  "email",
+  "profile",
+].join(" ");
 
-// v2: tokens saved before the drive.file switch carried the full drive scope.
-const TOKEN_STORAGE_KEY = "drive_ui_token_v2";
+// v3: after removing drive.file-only tokens from session storage.
+const TOKEN_STORAGE_KEY = "drive_ui_token_v3";
 
 interface StoredToken {
   access_token: string;
@@ -102,9 +98,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     tokenClientRef.current = window.google.accounts.oauth2.initTokenClient({
       client_id: clientId,
       scope: SCOPES,
-      // Accounts that consented to the old full `drive` scope would otherwise
-      // keep receiving it; the token must carry drive.file only.
-      include_granted_scopes: false,
       callback: (response: TokenResponse) => {
         const expiresAt = Date.now() + response.expires_in * 1000;
         const stored: StoredToken = {
