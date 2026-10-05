@@ -5,6 +5,7 @@ import { Loader2, Search } from "lucide-react";
 import { type DriveFile, isFolder, searchFiles } from "@/lib/drive/drive";
 import { getFileType } from "@/lib/types/file-types";
 import { addRecentSearch, getRecentSearches } from "@/lib/utils/recent-searches";
+import { BodyPortal } from "../ui/BodyPortal";
 
 const DEBOUNCE_MS = 300;
 
@@ -138,9 +139,10 @@ export function GlobalSearchModal({
   const trimmed = query.trim();
 
   return (
-    <>
-      <div className="fixed inset-0 bg-black/40 z-[80] backdrop-blur-sm" onClick={onClose} />
-      <div className="fixed left-1/2 top-[8%] sm:top-[12%] -translate-x-1/2 w-[calc(100%-1.5rem)] max-w-lg z-[81]">
+    <BodyPortal>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4">
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} aria-hidden />
+      <div className="relative w-full max-w-lg">
         <div className="bg-white dark:bg-zinc-900 rounded-xl shadow-2xl border border-zinc-200 dark:border-zinc-700 overflow-hidden">
           <div className="flex items-center gap-3 px-4 py-3 border-b border-zinc-200 dark:border-zinc-700">
             <Search className="w-5 h-5 text-zinc-400 shrink-0" />
@@ -247,7 +249,8 @@ export function GlobalSearchModal({
           </div>
         </div>
       </div>
-    </>
+    </div>
+    </BodyPortal>
   );
 }
 

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Loader2, Plus, Trash2, X } from "lucide-react";
 import { useTags } from "../tags/TagsProvider";
 import { toast } from "@/lib/ui/toast";
+import { BodyPortal } from "../ui/BodyPortal";
 import {
   defaultOpForField,
   defaultValueForField,
@@ -120,7 +121,8 @@ export function SpaceEditorModal({ open, space, onClose, onSaved }: SpaceEditorM
   }
 
   return (
-    <div className="fixed inset-0 z-[80] flex items-center justify-center p-4">
+    <BodyPortal>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4">
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
       <div className="relative w-full max-w-lg bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-200/80 dark:border-zinc-700 max-h-[90vh] flex flex-col">
         <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-200 dark:border-zinc-700">
@@ -275,6 +277,7 @@ export function SpaceEditorModal({ open, space, onClose, onSaved }: SpaceEditorM
         </div>
       </div>
     </div>
+    </BodyPortal>
   );
 }
 

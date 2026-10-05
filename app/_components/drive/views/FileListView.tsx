@@ -137,21 +137,11 @@ export function FileListView() {
           {b.isViewSavable && (
             <button
               onClick={() => b.setSaveViewOpen(true)}
-              className="inline-flex items-center gap-1.5 text-sm font-medium px-3.5 py-2 rounded-lg btn-primary shadow-sm"
+              className="inline-flex items-center gap-1.5 text-sm font-medium px-3.5 py-2 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 shadow-sm dark:shadow-none"
               title="Save current filters, sort, and scope"
             >
               <Bookmark className="w-4 h-4" />
               Save view
-            </button>
-          )}
-          {!b.isTrashView && !b.isActivityView && !b.isDashboardView && (
-            <button
-              onClick={() => b.setTagManageOpen(true)}
-              className="inline-flex items-center gap-1.5 text-sm font-medium px-3.5 py-2 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 shadow-sm dark:shadow-none"
-              title="Create, rename, and delete tags"
-            >
-              <Tag className="w-4 h-4" />
-              Manage tags
             </button>
           )}
           {isSpace && space && (

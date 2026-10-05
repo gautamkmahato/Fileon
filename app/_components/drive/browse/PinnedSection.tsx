@@ -7,7 +7,7 @@ import { usePins } from "@/app/_components/pins/PinsProvider";
 import { useBrowseStore } from "@/lib/stores";
 import { FileCard } from "../items/FileCard";
 import { FileRow } from "../items/FileRow";
-import { LIST_VIEW_HEADER_CLASS } from "@/lib/drive/list-view-layout";
+import { ListViewTableHeader } from "../items/ListViewTableHeader";
 import { FolderCard } from "../items/FolderCard";
 
 interface PinnedSectionProps {
@@ -106,13 +106,7 @@ export function PinnedSection({
         </div>
       ) : (
         <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200/80 dark:border-zinc-700 overflow-hidden shadow-sm dark:shadow-none">
-          <div className={LIST_VIEW_HEADER_CLASS}>
-            <span className="pl-7">Name</span>
-            <span>Owner</span>
-            <span>Modified</span>
-            <span>Size</span>
-            <span />
-          </div>
+          <ListViewTableHeader itemIds={items.map((i) => i.id)} />
           {items.map((item) => (
             <div
               key={item.id}

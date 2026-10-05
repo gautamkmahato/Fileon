@@ -6,6 +6,7 @@ import type { Tag } from "@/lib/tags/repository";
 import { addTagToFile, bulkAddTag, bulkRemoveTag, createTag, removeTagFromFile } from "@/lib/tags/repository";
 import { getTagColor } from "@/lib/tags/colors";
 import { logTagFileChanges } from "@/lib/tags/activity";
+import { BodyPortal } from "../ui/BodyPortal";
 import {
   TAG_KIND_META,
   TAG_KINDS,
@@ -173,7 +174,8 @@ export function TagPickerModal({
   });
 
   return (
-    <div className="fixed inset-0 z-[80] flex items-center justify-center p-4">
+    <BodyPortal>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4">
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
       <div className="relative w-full max-w-sm bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl border border-zinc-200/80 dark:border-zinc-700">
         <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-200 dark:border-zinc-700">
@@ -291,6 +293,7 @@ export function TagPickerModal({
         </div>
       </div>
     </div>
+    </BodyPortal>
   );
 }
 

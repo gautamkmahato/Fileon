@@ -19,7 +19,7 @@ import { useFavorites } from "../../favorites/FavoritesProvider";
 import { PinnedSection } from "../browse/PinnedSection";
 import { TypeBrowseStrip } from "../browse/TypeBrowseStrip";
 import { TYPE_BROWSE_META } from "@/lib/drive/type-browse";
-import { LIST_VIEW_HEADER_CLASS } from "@/lib/drive/list-view-layout";
+import { ListViewTableHeader } from "../items/ListViewTableHeader";
 
 /** File grid/list — store subscriptions only; immune to modal/context churn. */
 export const FileListBody = memo(function FileListBody({
@@ -179,13 +179,7 @@ export const FileListBody = memo(function FileListBody({
               </div>
             ) : (
               <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200/80 dark:border-zinc-700 overflow-hidden shadow-sm dark:shadow-none">
-                <div className={LIST_VIEW_HEADER_CLASS}>
-                  <span className="pl-7">Name</span>
-                  <span>Owner</span>
-                  <span>Modified</span>
-                  <span>Size</span>
-                  <span />
-                </div>
+                <ListViewTableHeader itemIds={visibleFiles.map((f) => f.id)} />
                 {visibleFiles.map(renderFileRow)}
               </div>
             )
@@ -205,13 +199,7 @@ export const FileListBody = memo(function FileListBody({
             </div>
           ) : (
             <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200/80 dark:border-zinc-700 overflow-hidden shadow-sm dark:shadow-none">
-              <div className={LIST_VIEW_HEADER_CLASS}>
-                <span className="pl-7">Name</span>
-                <span>Owner</span>
-                <span>Modified</span>
-                <span>Size</span>
-                <span />
-              </div>
+              <ListViewTableHeader itemIds={myDriveFolders.map((f) => f.id)} />
               {myDriveFolders.map((item) => (
                 <FileRow
                   key={item.id}
@@ -235,13 +223,7 @@ export const FileListBody = memo(function FileListBody({
             </div>
           ) : (
             <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200/80 dark:border-zinc-700 overflow-hidden shadow-sm dark:shadow-none">
-              <div className={LIST_VIEW_HEADER_CLASS}>
-                <span className="pl-7">Name</span>
-                <span>Owner</span>
-                <span>Modified</span>
-                <span>Size</span>
-                <span />
-              </div>
+              <ListViewTableHeader itemIds={visibleFiles.map((f) => f.id)} />
               {visibleFiles.map(renderFileRow)}
             </div>
           )}
@@ -257,13 +239,7 @@ export const FileListBody = memo(function FileListBody({
             </div>
           ) : (
             <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200/80 dark:border-zinc-700 overflow-hidden shadow-sm dark:shadow-none">
-              <div className={LIST_VIEW_HEADER_CLASS}>
-                <span className="pl-7">Name</span>
-                <span>Owner</span>
-                <span>Modified</span>
-                <span>Size</span>
-                <span />
-              </div>
+              <ListViewTableHeader itemIds={hiddenItems.map((f) => f.id)} />
               {hiddenItems.map((item) =>
                 isFolder(item) ? (
                   <FileRow

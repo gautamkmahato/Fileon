@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 
 interface ModalProps {
@@ -13,6 +14,9 @@ interface ModalProps {
 }
 
 export function Modal({ open, onClose, title, children, footer, width = "max-w-md" }: ModalProps) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   useEffect(() => {
     if (!open) return;
     function onKey(e: KeyboardEvent) {
@@ -26,10 +30,10 @@ export function Modal({ open, onClose, title, children, footer, width = "max-w-m
     };
   }, [open, onClose]);
 
-  if (!open) return null;
+  if (!open || !mounted) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 sm:p-4">
+  return createPortal(
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/40 backdrop-blur-sm"
@@ -54,6 +58,7 @@ export function Modal({ open, onClose, title, children, footer, width = "max-w-m
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
