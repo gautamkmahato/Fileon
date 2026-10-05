@@ -19,6 +19,13 @@ export interface GoogleNamespace {
         callback: (response: TokenResponse) => void;
         error_callback?: (error: TokenError) => void;
       }) => TokenClient;
+      initCodeClient: (config: {
+        client_id: string;
+        scope: string;
+        ux_mode?: "popup" | "redirect";
+        callback: (response: CodeResponse) => void;
+        error_callback?: (error: TokenError) => void;
+      }) => CodeClient;
       revoke: (token: string, callback?: () => void) => void;
     };
   };
@@ -26,6 +33,18 @@ export interface GoogleNamespace {
 
 export interface TokenClient {
   requestAccessToken: (overrideConfig?: { prompt?: string }) => void;
+}
+
+export interface CodeClient {
+  requestCode: (overrideConfig?: { prompt?: string; hint?: string }) => void;
+}
+
+export interface CodeResponse {
+  code: string;
+  scope: string;
+  authuser?: string;
+  hd?: string;
+  prompt?: string;
 }
 
 export interface TokenResponse {

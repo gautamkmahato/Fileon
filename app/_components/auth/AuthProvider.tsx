@@ -9,7 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
-import type { TokenClient, TokenResponse } from "@/lib/types/google-types";
+import type { CodeClient, TokenClient, TokenResponse } from "@/lib/types/google-types";
 import { fetchUserProfile, setDriveTokenRefresh, UserProfile } from "@/lib/drive/drive";
 import { clearFolderChildrenCache } from "@/lib/cache/folder-children-cache";
 import { clearTypeBrowseCountsCache } from "@/lib/cache/type-browse-counts-cache";
@@ -30,22 +30,25 @@ const SCOPES = [
   "profile",
 ].join(" ");
 
-// v3: after removing drive.file-only tokens from session storage.
-const TOKEN_STORAGE_KEY = "drive_ui_token_v3";
+const TOKEN_STORAGE_KEY = "drive_ui_token_v4";
+const REFRESH_BUFFER_MS = 5 * 60 * 1000;
+
+/** When true, sign-in uses auth code + server refresh token (24h app session). */
+const USE_SERVER_REFRESH =
+  process.env.NEXT_PUBLIC_GOOGLE_SERVER_AUTH === "true";
 
 interface StoredToken {
   access_token: string;
-  expires_at: number; // unix ms
+  expires_at: number;
 }
 
 interface AuthState {
-  isReady: boolean; // GSI script loaded
+  isReady: boolean;
   isSignedIn: boolean;
   token: string | null;
   profile: UserProfile | null;
   signIn: () => void;
   signOut: () => void;
-  /** Used by drive-api calls when 401 indicates expired token. */
   refreshToken: () => Promise<string | null>;
 }
 
@@ -57,15 +60,61 @@ export function useAuth(): AuthState {
   return ctx;
 }
 
+async function fetchServerAccessToken(): Promise<StoredToken | null> {
+  try {
+    const res = await fetch("/api/auth/refresh", { method: "POST", credentials: "same-origin" });
+    if (!res.ok) return null;
+    const data = (await res.json()) as { access_token: string; expires_in: number };
+    return {
+      access_token: data.access_token,
+      expires_at: Date.now() + data.expires_in * 1000,
+    };
+  } catch {
+    return null;
+  }
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isReady, setIsReady] = useState(false);
   const [token, setToken] = useState<string | null>(null);
+  const [expiresAt, setExpiresAt] = useState<number | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const tokenClientRef = useRef<TokenClient | null>(null);
+  const codeClientRef = useRef<CodeClient | null>(null);
   const pendingRefreshRef = useRef<Promise<string | null> | null>(null);
   const refreshResolverRef = useRef<((token: string | null) => void) | null>(null);
+  const proactiveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+
+  const persistAccessToken = useCallback((accessToken: string, expiresAtMs: number) => {
+    const stored: StoredToken = {
+      access_token: accessToken,
+      expires_at: expiresAtMs,
+    };
+    try {
+      sessionStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify(stored));
+    } catch {
+      /* sessionStorage unavailable */
+    }
+    setToken(accessToken);
+    setExpiresAt(expiresAtMs);
+  }, []);
+
+  const clearLocalAuth = useCallback(() => {
+    sessionStorage.removeItem(TOKEN_STORAGE_KEY);
+    setToken(null);
+    setExpiresAt(null);
+    setProfile(null);
+  }, []);
+
+  const applyAccessToken = useCallback((accessToken: string, expiresInSec: number) => {
+    const expiresAtMs = Date.now() + expiresInSec * 1000;
+    persistAccessToken(accessToken, expiresAtMs);
+    refreshResolverRef.current?.(accessToken);
+    refreshResolverRef.current = null;
+    pendingRefreshRef.current = null;
+  }, [persistAccessToken]);
 
   // Load Google Identity Services script
   useEffect(() => {
@@ -88,32 +137,50 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     document.head.appendChild(script);
   }, []);
 
-  // Initialize the token client once GSI is loaded
+  const refreshFromServer = useCallback(async (): Promise<string | null> => {
+    const stored = await fetchServerAccessToken();
+    if (!stored) return null;
+    persistAccessToken(stored.access_token, stored.expires_at);
+    return stored.access_token;
+  }, [persistAccessToken]);
+
+  const refreshToken = useCallback((): Promise<string | null> => {
+    if (pendingRefreshRef.current) return pendingRefreshRef.current;
+
+    const p = (async (): Promise<string | null> => {
+      if (USE_SERVER_REFRESH) {
+        const fresh = await refreshFromServer();
+        if (fresh) return fresh;
+        clearLocalAuth();
+        return null;
+      }
+      if (!tokenClientRef.current) return null;
+      return new Promise<string | null>((resolve) => {
+        refreshResolverRef.current = resolve;
+        tokenClientRef.current!.requestAccessToken({ prompt: "" });
+      });
+    })();
+
+    pendingRefreshRef.current = p;
+    p.finally(() => {
+      if (pendingRefreshRef.current === p) pendingRefreshRef.current = null;
+    });
+    return p;
+  }, [clearLocalAuth, refreshFromServer]);
+
+  // Initialize Google OAuth clients
   useEffect(() => {
     if (!isReady || !window.google?.accounts) return;
     if (!clientId) {
       console.error("NEXT_PUBLIC_GOOGLE_CLIENT_ID is not set.");
       return;
     }
+
     tokenClientRef.current = window.google.accounts.oauth2.initTokenClient({
       client_id: clientId,
       scope: SCOPES,
       callback: (response: TokenResponse) => {
-        const expiresAt = Date.now() + response.expires_in * 1000;
-        const stored: StoredToken = {
-          access_token: response.access_token,
-          expires_at: expiresAt,
-        };
-        try {
-          sessionStorage.setItem(TOKEN_STORAGE_KEY, JSON.stringify(stored));
-        } catch {
-          // sessionStorage might be unavailable; that's fine, token still in memory.
-        }
-        setToken(response.access_token);
-        // Resolve any pending refresh
-        refreshResolverRef.current?.(response.access_token);
-        refreshResolverRef.current = null;
-        pendingRefreshRef.current = null;
+        applyAccessToken(response.access_token, response.expires_in);
       },
       error_callback: (err) => {
         console.error("[auth] token client error:", err);
@@ -123,22 +190,81 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       },
     });
 
-    // Restore a non-expired token from sessionStorage
-    try {
-      const raw = sessionStorage.getItem(TOKEN_STORAGE_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw) as StoredToken;
-        // Reject tokens with <60s left to avoid 401 race conditions.
-        if (parsed.expires_at > Date.now() + 60_000) {
-          setToken(parsed.access_token);
-        } else {
+    if (USE_SERVER_REFRESH) {
+      codeClientRef.current = window.google.accounts.oauth2.initCodeClient({
+        client_id: clientId,
+        scope: SCOPES,
+        ux_mode: "popup",
+        callback: (response) => {
+          void (async () => {
+            try {
+              const res = await fetch("/api/auth/google", {
+                method: "POST",
+                credentials: "same-origin",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  code: response.code,
+                  redirectUri: window.location.origin,
+                }),
+              });
+              if (!res.ok) {
+                const err = await res.json().catch(() => ({}));
+                throw new Error((err as { error?: string }).error ?? "Sign-in failed");
+              }
+              const data = (await res.json()) as { access_token: string; expires_in: number };
+              applyAccessToken(data.access_token, data.expires_in);
+            } catch (err) {
+              console.error("[auth] code exchange failed:", err);
+              refreshResolverRef.current?.(null);
+              refreshResolverRef.current = null;
+              pendingRefreshRef.current = null;
+            }
+          })();
+        },
+        error_callback: (err) => {
+          console.error("[auth] code client error:", err);
+        },
+      });
+    }
+
+    void (async () => {
+      try {
+        const raw = sessionStorage.getItem(TOKEN_STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw) as StoredToken;
+          if (parsed.expires_at > Date.now() + 60_000) {
+            persistAccessToken(parsed.access_token, parsed.expires_at);
+            return;
+          }
           sessionStorage.removeItem(TOKEN_STORAGE_KEY);
         }
+      } catch {
+        /* ignore */
       }
-    } catch {
-      // ignore
+
+      if (USE_SERVER_REFRESH) {
+        await refreshFromServer();
+      }
+    })();
+  }, [isReady, clientId, applyAccessToken, persistAccessToken, refreshFromServer]);
+
+  // Proactively refresh access token before it expires (Google tokens are ~1h).
+  useEffect(() => {
+    if (proactiveTimerRef.current) {
+      clearTimeout(proactiveTimerRef.current);
+      proactiveTimerRef.current = null;
     }
-  }, [isReady, clientId]);
+    if (!token || !expiresAt) return;
+
+    const delay = Math.max(0, expiresAt - Date.now() - REFRESH_BUFFER_MS);
+    proactiveTimerRef.current = setTimeout(() => {
+      void refreshToken();
+    }, delay);
+
+    return () => {
+      if (proactiveTimerRef.current) clearTimeout(proactiveTimerRef.current);
+    };
+  }, [token, expiresAt, refreshToken]);
 
   useEffect(() => {
     if (token) openFilesListSnapshot();
@@ -148,7 +274,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setFilesCacheUser(profile?.sub ?? null);
   }, [profile]);
 
-  // Fetch user profile whenever we get a new token
   useEffect(() => {
     if (!token) {
       setProfile(null);
@@ -169,6 +294,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [token]);
 
   const signIn = useCallback(() => {
+    if (USE_SERVER_REFRESH) {
+      if (!codeClientRef.current) {
+        console.warn("[auth] code client not ready");
+        return;
+      }
+      codeClientRef.current.requestCode({ prompt: "consent" });
+      return;
+    }
     if (!tokenClientRef.current) {
       console.warn("[auth] token client not ready");
       return;
@@ -177,35 +310,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signOut = useCallback(() => {
-    if (token && window.google?.accounts) {
-      window.google.accounts.oauth2.revoke(token);
-    }
-    sessionStorage.removeItem(TOKEN_STORAGE_KEY);
-    clearFilesListSnapshot();
-    clearFolderChildrenCache();
-    clearTypeBrowseCountsCache();
-    clearFolderItemCountCache();
-    setToken(null);
-    setProfile(null);
-  }, [token]);
-
-  /**
-   * Re-issue an access token silently when the current one expires.
-   * Returns the new token, or null if user interaction is required.
-   */
-  const refreshToken = useCallback((): Promise<string | null> => {
-    if (pendingRefreshRef.current) return pendingRefreshRef.current;
-    if (!tokenClientRef.current) return Promise.resolve(null);
-
-    const p = new Promise<string | null>((resolve) => {
-      refreshResolverRef.current = resolve;
-      // prompt: '' attempts silent token issuance — works as long as the user
-      // hasn't revoked consent. If it requires interaction, the popup appears.
-      tokenClientRef.current!.requestAccessToken({ prompt: "" });
-    });
-    pendingRefreshRef.current = p;
-    return p;
-  }, []);
+    void (async () => {
+      if (USE_SERVER_REFRESH) {
+        try {
+          await fetch("/api/auth/signout", { method: "POST", credentials: "same-origin" });
+        } catch {
+          /* ignore */
+        }
+      } else if (token && window.google?.accounts) {
+        window.google.accounts.oauth2.revoke(token);
+      }
+      sessionStorage.removeItem(TOKEN_STORAGE_KEY);
+      clearFilesListSnapshot();
+      clearFolderChildrenCache();
+      clearTypeBrowseCountsCache();
+      clearFolderItemCountCache();
+      clearLocalAuth();
+    })();
+  }, [token, clearLocalAuth]);
 
   useEffect(() => {
     setDriveTokenRefresh(refreshToken);
@@ -222,7 +344,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       signOut,
       refreshToken,
     }),
-    [isReady, token, profile, signIn, signOut, refreshToken]
+    [isReady, token, profile, signIn, signOut, refreshToken],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
