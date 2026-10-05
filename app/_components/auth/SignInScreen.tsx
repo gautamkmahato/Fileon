@@ -34,7 +34,7 @@ export function SignInScreen() {
             <p className="mt-4 text-base leading-relaxed text-zinc-600 sm:text-lg">
               {APP_TAGLINE}
               <br />
-              Files stay where they are — we just give them a better home.
+              Files stay where they are - we just give them a better home.
             </p>
           </div>
 
@@ -59,7 +59,7 @@ export function SignInScreen() {
 
           <p className="mt-8 text-center text-xs leading-relaxed text-zinc-500 lg:text-left">
             We use the standard Google OAuth flow. Your Drive credentials never touch our
-            servers — Google handles all authentication directly.
+            servers - Google handles all authentication directly.
           </p>
         </div>
       </div>
