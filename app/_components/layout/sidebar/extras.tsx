@@ -343,7 +343,7 @@ function FavoritesExtra({
         label="Favorites"
         count={favoriteFolders.length > FAVORITES_VISIBLE_CAP && !showAll ? favoriteFolders.length : undefined}
       />
-      <div className={`space-y-0.5 ${showAll ? "max-h-[400px] overflow-y-auto" : ""}`}>
+      <div className={`space-y-0.5 ${showAll ? "max-h-[400px] overflow-y-auto scrollbar-custom" : ""}`}>
         {visible.map((folder) => (
           <FolderRow
             key={folder.id}

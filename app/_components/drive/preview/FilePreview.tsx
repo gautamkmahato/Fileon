@@ -258,7 +258,7 @@ export function FilePreview({ file, onClose, onFileChanged, onFileDeleted, fileT
         </div>
 
         {/* Body */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto scrollbar-custom">
           <PreviewBody file={file} userEmail={profile?.email} variant="drawer" />
 
           {/* Metadata */}

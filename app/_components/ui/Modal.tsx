@@ -51,7 +51,7 @@ export function Modal({ open, onClose, title, children, footer, width = "max-w-m
             <X className="w-4 h-4" />
           </button>
         </div>
-        <div className="px-5 py-5 overflow-y-auto min-h-0">{children}</div>
+        <div className="px-5 py-5 overflow-y-auto scrollbar-custom min-h-0">{children}</div>
         {footer && (
           <div className="px-5 py-3 border-t border-zinc-200 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-900/80 flex flex-wrap items-center justify-end gap-2 shrink-0">
             {footer}

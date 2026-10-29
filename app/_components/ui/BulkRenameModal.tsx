@@ -180,7 +180,7 @@ export function BulkRenameModal({
         </div>
       )}
 
-      <div className="border border-zinc-200 dark:border-zinc-700 rounded-lg overflow-hidden max-h-64 overflow-y-auto">
+      <div className="border border-zinc-200 dark:border-zinc-700 rounded-lg overflow-hidden max-h-64 overflow-y-auto scrollbar-custom">
         <div className="grid grid-cols-2 gap-px bg-zinc-200 dark:bg-zinc-700 text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
           <div className="bg-zinc-50 dark:bg-zinc-800 px-3 py-2">Current</div>
           <div className="bg-zinc-50 dark:bg-zinc-800 px-3 py-2">New name</div>

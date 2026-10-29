@@ -169,7 +169,7 @@ function AppShellInner() {
         <main className={`flex-1 min-h-0 min-w-0 ${
           isInboxView
             ? "p-2 sm:p-3 overflow-hidden flex flex-col"
-            : "px-3 py-4 lg:px-6 lg:py-6 overflow-auto"
+            : "px-3 py-4 lg:px-6 lg:py-6 overflow-auto scrollbar-custom"
         }`}>
           {isActivityView ? (
             <ActivityPageView />

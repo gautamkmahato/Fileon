@@ -5,12 +5,18 @@
 :root {
   --background: #f8fafc;
   --foreground: #0f172a;
+  --bg-tertiary: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --text-muted: #64748b;
   color-scheme: light;
 }
 
 .dark {
   --background: #0f0f0f;
   --foreground: #f3f3f3;
+  --bg-tertiary: #2a2a2a;
+  --border-strong: #5a5a5a;
+  --text-muted: #8e8e8e;
   color-scheme: dark;
 }
 
@@ -66,4 +72,49 @@ body {
   .btn-primary-toggle {
     @apply bg-zinc-900 text-white border-zinc-900 hover:bg-zinc-800 dark:bg-zinc-900 dark:border-zinc-700 dark:text-white dark:hover:bg-zinc-800;
   }
+}
+
+/* global thin scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--bg-tertiary) transparent;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--bg-tertiary); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-strong); }
+
+.scrollbar-custom {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.3s ease;
+}
+
+.scrollbar-custom:hover {
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+.scrollbar-custom::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 9999px;
+  transition: background-color 0.3s ease;
+}
+
+.scrollbar-custom:hover::-webkit-scrollbar-thumb {
+  background-color: var(--border-strong);
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text-muted);
 }

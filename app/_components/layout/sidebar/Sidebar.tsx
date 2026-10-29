@@ -180,7 +180,7 @@ export function Sidebar({
       } lg:relative lg:translate-x-0`}
     >
       <div className="h-full w-[60px] shrink-0 border-r border-zinc-200/80 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex flex-col">
-        <nav className="flex-1 overflow-y-auto py-4 px-2 space-y-1" aria-label="Primary">
+        <nav className="flex-1 overflow-y-auto scrollbar-custom py-4 px-2 space-y-1" aria-label="Primary">
           {NAV_SECTIONS.map((item) => {
             const Icon = item.icon;
             if (!Icon) return null;
@@ -217,7 +217,7 @@ export function Sidebar({
             </h2>
           </div>
 
-          <div className="flex-1 overflow-y-auto px-3 pb-5 space-y-6">
+          <div className="flex-1 overflow-y-auto scrollbar-custom px-3 pb-5 space-y-6">
             {links.length > 0 && (
               <ul className="space-y-0.5">
                 {links.map((item) => {

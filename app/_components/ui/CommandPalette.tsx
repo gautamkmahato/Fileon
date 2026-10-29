@@ -145,7 +145,7 @@ export function CommandPalette({
             />
             <kbd className="text-[10px] px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-500">esc</kbd>
           </div>
-          <div className="max-h-80 overflow-y-auto py-2">
+          <div className="max-h-80 overflow-y-auto scrollbar-custom py-2">
             {results.length === 0 && (
               <p className="px-4 py-6 text-sm text-zinc-500 text-center">No results</p>
             )}

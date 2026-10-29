@@ -330,7 +330,7 @@ export function AllFoldersModal({ open, token, onClose }: AllFoldersModalProps) 
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-2 min-h-0">
+        <div className="flex-1 overflow-y-auto scrollbar-custom p-2 min-h-0">
           {showFullLoader ? (
             <div className="flex justify-center py-12">
               <Loader2 className="w-6 h-6 animate-spin text-zinc-400" />

@@ -198,7 +198,7 @@ export function TagPickerModal({
           />
         </div>
 
-        <div className="max-h-80 overflow-y-auto py-2">
+        <div className="max-h-80 overflow-y-auto scrollbar-custom py-2">
           {allTags.length === 0 && !query.trim() ? (
             <div className="px-5 py-6 text-center">
               <p className="text-sm text-zinc-500 mb-3">No tags yet.</p>

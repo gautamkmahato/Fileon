@@ -192,7 +192,7 @@ export function TagManageModal({ open, onClose, tags, counts }: TagManageModalPr
             ))}
           </div>
 
-          <div className="flex-1 overflow-y-auto px-5 py-3">
+          <div className="flex-1 overflow-y-auto scrollbar-custom px-5 py-3">
             {tags.length === 0 ? (
               <p className="text-sm text-zinc-500 py-4 text-center">No tags yet. Create one above.</p>
             ) : visibleKinds.every((k) => (grouped.get(k) ?? []).length === 0) ? (

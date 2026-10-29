@@ -118,7 +118,7 @@ export function SetFolderCoverModal({
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-3 gap-2 max-h-[360px] overflow-y-auto pr-1">
+              <div className="grid grid-cols-3 gap-2 max-h-[360px] overflow-y-auto scrollbar-custom pr-1">
                 {images.map((img) => (
                   <button
                     key={img.id}

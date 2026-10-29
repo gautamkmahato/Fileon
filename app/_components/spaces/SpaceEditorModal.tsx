@@ -138,7 +138,7 @@ export function SpaceEditorModal({ open, space, onClose, onSaved }: SpaceEditorM
           </button>
         </div>
 
-        <div className="px-5 py-4 space-y-4 overflow-y-auto">
+        <div className="px-5 py-4 space-y-4 overflow-y-auto scrollbar-custom">
           <div>
             <label className="block text-xs font-medium text-zinc-600 dark:text-zinc-400 mb-1.5">Name</label>
             <input

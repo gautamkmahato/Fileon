@@ -62,7 +62,7 @@ export function AnchorDropdownMenu({
   return createPortal(
     <div
       ref={menuRef}
-      className="fixed z-[100] bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-lg shadow-lg py-1 max-h-[min(60dvh,320px)] overflow-y-auto"
+      className="scrollbar-custom fixed z-[100] bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-lg shadow-lg py-1 max-h-[min(60dvh,320px)] overflow-y-auto"
       style={{ top: pos.top, left: pos.left, minWidth: pos.width }}
     >
       {children}

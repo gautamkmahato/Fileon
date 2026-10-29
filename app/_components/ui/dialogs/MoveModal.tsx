@@ -90,7 +90,7 @@ export function MoveModal({
           <Loader2 className="w-5 h-5 animate-spin text-zinc-400" />
         </div>
       ) : (
-        <ul className="max-h-[320px] overflow-y-auto -mx-1.5 space-y-0.5">
+        <ul className="max-h-[320px] overflow-y-auto scrollbar-custom -mx-1.5 space-y-0.5">
           {filteredMyDrive && (
             <FolderRow
               name="My Drive"
