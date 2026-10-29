@@ -136,7 +136,7 @@ export function PublicShareGate({ token }: { token: string }) {
 
 function Shell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-white dark:bg-zinc-900 flex items-center justify-center p-6">
       <div className="w-full max-w-md rounded-2xl border border-zinc-200/80 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-8 shadow-sm text-center">
         <div className="mb-6 flex justify-center">
           <AppLogo href="/home" size="sm" />

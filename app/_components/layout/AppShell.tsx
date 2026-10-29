@@ -40,7 +40,7 @@ function AppShellInner() {
 
   return (
     <div
-      className="h-screen overflow-hidden bg-zinc-50 dark:bg-zinc-900 flex flex-col transition-colors"
+      className="h-screen overflow-hidden bg-white dark:bg-zinc-900 flex flex-col transition-colors"
       onDragEnter={dragDrop.onWindowDragEnter}
       onDragLeave={dragDrop.onWindowDragLeave}
       onDragOver={dragDrop.onWindowDragOver}
