@@ -52,7 +52,7 @@ export function CleanupDashboard() {
         <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
           Drive health
         </h1>
-        <p className="text-sm text-zinc-500 mt-1">
+        <p className="text-sm text-zinc-500 dark:text-zinc-100 mt-1">
           Duplicates, stale files, unused clutter, and structure issues — in one place.
         </p>
       </div>
@@ -70,13 +70,13 @@ export function CleanupDashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-4 mb-6">
         <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5 flex flex-col items-center justify-center">
-          <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-zinc-400">Health score</p>
-          <p className={`text-5xl font-semibold tabular-nums mt-2 ${score == null ? "text-zinc-300" : scoreColor(score)}`}>
+          <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-zinc-400 dark:text-zinc-100">Health score</p>
+          <p className={`text-5xl font-semibold tabular-nums mt-2 ${score == null ? "text-zinc-300 dark:text-zinc-100" : scoreColor(score)}`}>
             {score == null ? "—" : score}
-            <span className="text-lg text-zinc-400 font-medium">/100</span>
+            <span className="text-lg text-zinc-400 dark:text-zinc-100 font-medium">/100</span>
           </p>
           {analysis && (
-            <p className="text-xs text-zinc-500 mt-2 text-center">
+            <p className="text-xs text-zinc-500 dark:text-zinc-100 mt-2 text-center">
               {analysis.counts.duplicateFiles.toLocaleString()} duplicate candidates ·{" "}
               {analysis.counts.stale1y.toLocaleString()} stale ·{" "}
               {analysis.counts.untagged.toLocaleString()} untagged ·{" "}
@@ -86,23 +86,23 @@ export function CleanupDashboard() {
         </div>
 
         <div className="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
-          <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-zinc-400 mb-3">
+          <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-zinc-400 dark:text-zinc-100 mb-3">
             Score breakdown
           </p>
           <ul className="space-y-2">
             {(analysis?.health.breakdown ?? []).map((item) => (
               <li key={item.label} className="flex items-center justify-between gap-3 text-sm">
-                <span className="text-zinc-700 dark:text-zinc-300">{item.label}</span>
-                <span className="text-zinc-500 tabular-nums">
+                <span className="text-zinc-700 dark:text-zinc-100">{item.label}</span>
+                <span className="text-zinc-500 dark:text-zinc-100 tabular-nums">
                   {item.count.toLocaleString()}
                   {item.penalty > 0 && (
-                    <span className="text-zinc-400 ml-2">−{item.penalty}</span>
+                    <span className="text-zinc-400 dark:text-zinc-100 ml-2">−{item.penalty}</span>
                   )}
                 </span>
               </li>
             ))}
             {!analysis && (
-              <li className="text-sm text-zinc-400">
+              <li className="text-sm text-zinc-400 dark:text-zinc-100">
                 {scan.status === "scanning" || scan.status === "loading" ? "Scoring after scan…" : "Run a scan to see Drive health."}
               </li>
             )}
@@ -121,7 +121,7 @@ export function CleanupDashboard() {
               href={driveRoutes.cleanupKind(kind)}
               className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4 hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors"
             >
-              <div className="flex items-center gap-2 text-zinc-500 mb-2">
+              <div className="flex items-center gap-2 text-zinc-500 dark:text-zinc-100 mb-2">
                 <Icon className="w-4 h-4" strokeWidth={1.75} />
                 <span className="text-xs font-medium truncate">{meta.label}</span>
               </div>
@@ -139,7 +139,7 @@ export function CleanupDashboard() {
             <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
               Clean these first
             </h2>
-            <p className="text-xs text-zinc-500 mt-0.5">
+            <p className="text-xs text-zinc-500 dark:text-zinc-100 mt-0.5">
               Prioritized by size, age, duplicates, and activity. Review before deleting.
             </p>
           </div>
@@ -150,7 +150,7 @@ export function CleanupDashboard() {
                 const ids = analysis!.recommendations.map((f) => f.file.id);
                 useSelectionStore.getState().setSelection(ids, ids[ids.length - 1] ?? null);
               }}
-              className="text-xs font-medium text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100"
+              className="text-xs font-medium text-zinc-600 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-zinc-100"
             >
               Select all
             </button>

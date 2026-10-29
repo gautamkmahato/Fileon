@@ -28,10 +28,10 @@ export function SignInScreen() {
             <div className="mb-6 flex justify-center lg:justify-start">
               <AppLogo size={72} priority href="/home" />
             </div>
-            <h1 className="text-4xl font-semibold tracking-tight text-zinc-900 sm:text-[2.75rem]">
+            <h1 className="text-4xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-[2.75rem]">
               {APP_NAME}
             </h1>
-            <p className="mt-4 text-base leading-relaxed text-zinc-600 sm:text-lg">
+            <p className="mt-4 text-base leading-relaxed text-zinc-600 dark:text-zinc-100 sm:text-lg">
               {APP_TAGLINE}
               <br />
               Files stay where they are - we just give them a better home.
@@ -42,11 +42,11 @@ export function SignInScreen() {
             type="button"
             onClick={signIn}
             disabled={!isReady}
-            className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl border border-zinc-200/90 bg-white text-base font-medium text-zinc-800 shadow-[0_8px_30px_rgba(0,0,0,0.08)] transition-colors hover:bg-zinc-50 disabled:opacity-50"
+            className="flex h-14 w-full items-center justify-center gap-3 rounded-2xl border border-zinc-200/90 bg-white text-base font-medium text-zinc-800 dark:text-zinc-100 shadow-[0_8px_30px_rgba(0,0,0,0.08)] transition-colors hover:bg-zinc-50 disabled:opacity-50"
           >
             {!isReady ? (
               <>
-                <Loader2 className="h-5 w-5 animate-spin text-zinc-500" />
+                <Loader2 className="h-5 w-5 animate-spin text-zinc-500 dark:text-zinc-100" />
                 Loading Google sign-in…
               </>
             ) : (
@@ -57,7 +57,7 @@ export function SignInScreen() {
             )}
           </button>
 
-          <p className="mt-8 text-center text-xs leading-relaxed text-zinc-500 lg:text-left">
+          <p className="mt-8 text-center text-xs leading-relaxed text-zinc-500 dark:text-zinc-100 lg:text-left">
             We use the standard Google OAuth flow. Your Drive credentials never touch our
             servers - Google handles all authentication directly.
           </p>

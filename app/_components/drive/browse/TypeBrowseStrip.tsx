@@ -71,7 +71,7 @@ export function TypeBrowseStrip() {
                 <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 truncate">
                   {meta.label}
                 </p>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5 truncate">
+                <p className="text-xs text-zinc-500 dark:text-zinc-100 mt-0.5 truncate">
                   {formatTypeCount(category, countInfo)}
                 </p>
               </div>

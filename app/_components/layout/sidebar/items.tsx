@@ -13,7 +13,7 @@ export function navRowClass(active: boolean, nested = false): string {
     nested ? "pl-9 pr-3" : "px-3",
     active
       ? "bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-semibold"
-      : "text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900",
+      : "text-zinc-700 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900",
   ].join(" ");
 }
 
@@ -51,7 +51,7 @@ export function NavButton({
       <Icon className="w-4 h-4 shrink-0" strokeWidth={active ? 2 : 1.75} />
       <span className="truncate flex-1 text-left">{label}</span>
       {trailing === "chevron" && (
-        <ChevronRight className="w-3.5 h-3.5 text-zinc-400" strokeWidth={2} />
+        <ChevronRight className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-100" strokeWidth={2} />
       )}
     </button>
   );
@@ -67,10 +67,10 @@ export function SectionHeader({
 }) {
   return (
     <div className="px-1 mb-1.5 flex items-center justify-between">
-      <h3 className="text-[10px] font-bold uppercase tracking-[0.1em] text-zinc-400">
+      <h3 className="text-[10px] font-bold uppercase tracking-[0.1em] text-zinc-400 dark:text-zinc-100">
         {label}
         {count !== undefined && (
-          <span className="text-zinc-300 dark:text-zinc-600 font-medium tabular-nums normal-case tracking-normal ml-1.5">
+          <span className="text-zinc-300 dark:text-zinc-100 font-medium tabular-nums normal-case tracking-normal ml-1.5">
             · {count}
           </span>
         )}
@@ -79,7 +79,7 @@ export function SectionHeader({
         <button
           type="button"
           onClick={onAction}
-          className="w-5 h-5 rounded text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center"
+          className="w-5 h-5 rounded text-zinc-400 dark:text-zinc-100 hover:text-zinc-700 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center"
           aria-label={`${label} action`}
         >
           <ActionIcon className="w-3.5 h-3.5" strokeWidth={2} />
@@ -90,7 +90,7 @@ export function SectionHeader({
 }
 
 export function EmptyHint({ children }: { children: React.ReactNode }) {
-  return <p className="px-3 py-1 text-[11px] text-zinc-400">{children}</p>;
+  return <p className="px-3 py-1 text-[11px] text-zinc-400 dark:text-zinc-100">{children}</p>;
 }
 
 export function ShowMoreButton({
@@ -104,7 +104,7 @@ export function ShowMoreButton({
     <button
       type="button"
       onClick={onClick}
-      className="mt-1 w-full text-left px-3 py-1 text-[11px] font-medium text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200"
+      className="mt-1 w-full text-left px-3 py-1 text-[11px] font-medium text-zinc-500 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-zinc-100"
     >
       {expanded ? "Show less" : `Show all (${total})`}
     </button>
@@ -129,7 +129,7 @@ export function FolderRow({
           ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 font-semibold"
           : isDrop
           ? "bg-blue-50 dark:bg-blue-950/40 ring-2 ring-blue-400"
-          : "text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900"
+          : "text-zinc-700 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900"
       }`}
       style={{ paddingLeft: 8 }}
       onDragOver={(e) => { e.preventDefault(); setDropTargetId(folder.id); }}
@@ -138,7 +138,7 @@ export function FolderRow({
     >
       <span className="shrink-0" />
       <Link href={driveRoutes.folder(folder.id)} className="flex items-center gap-2 min-w-0 flex-1">
-        <Folder className="w-4 h-4 shrink-0 text-zinc-500" strokeWidth={1.75} />
+        <Folder className="w-4 h-4 shrink-0 text-zinc-500 dark:text-zinc-100" strokeWidth={1.75} />
         <span className="truncate">{displayLabel(folder.name, "Untitled folder")}</span>
       </Link>
     </div>
@@ -155,7 +155,7 @@ export function CollapseToggle({
     <button
       type="button"
       onClick={onClick}
-      className="p-3 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 border-t border-zinc-200 dark:border-zinc-800 text-xs"
+      className="p-3 text-zinc-400 dark:text-zinc-100 hover:text-zinc-600 dark:hover:text-zinc-100 border-t border-zinc-200 dark:border-zinc-800 text-xs"
       title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
     >
       {collapsed ? "»" : "«"}

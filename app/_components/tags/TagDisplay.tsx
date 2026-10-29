@@ -32,7 +32,7 @@ export function TagPills({ tags, max = 4, className = "" }: TagPillsProps) {
         );
       })}
       {extra > 0 && (
-        <span className="text-[10px] text-zinc-400 font-medium">+{extra}</span>
+        <span className="text-[10px] text-zinc-400 dark:text-zinc-100 font-medium">+{extra}</span>
       )}
     </div>
   );
@@ -67,7 +67,7 @@ export function TagDots({ tags, max = 5, className = "" }: TagDotsProps) {
         );
       })}
       {tags.length > max && (
-        <span className="text-[9px] text-zinc-400">+{tags.length - max}</span>
+        <span className="text-[9px] text-zinc-400 dark:text-zinc-100">+{tags.length - max}</span>
       )}
     </div>
   );

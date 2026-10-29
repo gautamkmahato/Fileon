@@ -35,7 +35,7 @@ export function CleanupScanBanner({
     <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
       <div className="min-w-0">
         {busy && (
-          <p className="text-sm text-zinc-500 flex items-center gap-2">
+          <p className="text-sm text-zinc-500 dark:text-zinc-100 flex items-center gap-2">
             <Loader2 className="w-4 h-4 animate-spin shrink-0" />
             {phaseLabel}
             {listed > 0 && status === "scanning" && (
@@ -47,7 +47,7 @@ export function CleanupScanBanner({
           <p className="text-sm text-red-600 dark:text-red-400">{error || "Scan failed"}</p>
         )}
         {status === "ready" && !busy && (
-          <p className="text-xs text-zinc-500">
+          <p className="text-xs text-zinc-500 dark:text-zinc-100">
             {scannedAt ? `Last updated ${formatSynced(scannedAt)}` : "Saved locally"}
             {truncated && (
               <span className="text-amber-700 dark:text-amber-400">
@@ -62,7 +62,7 @@ export function CleanupScanBanner({
         type="button"
         onClick={onRefresh}
         disabled={busy}
-        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 disabled:opacity-50"
+        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 disabled:opacity-50"
       >
         <RefreshCw className={`w-3.5 h-3.5 ${status === "scanning" ? "animate-spin" : ""}`} />
         Rescan

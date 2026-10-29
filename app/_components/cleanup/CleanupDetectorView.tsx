@@ -96,7 +96,7 @@ export function CleanupDetectorView({
         <h1 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
           {meta.label}
         </h1>
-        <p className="text-sm text-zinc-500 mt-1">{meta.description}</p>
+        <p className="text-sm text-zinc-500 dark:text-zinc-100 mt-1">{meta.description}</p>
       </div>
 
       <CleanupScanBanner
@@ -135,7 +135,7 @@ export function CleanupDetectorView({
         />
       )}
 
-      <p className="text-xs text-zinc-500 mb-3 tabular-nums flex items-center justify-between gap-3">
+      <p className="text-xs text-zinc-500 dark:text-zinc-100 mb-3 tabular-nums flex items-center justify-between gap-3">
         <span>
           {scan.status === "scanning" || scan.status === "loading" ? "Scanning…" : `${count.toLocaleString()} found`}
           {kind === "duplicates" && analysis && dupMode === "exact" && (
@@ -149,7 +149,7 @@ export function CleanupDetectorView({
               if (!visibleIds.length) return;
               useSelectionStore.getState().setSelection(visibleIds, visibleIds[visibleIds.length - 1] ?? null);
             }}
-            className="text-xs font-medium text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100"
+            className="text-xs font-medium text-zinc-600 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-zinc-100"
           >
             Select all
           </button>
@@ -186,7 +186,7 @@ function ChipRow<T extends string>({
             className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
               active
                 ? "bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900"
-                : "bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700"
+                : "bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-100 hover:bg-zinc-200 dark:hover:bg-zinc-700"
             }`}
           >
             {item.label}

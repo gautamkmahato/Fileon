@@ -181,7 +181,7 @@ function MenuItem({
       className={`w-full flex items-center gap-2.5 px-3 py-1.5 text-sm text-left ${
         danger
           ? "text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30"
-          : "text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800"
+          : "text-zinc-700 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800"
       }`}
     >
       <Icon className="w-4 h-4" />

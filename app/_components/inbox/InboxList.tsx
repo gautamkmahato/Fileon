@@ -81,7 +81,7 @@ function InboxListRow({
               {file.name || "Untitled"}
             </p>
           </div>
-          <div className="mt-0.5 flex items-center gap-2 text-[11px] text-zinc-500">
+          <div className="mt-0.5 flex items-center gap-2 text-[11px] text-zinc-500 dark:text-zinc-100">
             <span className="truncate">{type.label}</span>
             <span className="shrink-0">·</span>
             <span className="shrink-0">{file.size ? humanFileSize(file.size) : "—"}</span>

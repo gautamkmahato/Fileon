@@ -66,7 +66,7 @@ export function UndoToastCard({ toastId, message, entryId, onUndo }: UndoToastCa
     >
       <div className="relative w-6 h-6 shrink-0" aria-hidden>
         <svg className="w-6 h-6 -rotate-90" viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r={R} fill="none" stroke="currentColor" strokeWidth="2" className="text-zinc-600" />
+          <circle cx="12" cy="12" r={R} fill="none" stroke="currentColor" strokeWidth="2" className="text-zinc-600 dark:text-zinc-100" />
           <circle
             cx="12"
             cy="12"

@@ -41,7 +41,7 @@ export function ViewContextMenu({
     >
       <button
         onClick={() => { onRename(); onClose(); }}
-        className="w-full flex items-center gap-2 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800"
+        className="w-full flex items-center gap-2 px-3 py-2 text-sm text-zinc-700 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800"
       >
         <Pencil className="w-3.5 h-3.5" />
         {renameLabel}

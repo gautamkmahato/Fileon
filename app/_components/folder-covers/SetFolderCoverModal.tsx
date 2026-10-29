@@ -100,12 +100,12 @@ export function SetFolderCoverModal({
       {tab === "pick" && (
         <div>
           {loading ? (
-            <div className="flex items-center justify-center py-16 text-zinc-500">
+            <div className="flex items-center justify-center py-16 text-zinc-500 dark:text-zinc-100">
               <Loader2 className="w-5 h-5 animate-spin mr-2" />
               Loading images…
             </div>
           ) : images.length === 0 ? (
-            <div className="text-center py-12 text-zinc-500 text-sm">
+            <div className="text-center py-12 text-zinc-500 dark:text-zinc-100 text-sm">
               <ImagePlus className="w-10 h-10 mx-auto mb-3 opacity-40" />
               <p>No images in this folder yet.</p>
               <button
@@ -173,9 +173,9 @@ export function SetFolderCoverModal({
             onChange={(e) => void handleUpload(e.target.files)}
           />
           <div className="w-14 h-14 rounded-2xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center mx-auto mb-4">
-            <Upload className="w-6 h-6 text-zinc-500" />
+            <Upload className="w-6 h-6 text-zinc-500 dark:text-zinc-100" />
           </div>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-4">
+          <p className="text-sm text-zinc-600 dark:text-zinc-100 mb-4">
             Upload an image into this folder and use it as the cover.
           </p>
           <button
@@ -215,7 +215,7 @@ function TabButton({
       className={`flex-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
         active
           ? "bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 shadow-sm"
-          : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200"
+          : "text-zinc-600 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-zinc-100"
       }`}
     >
       {children}

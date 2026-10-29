@@ -23,7 +23,7 @@ export function ClipboardBar({ onCancel, elevated }: ClipboardBarProps) {
         </span>
         <button
           onClick={onCancel}
-          className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200"
+          className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 dark:text-zinc-100"
         >
           <X className="w-3.5 h-3.5" />
           Cancel

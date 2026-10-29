@@ -122,7 +122,7 @@ export const FileCard = memo(function FileCard({
           {onMenu && !bulkSelectionActive && !isTrash && (
             <button
               onClick={(e) => { e.stopPropagation(); onMenu(file, e.currentTarget); }}
-              className="shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+              className="shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-zinc-500 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
               aria-label="More actions"
             >
               <MoreVertical className="w-4 h-4" strokeWidth={2} />
@@ -230,7 +230,7 @@ export const FileCard = memo(function FileCard({
           </button>
           <button
             onClick={(e) => { e.stopPropagation(); onDeleteForever?.(file); }}
-            className="inline-flex items-center justify-center gap-1.5 text-xs font-medium px-2 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800"
+            className="inline-flex items-center justify-center gap-1.5 text-xs font-medium px-2 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800"
           >
             <Trash2 className="w-3.5 h-3.5" />
             Delete

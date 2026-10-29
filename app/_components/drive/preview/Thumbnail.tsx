@@ -326,11 +326,11 @@ function DocTextPreview({ html, className }: { html: string; className?: string 
     <div className={`bg-white ${className || ""}`} style={{ position: "relative" }}>
       <div className="absolute inset-0 px-4 py-3 overflow-hidden">
         {text.heading && (
-          <div className="text-[10px] font-bold text-zinc-900 mb-1 line-clamp-2 leading-tight">
+          <div className="text-[10px] font-bold text-zinc-900 dark:text-zinc-100 mb-1 line-clamp-2 leading-tight">
             {text.heading}
           </div>
         )}
-        <div className="text-[7px] leading-[1.4] text-zinc-700 space-y-0.5">
+        <div className="text-[7px] leading-[1.4] text-zinc-700 dark:text-zinc-100 space-y-0.5">
           {text.paragraphs.slice(0, 8).map((p, i) => (
             <p key={i} className="line-clamp-2">{p}</p>
           ))}
@@ -345,7 +345,7 @@ function SheetPreview({ rows, className }: { rows: string[][]; className?: strin
   return (
     <div className={`bg-white ${className || ""}`} style={{ position: "relative" }}>
       <div className="absolute inset-0 p-1.5 overflow-hidden">
-        <table className="w-full border-collapse text-[6px] leading-tight text-zinc-700">
+        <table className="w-full border-collapse text-[6px] leading-tight text-zinc-700 dark:text-zinc-100">
           <tbody>
             {rows.map((row, ri) => (
               <tr key={ri} className={ri === 0 ? "bg-emerald-50/80 font-semibold" : ""}>

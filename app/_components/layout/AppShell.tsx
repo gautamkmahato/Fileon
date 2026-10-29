@@ -40,7 +40,7 @@ function AppShellInner() {
 
   return (
     <div
-      className="h-screen overflow-hidden bg-zinc-50 dark:bg-zinc-950 flex flex-col transition-colors"
+      className="h-screen overflow-hidden bg-zinc-50 dark:bg-zinc-900 flex flex-col transition-colors"
       onDragEnter={dragDrop.onWindowDragEnter}
       onDragLeave={dragDrop.onWindowDragLeave}
       onDragOver={dragDrop.onWindowDragOver}
@@ -51,7 +51,7 @@ function AppShellInner() {
           <button
             type="button"
             onClick={() => setMobileNavOpen(true)}
-            className="lg:hidden w-9 h-9 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-300 shrink-0"
+            className="lg:hidden w-9 h-9 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-100 shrink-0"
             aria-label="Open menu"
           >
             <Menu className="w-5 h-5" strokeWidth={1.75} />
@@ -68,11 +68,11 @@ function AppShellInner() {
             <button
               type="button"
               onClick={() => setGlobalSearchOpen(true)}
-              className="w-full h-9 px-3.5 rounded-lg bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200/70 dark:hover:bg-zinc-700/70 text-zinc-500 dark:text-zinc-400 text-sm flex items-center gap-2.5 transition-colors"
+              className="w-full h-9 px-3.5 rounded-lg bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200/70 dark:hover:bg-zinc-700/70 text-zinc-500 dark:text-zinc-100 text-sm flex items-center gap-2.5 transition-colors"
             >
               <Search className="w-4 h-4 shrink-0" strokeWidth={1.75} />
               <span className="flex-1 text-left truncate">Search files, folders, people…</span>
-              <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-[10px] font-mono font-semibold text-zinc-500 dark:text-zinc-400 shrink-0">
+              <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-[10px] font-mono font-semibold text-zinc-500 dark:text-zinc-100 shrink-0">
                 ⌘K
               </kbd>
             </button>
@@ -81,7 +81,7 @@ function AppShellInner() {
           <div className="flex items-center gap-1 sm:gap-2 shrink-0">
             <button
               type="button"
-              className="w-9 h-9 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-400 relative"
+              className="w-9 h-9 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-100 relative"
               aria-label="Notifications"
             >
               <Bell className="w-4 h-4" strokeWidth={1.75} />
@@ -110,7 +110,7 @@ function AppShellInner() {
                     {displayName}
                   </span>
                   <ChevronDown
-                    className={`w-3.5 h-3.5 text-zinc-400 shrink-0 transition-transform ${profileMenuOpen ? "rotate-180" : ""}`}
+                    className={`w-3.5 h-3.5 text-zinc-400 dark:text-zinc-100 shrink-0 transition-transform ${profileMenuOpen ? "rotate-180" : ""}`}
                     strokeWidth={2}
                   />
                 </button>
@@ -123,9 +123,9 @@ function AppShellInner() {
                   <Link
                     href={driveRoutes.controls}
                     onClick={() => setProfileMenuOpen(false)}
-                    className="w-full flex items-center gap-2.5 px-3 py-2.5 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-left"
+                    className="w-full flex items-center gap-2.5 px-3 py-2.5 text-sm text-zinc-700 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-left"
                   >
-                    <User className="w-4 h-4 text-zinc-500 shrink-0" strokeWidth={1.75} />
+                    <User className="w-4 h-4 text-zinc-500 dark:text-zinc-100 shrink-0" strokeWidth={1.75} />
                     Profile
                   </Link>
                   <button
@@ -134,9 +134,9 @@ function AppShellInner() {
                       setProfileMenuOpen(false);
                       signOut();
                     }}
-                    className="w-full flex items-center gap-2.5 px-3 py-2.5 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-left border-t border-zinc-100 dark:border-zinc-800"
+                    className="w-full flex items-center gap-2.5 px-3 py-2.5 text-sm text-zinc-700 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-left border-t border-zinc-100 dark:border-zinc-800"
                   >
-                    <LogOut className="w-4 h-4 text-zinc-500 shrink-0" strokeWidth={1.75} />
+                    <LogOut className="w-4 h-4 text-zinc-500 dark:text-zinc-100 shrink-0" strokeWidth={1.75} />
                     Sign out
                   </button>
                 </AnchorDropdownMenu>

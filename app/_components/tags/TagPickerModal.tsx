@@ -181,9 +181,9 @@ export function TagPickerModal({
         <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-200 dark:border-zinc-700">
           <div>
             <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-100">Tags</h2>
-            <p className="text-xs text-zinc-500 mt-0.5 truncate max-w-[240px]">{fileLabel}</p>
+            <p className="text-xs text-zinc-500 dark:text-zinc-100 mt-0.5 truncate max-w-[240px]">{fileLabel}</p>
           </div>
-          <button onClick={onClose} className="w-8 h-8 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center text-zinc-500">
+          <button onClick={onClose} className="w-8 h-8 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-100">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -201,7 +201,7 @@ export function TagPickerModal({
         <div className="max-h-80 overflow-y-auto scrollbar-custom py-2">
           {allTags.length === 0 && !query.trim() ? (
             <div className="px-5 py-6 text-center">
-              <p className="text-sm text-zinc-500 mb-3">No tags yet.</p>
+              <p className="text-sm text-zinc-500 dark:text-zinc-100 mb-3">No tags yet.</p>
               {onManageTags && (
                 <button
                   onClick={onManageTags}
@@ -242,18 +242,18 @@ export function TagPickerModal({
                 );
               })}
               {!anyVisible && createKinds.length === 0 && (
-                <p className="px-5 py-4 text-sm text-zinc-500 text-center">No matching tags</p>
+                <p className="px-5 py-4 text-sm text-zinc-500 dark:text-zinc-100 text-center">No matching tags</p>
               )}
               {createKinds.length > 0 && (
                 <div className="px-5 py-2 space-y-1">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-zinc-400">Create</p>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-zinc-400 dark:text-zinc-100">Create</p>
                   {createKinds.map((kind) => (
                     <button
                       key={kind}
                       type="button"
                       onClick={() => void handleCreate(kind)}
                       disabled={!!creatingKind}
-                      className="w-full flex items-center gap-2 px-0 py-1.5 text-sm text-zinc-700 dark:text-zinc-300 hover:text-zinc-900"
+                      className="w-full flex items-center gap-2 px-0 py-1.5 text-sm text-zinc-700 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-zinc-100"
                     >
                       {creatingKind === kind ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
                       {TAG_KIND_META[kind].label}: {createName}
@@ -277,7 +277,7 @@ export function TagPickerModal({
           <div className="flex gap-2">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-lg text-sm text-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+            className="px-4 py-2 rounded-lg text-sm text-zinc-600 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800"
           >
             Cancel
           </button>
@@ -306,9 +306,9 @@ function PickerSection({
 }) {
   return (
     <div className="mb-1">
-      <p className="px-5 pt-2 pb-1 text-[10px] font-bold uppercase tracking-[0.1em] text-zinc-400">
+      <p className="px-5 pt-2 pb-1 text-[10px] font-bold uppercase tracking-[0.1em] text-zinc-400 dark:text-zinc-100">
         {title}
-        {hint ? <span className="ml-1.5 font-medium normal-case tracking-normal text-zinc-300 dark:text-zinc-600">{hint}</span> : null}
+        {hint ? <span className="ml-1.5 font-medium normal-case tracking-normal text-zinc-300 dark:text-zinc-100">{hint}</span> : null}
       </p>
       {children}
     </div>

@@ -98,15 +98,15 @@ export function TagManageModal({ open, onClose, tags, counts }: TagManageModalPr
           <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-200 dark:border-zinc-700">
             <div>
               <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Manage tags</h2>
-              <p className="text-xs text-zinc-500 mt-0.5">App labels — not Google Drive labels. Combine them freely.</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-100 mt-0.5">App labels — not Google Drive labels. Combine them freely.</p>
             </div>
-            <button onClick={onClose} className="w-8 h-8 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center text-zinc-500">
+            <button onClick={onClose} className="w-8 h-8 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-100">
               <X className="w-4 h-4" />
             </button>
           </div>
 
           <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-700 space-y-3">
-            <p className="text-xs font-medium text-zinc-500 uppercase tracking-wider">
+            <p className="text-xs font-medium text-zinc-500 dark:text-zinc-100 uppercase tracking-wider">
               {editing ? (editingBuiltin ? "Built-in tag" : "Edit tag") : "New tag"}
             </p>
             <input
@@ -127,7 +127,7 @@ export function TagManageModal({ open, onClose, tags, counts }: TagManageModalPr
                     className={`px-2.5 py-1 rounded-md text-xs font-medium ${
                       kind === k
                         ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
-                        : "text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                        : "text-zinc-500 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800"
                     }`}
                     title={TAG_KIND_META[k].hint}
                   >
@@ -137,7 +137,7 @@ export function TagManageModal({ open, onClose, tags, counts }: TagManageModalPr
               </div>
             )}
             <div>
-              <p className="text-xs text-zinc-500 mb-2">Color</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-100 mb-2">Color</p>
               <div className="flex flex-wrap gap-2">
                 {TAG_COLORS.map((c) => (
                   <button
@@ -154,7 +154,7 @@ export function TagManageModal({ open, onClose, tags, counts }: TagManageModalPr
             </div>
             {!editingBuiltin && (
               <div>
-                <p className="text-xs text-zinc-500 mb-1.5">Emoji (optional)</p>
+                <p className="text-xs text-zinc-500 dark:text-zinc-100 mb-1.5">Emoji (optional)</p>
                 <input
                   value={emoji}
                   onChange={(e) => setEmoji(e.target.value.slice(0, 8))}
@@ -175,7 +175,7 @@ export function TagManageModal({ open, onClose, tags, counts }: TagManageModalPr
               {editing && (
                 <button
                   onClick={resetForm}
-                  className="px-4 py-2 rounded-lg text-sm text-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                  className="px-4 py-2 rounded-lg text-sm text-zinc-600 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800"
                 >
                   Cancel edit
                 </button>
@@ -194,18 +194,18 @@ export function TagManageModal({ open, onClose, tags, counts }: TagManageModalPr
 
           <div className="flex-1 overflow-y-auto scrollbar-custom px-5 py-3">
             {tags.length === 0 ? (
-              <p className="text-sm text-zinc-500 py-4 text-center">No tags yet. Create one above.</p>
+              <p className="text-sm text-zinc-500 dark:text-zinc-100 py-4 text-center">No tags yet. Create one above.</p>
             ) : visibleKinds.every((k) => (grouped.get(k) ?? []).length === 0) ? (
-              <p className="text-sm text-zinc-500 py-4 text-center">Nothing in this group yet.</p>
+              <p className="text-sm text-zinc-500 dark:text-zinc-100 py-4 text-center">Nothing in this group yet.</p>
             ) : (
               visibleKinds.map((k) => {
                 const list = grouped.get(k) ?? [];
                 if (list.length === 0) return null;
                 return (
                   <div key={k} className="mb-4 last:mb-0">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-zinc-400 mb-1">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.1em] text-zinc-400 dark:text-zinc-100 mb-1">
                       {TAG_KIND_META[k].label}
-                      <span className="ml-1.5 font-medium normal-case tracking-normal text-zinc-300 dark:text-zinc-600">
+                      <span className="ml-1.5 font-medium normal-case tracking-normal text-zinc-300 dark:text-zinc-100">
                         {TAG_KIND_META[k].hint}
                       </span>
                     </p>
@@ -227,12 +227,12 @@ export function TagManageModal({ open, onClose, tags, counts }: TagManageModalPr
                               title="Click to edit"
                             >
                               <span className="truncate">{displayTagName(tag)}</span>
-                              <span className="ml-2 text-xs text-zinc-400 font-normal">({count})</span>
+                              <span className="ml-2 text-xs text-zinc-400 dark:text-zinc-100 font-normal">({count})</span>
                             </button>
                             {!builtin && (
                               <button
                                 onClick={() => setDeleteTarget(tag)}
-                                className="w-8 h-8 rounded-lg text-zinc-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 flex items-center justify-center"
+                                className="w-8 h-8 rounded-lg text-zinc-400 dark:text-zinc-100 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 flex items-center justify-center"
                                 aria-label={`Delete ${tag.name}`}
                               >
                                 <Trash2 className="w-4 h-4" />
@@ -293,7 +293,7 @@ function KindChip({
       className={`px-2 py-0.5 rounded-md text-[11px] font-medium ${
         active
           ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
-          : "text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+          : "text-zinc-500 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800"
       }`}
     >
       {children}

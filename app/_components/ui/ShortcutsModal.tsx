@@ -74,18 +74,18 @@ export function ShortcutsModal({ open, onClose }: ShortcutsModalProps) {
       <div className="space-y-6">
         {SHORTCUTS.map((group) => (
           <div key={group.title}>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-100 mb-2">
               {group.title}
             </h3>
             <div className="space-y-2">
               {group.items.map((item) => (
                 <div key={item.description} className="flex items-center justify-between gap-4">
-                  <span className="text-sm text-zinc-700 dark:text-zinc-300">{item.description}</span>
+                  <span className="text-sm text-zinc-700 dark:text-zinc-100">{item.description}</span>
                   <div className="flex items-center gap-1 shrink-0">
                     {item.keys.map((k, i) => (
                       <kbd
                         key={i}
-                        className="text-xs px-2 py-1 rounded-md bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-300 font-mono"
+                        className="text-xs px-2 py-1 rounded-md bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-100 font-mono"
                       >
                         {k}
                       </kbd>

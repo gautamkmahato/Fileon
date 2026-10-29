@@ -98,10 +98,10 @@ export function InboxPageView() {
         <div className="shrink-0 px-3 pt-4 pb-3 border-b border-zinc-200/80 dark:border-zinc-800">
           <div className="flex items-baseline justify-between gap-2">
             <h1 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Inbox</h1>
-            <span className="text-[11px] tabular-nums text-zinc-400">{items.length}</span>
+            <span className="text-[11px] tabular-nums text-zinc-400 dark:text-zinc-100">{items.length}</span>
           </div>
           <div className="mt-2 relative">
-            <Search className="w-3.5 h-3.5 text-zinc-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-100 absolute left-2.5 top-1/2 -translate-y-1/2" />
             <input
               type="search"
               value={query}
@@ -115,25 +115,25 @@ export function InboxPageView() {
         <div className="flex-1 min-h-0 overflow-y-auto scrollbar-custom">
           {loading && items.length === 0 ? (
             <div className="h-full flex items-center justify-center">
-              <Loader2 className="w-6 h-6 animate-spin text-zinc-400" />
+              <Loader2 className="w-6 h-6 animate-spin text-zinc-400 dark:text-zinc-100" />
             </div>
           ) : error ? (
             <div className="px-4 py-10 text-center">
-              <p className="text-sm text-zinc-700 dark:text-zinc-300">Couldn't load inbox</p>
-              <p className="text-xs text-zinc-400 mt-1">{error}</p>
+              <p className="text-sm text-zinc-700 dark:text-zinc-100">Couldn't load inbox</p>
+              <p className="text-xs text-zinc-400 dark:text-zinc-100 mt-1">{error}</p>
               <button
                 type="button"
                 onClick={() => void loadFiles()}
-                className="mt-3 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:underline"
+                className="mt-3 text-xs font-medium text-zinc-700 dark:text-zinc-100 hover:underline"
               >
                 Try again
               </button>
             </div>
           ) : items.length === 0 ? (
             <div className="px-6 py-16 text-center">
-              <Inbox className="w-8 h-8 text-zinc-300 mx-auto mb-3" strokeWidth={1.5} />
-              <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200">Inbox zero</p>
-              <p className="text-xs text-zinc-400 mt-1">
+              <Inbox className="w-8 h-8 text-zinc-300 dark:text-zinc-100 mx-auto mb-3" strokeWidth={1.5} />
+              <p className="text-sm font-medium text-zinc-800 dark:text-zinc-100">Inbox zero</p>
+              <p className="text-xs text-zinc-400 dark:text-zinc-100 mt-1">
                 New uploads land here. You can decide where they belong later.
               </p>
             </div>

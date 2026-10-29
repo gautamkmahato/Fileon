@@ -303,14 +303,14 @@ export function AllFoldersModal({ open, token, onClose }: AllFoldersModalProps) 
         aria-labelledby="all-folders-title"
       >
         <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-700 flex items-center gap-3 shrink-0">
-          <Folder className="w-5 h-5 text-zinc-500" strokeWidth={1.75} />
+          <Folder className="w-5 h-5 text-zinc-500 dark:text-zinc-100" strokeWidth={1.75} />
           <h2 id="all-folders-title" className="text-base font-semibold text-zinc-900 dark:text-zinc-100 flex-1">
             All folders
           </h2>
           <button
             type="button"
             onClick={onClose}
-            className="w-8 h-8 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center text-zinc-500"
+            className="w-8 h-8 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-100"
             aria-label="Close"
           >
             <X className="w-4 h-4" />
@@ -319,7 +319,7 @@ export function AllFoldersModal({ open, token, onClose }: AllFoldersModalProps) 
 
         <div className="px-5 py-3 border-b border-zinc-200 dark:border-zinc-700 shrink-0">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 dark:text-zinc-100" />
             <input
               autoFocus
               value={search}
@@ -333,11 +333,11 @@ export function AllFoldersModal({ open, token, onClose }: AllFoldersModalProps) 
         <div className="flex-1 overflow-y-auto scrollbar-custom p-2 min-h-0">
           {showFullLoader ? (
             <div className="flex justify-center py-12">
-              <Loader2 className="w-6 h-6 animate-spin text-zinc-400" />
+              <Loader2 className="w-6 h-6 animate-spin text-zinc-400 dark:text-zinc-100" />
             </div>
           ) : isSearchMode ? (
             searchResults.length === 0 ? (
-              <div className="text-center py-12 text-sm text-zinc-500">
+              <div className="text-center py-12 text-sm text-zinc-500 dark:text-zinc-100">
                 No folders match &ldquo;{trimmedSearch}&rdquo;
               </div>
             ) : (
@@ -347,10 +347,10 @@ export function AllFoldersModal({ open, token, onClose }: AllFoldersModalProps) 
                     <button
                       type="button"
                       onClick={() => navigateToFolder(folder.id)}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-left"
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] text-zinc-700 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-left"
                     >
                       <span className="w-4 h-4 shrink-0" />
-                      <Folder className="w-4 h-4 shrink-0 text-zinc-500" strokeWidth={1.75} />
+                      <Folder className="w-4 h-4 shrink-0 text-zinc-500 dark:text-zinc-100" strokeWidth={1.75} />
                       <span className="truncate flex-1">{folder.name}</span>
                     </button>
                   </li>
@@ -358,7 +358,7 @@ export function AllFoldersModal({ open, token, onClose }: AllFoldersModalProps) 
               </ul>
             )
           ) : displayTree.length === 0 ? (
-            <div className="text-center py-12 text-sm text-zinc-500">No folders found</div>
+            <div className="text-center py-12 text-sm text-zinc-500 dark:text-zinc-100">No folders found</div>
           ) : (
             <ul className="space-y-0.5">
               {displayTree.map((node) => (
@@ -375,10 +375,10 @@ export function AllFoldersModal({ open, token, onClose }: AllFoldersModalProps) 
         </div>
 
         <div className="px-5 py-3 border-t border-zinc-200 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800/30 flex items-center justify-between shrink-0">
-          <span className="text-[11px] text-zinc-500">
+          <span className="text-[11px] text-zinc-500 dark:text-zinc-100">
             {visibleCount} folder{visibleCount === 1 ? "" : "s"}
           </span>
-          <span className="text-[11px] text-zinc-400 hidden sm:inline">Click any folder to navigate</span>
+          <span className="text-[11px] text-zinc-400 dark:text-zinc-100 hidden sm:inline">Click any folder to navigate</span>
         </div>
       </div>
     </div>,
@@ -412,7 +412,7 @@ function FolderTreeRow({
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); onToggle(node.folder.id); }}
-              className="w-4 h-4 flex items-center justify-center shrink-0 text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300"
+              className="w-4 h-4 flex items-center justify-center shrink-0 text-zinc-400 dark:text-zinc-100 hover:text-zinc-700 dark:hover:text-zinc-100"
               aria-label={node.expanded ? "Collapse" : "Expand"}
             >
               {node.loading ? (
@@ -426,8 +426,8 @@ function FolderTreeRow({
           ) : (
             <span className="w-4 h-4 shrink-0" />
           )}
-          <Folder className="w-4 h-4 shrink-0 text-zinc-500" strokeWidth={1.75} />
-          <span className="truncate flex-1 text-zinc-700 dark:text-zinc-300">{node.folder.name}</span>
+          <Folder className="w-4 h-4 shrink-0 text-zinc-500 dark:text-zinc-100" strokeWidth={1.75} />
+          <span className="truncate flex-1 text-zinc-700 dark:text-zinc-100">{node.folder.name}</span>
         </div>
       </li>
       {showChildren && node.children.map((child) => (

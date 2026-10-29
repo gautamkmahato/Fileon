@@ -81,7 +81,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={cycleMode}
-      className="w-9 h-9 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-400 transition-colors"
+      className="w-9 h-9 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-100 transition-colors"
       title={`Theme: ${label}`}
     >
       <Icon className="w-4 h-4" />
