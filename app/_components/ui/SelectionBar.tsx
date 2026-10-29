@@ -31,17 +31,17 @@ export function SelectionBar({
   const isBulk = count >= 2 || !!allowSingleActions;
 
   return (
-    <div className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-1.5rem)] max-w-3xl px-0">
-      <div className="flex items-center gap-1 px-2 py-2 bg-zinc-900 dark:bg-zinc-900/90 dark:backdrop-blur-md text-white rounded-xl shadow-2xl border border-zinc-700 dark:border-zinc-700/60 overflow-x-auto [-webkit-overflow-scrolling:touch]">
+    <div className="fixed inset-x-0 bottom-4 sm:bottom-6 z-50 flex justify-center px-3 pointer-events-none">
+      <div className="pointer-events-auto flex w-max max-w-full flex-wrap items-center justify-center gap-1 px-2 py-2 bg-zinc-900 dark:bg-zinc-900/90 dark:backdrop-blur-md text-white rounded-xl shadow-2xl border border-zinc-700 dark:border-zinc-700/60">
         {busy ? (
-          <span className="flex items-center gap-2 text-sm font-medium px-3 py-1.5 text-zinc-300">
+          <span className="flex items-center gap-2 text-sm font-medium px-3 py-1.5 text-zinc-300 whitespace-nowrap">
             <Loader2 className="w-4 h-4 animate-spin shrink-0" />
             {busyLabel ?? "Working…"}
           </span>
         ) : (
           <>
-            <span className="text-sm font-medium px-3">{count} selected</span>
-            <div className="w-px h-6 bg-zinc-600 mx-1" />
+            <span className="text-sm font-medium px-3 whitespace-nowrap shrink-0">{count} selected</span>
+            <div className="w-px h-6 bg-zinc-600 mx-1 shrink-0" />
             {isTrash ? (
               <>
                 {isBulk && <BarButton icon={RotateCcw} label="Restore" onClick={onRestore!} />}
@@ -64,7 +64,7 @@ export function SelectionBar({
                 {isBulk && <BarButton icon={Trash2} label="Trash" onClick={onTrash} />}
               </>
             )}
-            <div className="w-px h-6 bg-zinc-600 mx-1" />
+            <div className="w-px h-6 bg-zinc-600 mx-1 shrink-0" />
             <BarButton icon={X} label="Clear" onClick={onClear} />
           </>
         )}
@@ -83,10 +83,10 @@ function BarButton({
   return (
     <button
       onClick={onClick}
-      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm hover:bg-zinc-700 transition-colors"
+      className="flex shrink-0 items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm whitespace-nowrap hover:bg-zinc-700 transition-colors"
     >
-      <Icon className="w-4 h-4" />
-      <span className="hidden sm:inline">{label}</span>
+      <Icon className="w-4 h-4 shrink-0" />
+      <span>{label}</span>
     </button>
   );
 }

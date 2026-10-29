@@ -1,8 +1,12 @@
 import { NextResponse } from "next/server";
 import { exchangeAuthorizationCode } from "@/lib/auth/google-token";
-import { clearAuthSession, getGoogleOAuth, isServerAuthConfigured, writeAuthSession } from "@/lib/auth/auth-cookie";
+import { getGoogleOAuth, isServerAuthConfigured, writeAuthSession } from "@/lib/auth/auth-cookie";
+import { isValidPopupRedirectUri, requireSameOrigin } from "@/lib/auth/request-security";
 
 export async function POST(req: Request) {
+  const rejected = requireSameOrigin(req);
+  if (rejected) return rejected;
+
   if (!isServerAuthConfigured()) {
     return NextResponse.json({ error: "Server auth is not configured" }, { status: 503 });
   }
@@ -19,7 +23,13 @@ export async function POST(req: Request) {
   }
 
   const { code, redirectUri } = body;
-  if (!code || !redirectUri) {
+  if (
+    typeof code !== "string" ||
+    typeof redirectUri !== "string" ||
+    !code ||
+    code.length > 4_096 ||
+    !isValidPopupRedirectUri(redirectUri, req)
+  ) {
     return NextResponse.json({ error: "code and redirectUri are required" }, { status: 400 });
   }
 
@@ -40,16 +50,12 @@ export async function POST(req: Request) {
 
     await writeAuthSession(tokens.refresh_token);
 
-    return NextResponse.json({
-      access_token: tokens.access_token,
-      expires_in: tokens.expires_in,
-    });
-  } catch (err) {
-    console.error("[auth/google]", err);
-    await clearAuthSession();
     return NextResponse.json(
-      { error: err instanceof Error ? err.message : "Sign-in failed" },
-      { status: 401 },
+      { access_token: tokens.access_token, expires_in: tokens.expires_in },
+      { headers: { "Cache-Control": "no-store" } },
     );
+  } catch (err) {
+    console.error("[auth/google] authorization-code exchange failed", err);
+    return NextResponse.json({ error: "Sign-in failed" }, { status: 401 });
   }
 }

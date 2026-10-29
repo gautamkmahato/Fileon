@@ -58,11 +58,20 @@ export function useAuth(): AuthState {
   return ctx;
 }
 
-async function fetchServerAccessToken(): Promise<StoredToken | null> {
+async function fetchServerAccessToken(): Promise<StoredToken | "invalid" | null> {
   try {
     const res = await fetch("/api/auth/refresh", { method: "POST", credentials: "same-origin" });
-    if (!res.ok) return null;
+    if (!res.ok) return res.status === 401 ? "invalid" : null;
     const data = (await res.json()) as { access_token: string; expires_in: number };
+    if (
+      typeof data.access_token !== "string" ||
+      !data.access_token ||
+      typeof data.expires_in !== "number" ||
+      !Number.isFinite(data.expires_in) ||
+      data.expires_in <= 0
+    ) {
+      return null;
+    }
     return {
       access_token: data.access_token,
       expires_at: Date.now() + data.expires_in * 1000,
@@ -135,9 +144,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     document.head.appendChild(script);
   }, []);
 
-  const refreshFromServer = useCallback(async (): Promise<string | null> => {
+  const refreshFromServer = useCallback(async (): Promise<string | "invalid" | null> => {
     const stored = await fetchServerAccessToken();
-    if (!stored) return null;
+    if (!stored || stored === "invalid") return stored;
     persistAccessToken(stored.access_token, stored.expires_at);
     return stored.access_token;
   }, [persistAccessToken]);
@@ -148,8 +157,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const p = (async (): Promise<string | null> => {
       if (USE_SERVER_REFRESH) {
         const fresh = await refreshFromServer();
-        if (fresh) return fresh;
-        clearLocalAuth();
+        if (typeof fresh === "string") return fresh;
+        if (fresh === "invalid") clearLocalAuth();
         return null;
       }
       if (!tokenClientRef.current) return null;

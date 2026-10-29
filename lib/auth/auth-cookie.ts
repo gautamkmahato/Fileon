@@ -10,7 +10,7 @@ export const AUTH_COOKIE_NAME = "fileon_auth";
 
 function getAuthSecret(): string | null {
   const secret = process.env.AUTH_SESSION_SECRET;
-  return secret && secret.length >= 16 ? secret : null;
+  return secret && secret.length >= 32 ? secret : null;
 }
 
 function getGoogleOAuthConfig() {
@@ -47,9 +47,10 @@ export async function writeAuthSession(refreshToken: string): Promise<void> {
   jar.set(AUTH_COOKIE_NAME, sealAuthSession(payload, secret), {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    sameSite: "strict",
     path: "/",
     maxAge: Math.floor(AUTH_SESSION_MS / 1000),
+    priority: "high",
   });
 }
 

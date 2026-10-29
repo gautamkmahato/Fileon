@@ -58,20 +58,6 @@ export class MemoryCache<T> {
     return entry.value;
   }
 
-  /** Returns value if present and younger than `maxAgeMs` (for stale-while-revalidate). */
-  getIfYounger(key: string, maxAgeMs: number): T | undefined {
-    const entry = this.map.get(key);
-    if (!entry) return undefined;
-    if (this.isExpired(entry)) {
-      this.map.delete(key);
-      return undefined;
-    }
-    const age = Date.now() - (entry.expiresAt - this.defaultTtlMs);
-    if (age > maxAgeMs) return undefined;
-    this.touch(key, entry);
-    return entry.value;
-  }
-
   peek(key: string): T | undefined {
     const entry = this.map.get(key);
     if (!entry || this.isExpired(entry)) return undefined;
@@ -168,10 +154,4 @@ function ensureCacheSweeper(): void {
       }
     }
   }, interval);
-}
-
-export function sweepAllMemoryCaches(): number {
-  let n = 0;
-  for (const cache of registry) n += cache.sweep();
-  return n;
 }
