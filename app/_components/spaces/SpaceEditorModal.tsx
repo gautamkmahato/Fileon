@@ -23,7 +23,15 @@ import { MAX_SPACE_RULES } from "@/lib/db/schema";
 import { TAG_KIND_META, TAG_KINDS, tagKind, tagShortLabel } from "@/lib/tags/kinds";
 import { useSpaces } from "./SpacesProvider";
 
-const EMOJI_PRESETS = ["🧾", "📁", "🎬", "🖼️", "⭐", "🔍", "📦", "💼", "🏷️", "⚠️", "✨", "📌"];
+const EMOJI_PRESETS: Array<{ emoji: string; label: string }> = [
+  ...SPACE_FILE_TYPES.map((type) => ({ emoji: type.emoji, label: type.label })),
+  { emoji: "⭐", label: "Starred" },
+  { emoji: "🏷️", label: "Tag" },
+  { emoji: "📌", label: "Pinned" },
+  { emoji: "💼", label: "Work" },
+  { emoji: "🔍", label: "Search" },
+  { emoji: "✨", label: "Highlight" },
+];
 const COLORS = ["zinc", "blue", "emerald", "amber", "violet", "rose"] as const;
 
 interface SpaceEditorModalProps {
@@ -131,7 +139,7 @@ export function SpaceEditorModal({ open, space, onClose, onSaved }: SpaceEditorM
           </h2>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-100"
+            className="w-8 h-8 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center text-zinc-500"
             aria-label="Close"
           >
             <X className="w-4 h-4" />
@@ -140,7 +148,7 @@ export function SpaceEditorModal({ open, space, onClose, onSaved }: SpaceEditorM
 
         <div className="px-5 py-4 space-y-4 overflow-y-auto scrollbar-custom">
           <div>
-            <label className="block text-xs font-medium text-zinc-600 dark:text-zinc-100 mb-1.5">Name</label>
+            <label className="block text-xs font-medium text-zinc-600 dark:text-zinc-400 mb-1.5">Name</label>
             <input
               autoFocus
               value={name}
@@ -152,27 +160,33 @@ export function SpaceEditorModal({ open, space, onClose, onSaved }: SpaceEditorM
           </div>
 
           <div>
-            <p className="text-xs font-medium text-zinc-600 dark:text-zinc-100 mb-1.5">Emoji</p>
+            <p className="text-xs font-medium text-zinc-600 dark:text-zinc-400 mb-1.5">Emoji</p>
             <div className="flex flex-wrap gap-1">
-              {EMOJI_PRESETS.map((item) => (
+              {(emoji && !EMOJI_PRESETS.some((item) => item.emoji === emoji)
+                ? [{ emoji, label: "Current" }, ...EMOJI_PRESETS]
+                : EMOJI_PRESETS
+              ).map((item) => (
                 <button
-                  key={item}
+                  key={item.emoji}
                   type="button"
-                  onClick={() => setEmoji(emoji === item ? undefined : item)}
+                  title={item.label}
+                  aria-label={item.label}
+                  aria-pressed={emoji === item.emoji}
+                  onClick={() => setEmoji(emoji === item.emoji ? undefined : item.emoji)}
                   className={`w-8 h-8 rounded-lg text-base ${
-                    emoji === item
+                    emoji === item.emoji
                       ? "bg-zinc-900 dark:bg-zinc-100"
                       : "hover:bg-zinc-100 dark:hover:bg-zinc-800"
                   }`}
                 >
-                  {item}
+                  {item.emoji}
                 </button>
               ))}
             </div>
           </div>
 
           <div>
-            <p className="text-xs font-medium text-zinc-600 dark:text-zinc-100 mb-1.5">Color</p>
+            <p className="text-xs font-medium text-zinc-600 dark:text-zinc-400 mb-1.5">Color</p>
             <div className="flex gap-1.5">
               {COLORS.map((c) => (
                 <button
@@ -187,19 +201,19 @@ export function SpaceEditorModal({ open, space, onClose, onSaved }: SpaceEditorM
           </div>
 
           <div>
-            <p className="text-xs font-medium text-zinc-600 dark:text-zinc-100 mb-1.5">Match</p>
+            <p className="text-xs font-medium text-zinc-600 dark:text-zinc-400 mb-1.5">Match</p>
             <div className="flex gap-0.5 rounded-lg border border-zinc-200 dark:border-zinc-700 p-0.5 w-fit">
               <button
                 type="button"
                 onClick={() => setMatchMode("and")}
-                className={`px-3 py-1 rounded-md text-xs font-medium ${matchMode === "and" ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900" : "text-zinc-500 dark:text-zinc-100"}`}
+                className={`px-3 py-1 rounded-md text-xs font-medium ${matchMode === "and" ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900" : "text-zinc-500"}`}
               >
                 All rules
               </button>
               <button
                 type="button"
                 onClick={() => setMatchMode("or")}
-                className={`px-3 py-1 rounded-md text-xs font-medium ${matchMode === "or" ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900" : "text-zinc-500 dark:text-zinc-100"}`}
+                className={`px-3 py-1 rounded-md text-xs font-medium ${matchMode === "or" ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900" : "text-zinc-500"}`}
               >
                 Any rule
               </button>
@@ -207,7 +221,7 @@ export function SpaceEditorModal({ open, space, onClose, onSaved }: SpaceEditorM
           </div>
 
           <div>
-            <p className="text-xs font-medium text-zinc-600 dark:text-zinc-100 mb-1.5">Default layout</p>
+            <p className="text-xs font-medium text-zinc-600 dark:text-zinc-400 mb-1.5">Default layout</p>
             <div className="flex gap-0.5 rounded-lg border border-zinc-200 dark:border-zinc-700 p-0.5 w-fit">
               {(["grid", "list", "gallery"] as const).map((item) => (
                 <button
@@ -217,7 +231,7 @@ export function SpaceEditorModal({ open, space, onClose, onSaved }: SpaceEditorM
                   className={`px-3 py-1 rounded-md text-xs font-medium capitalize ${
                     layout === item
                       ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
-                      : "text-zinc-500 dark:text-zinc-100"
+                      : "text-zinc-500"
                   }`}
                 >
                   {item}
@@ -228,18 +242,18 @@ export function SpaceEditorModal({ open, space, onClose, onSaved }: SpaceEditorM
 
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <p className="text-xs font-medium text-zinc-600 dark:text-zinc-100">Rules</p>
+              <p className="text-xs font-medium text-zinc-600 dark:text-zinc-400">Rules</p>
               <button
                 type="button"
                 onClick={addRule}
                 disabled={rules.length >= MAX_SPACE_RULES}
-                className="inline-flex items-center gap-1 text-xs font-medium text-zinc-700 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-zinc-100 disabled:opacity-40"
+                className="inline-flex items-center gap-1 text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 disabled:opacity-40"
               >
                 <Plus className="w-3.5 h-3.5" />
                 Add rule
               </button>
             </div>
-            <p className="text-[11px] text-zinc-500 dark:text-zinc-100 mb-2">
+            <p className="text-[11px] text-zinc-500 mb-2">
               Files stay in Drive. This space is a live view of matches. Use tags for status or client.
             </p>
             <div className="space-y-2">
@@ -261,7 +275,7 @@ export function SpaceEditorModal({ open, space, onClose, onSaved }: SpaceEditorM
           <button
             type="button"
             onClick={onClose}
-            className="text-sm font-medium px-4 py-2 rounded-lg text-zinc-700 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+            className="text-sm font-medium px-4 py-2 rounded-lg text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
           >
             Cancel
           </button>
@@ -296,7 +310,7 @@ function RuleRow({
       <select
         value={rule.field}
         onChange={(e) => onChange({ field: e.target.value as SpaceRuleField })}
-        className="h-9 px-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-xs text-zinc-800 dark:text-zinc-100 shrink-0"
+        className="h-9 px-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-xs text-zinc-800 dark:text-zinc-200 shrink-0"
       >
         {(Object.keys(FIELD_LABELS) as SpaceRuleField[]).map((field) => (
           <option key={field} value={field} disabled={field === "tag" && tags.length === 0}>
@@ -308,7 +322,7 @@ function RuleRow({
         <select
           value={rule.op}
           onChange={(e) => onChange({ op: e.target.value as SpaceRuleOp })}
-          className="h-9 px-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-xs text-zinc-800 dark:text-zinc-100 shrink-0"
+          className="h-9 px-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-xs text-zinc-800 dark:text-zinc-200 shrink-0"
         >
           {ops.map((op) => (
             <option key={op} value={op}>{opLabel(rule.field, op)}</option>
@@ -320,7 +334,7 @@ function RuleRow({
         type="button"
         onClick={onRemove}
         disabled={!canRemove}
-        className="w-9 h-9 rounded-lg flex items-center justify-center text-zinc-400 dark:text-zinc-100 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 disabled:opacity-30 shrink-0"
+        className="w-9 h-9 rounded-lg flex items-center justify-center text-zinc-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 disabled:opacity-30 shrink-0"
         aria-label="Remove rule"
       >
         <Trash2 className="w-3.5 h-3.5" />
@@ -337,30 +351,30 @@ function RuleValue({
   onChange: (patch: Partial<DraftRule>) => void;
 }) {
   if (rule.field === "starred" || rule.field === "shared" || rule.field === "untagged") {
-    return <span className="h-9 flex items-center text-xs text-zinc-500 dark:text-zinc-100 px-1">Yes</span>;
+    return <span className="h-9 flex items-center text-xs text-zinc-500 px-1">Yes</span>;
   }
   if (rule.field === "type") {
     return (
       <select
         value={String(rule.value)}
         onChange={(e) => onChange({ value: e.target.value })}
-        className="flex-1 h-9 px-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-xs text-zinc-800 dark:text-zinc-100 min-w-0"
+        className="flex-1 h-9 px-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-xs text-zinc-800 dark:text-zinc-200 min-w-0"
       >
         {SPACE_FILE_TYPES.map((t) => (
-          <option key={t.value} value={t.value}>{t.label}</option>
+          <option key={t.value} value={t.value}>{t.emoji} {t.label}</option>
         ))}
       </select>
     );
   }
   if (rule.field === "tag") {
     if (tags.length === 0) {
-      return <span className="h-9 flex items-center text-xs text-zinc-500 dark:text-zinc-100">Create a tag first</span>;
+      return <span className="h-9 flex items-center text-xs text-zinc-500">Create a tag first</span>;
     }
     return (
       <select
         value={String(rule.value)}
         onChange={(e) => onChange({ value: e.target.value })}
-        className="flex-1 h-9 px-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-xs text-zinc-800 dark:text-zinc-100 min-w-0"
+        className="flex-1 h-9 px-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-xs text-zinc-800 dark:text-zinc-200 min-w-0"
       >
         {TAG_KINDS.map((kind) => {
           const list = tags.filter((t) => tagKind(t) === kind);
@@ -381,7 +395,7 @@ function RuleValue({
       <select
         value={String(rule.value)}
         onChange={(e) => onChange({ value: e.target.value })}
-        className="flex-1 h-9 px-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-xs text-zinc-800 dark:text-zinc-100 min-w-0"
+        className="flex-1 h-9 px-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-xs text-zinc-800 dark:text-zinc-200 min-w-0"
       >
         {SPACE_DATE_PRESETS.map((p) => (
           <option key={p.value} value={p.value}>{p.label}</option>

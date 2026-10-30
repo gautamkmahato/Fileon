@@ -66,9 +66,9 @@ export function QuickLook({ file, files, userEmail, onClose, onChangeFile }: Qui
 
       <footer className="relative z-10 shrink-0 py-4 px-6 text-center pointer-events-none">
         <p className="text-sm font-medium text-zinc-100 truncate max-w-lg mx-auto">{file.name}</p>
-        <p className="text-xs text-zinc-500 dark:text-zinc-100 mt-1">
+        <p className="text-xs text-zinc-500 mt-1">
           {files.length > 1 && (
-            <span className="text-zinc-600 dark:text-zinc-100 mr-2">
+            <span className="text-zinc-600 mr-2">
               {currentIndex + 1} of {files.length} ·
             </span>
           )}

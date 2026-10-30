@@ -20,7 +20,7 @@ export function CleanupFindingsList({
 }) {
   if (groups.length === 0 && findings.length === 0) {
     return (
-      <div className="rounded-xl border border-dashed border-zinc-200 dark:border-zinc-800 px-4 py-10 text-center text-sm text-zinc-400 dark:text-zinc-100">
+      <div className="rounded-xl border border-dashed border-zinc-200 dark:border-zinc-800 px-4 py-10 text-center text-sm text-zinc-400">
         {emptyLabel}
       </div>
     );
@@ -37,14 +37,14 @@ export function CleanupFindingsList({
             <div className="px-4 py-2.5 border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-between gap-3">
               <div className="min-w-0">
                 <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate">{group.label}</p>
-                <p className="text-xs text-zinc-500 dark:text-zinc-100 truncate">{group.reason}</p>
+                <p className="text-xs text-zinc-500 truncate">{group.reason}</p>
               </div>
               <div className="flex items-center gap-2 shrink-0">
                 {group.files.length > 1 && (
                   <button
                     type="button"
                     onClick={() => selectIds(group.files.slice(1).map((f) => f.id))}
-                    className="text-xs font-medium text-zinc-600 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-zinc-100"
+                    className="text-xs font-medium text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100"
                   >
                     Select older
                   </button>
@@ -52,7 +52,7 @@ export function CleanupFindingsList({
                 <button
                   type="button"
                   onClick={() => selectIds(group.files.map((f) => f.id))}
-                  className="text-xs font-medium text-zinc-600 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-zinc-100"
+                  className="text-xs font-medium text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100"
                 >
                   Select {group.files.length}
                 </button>
@@ -132,13 +132,13 @@ function CleanupFileRow({ file, reason }: { file: DriveFile; reason: string }) {
             {file.name}
           </p>
         </div>
-        <p className="text-xs text-zinc-500 dark:text-zinc-100 truncate hidden sm:block" title={reason}>
+        <p className="text-xs text-zinc-500 truncate hidden sm:block" title={reason}>
           {reason}
         </p>
-        <span className="text-xs text-zinc-500 dark:text-zinc-100 tabular-nums hidden sm:block">
+        <span className="text-xs text-zinc-500 tabular-nums hidden sm:block">
           {formatActivity(last)}
         </span>
-        <span className="text-xs text-zinc-500 dark:text-zinc-100 tabular-nums text-right">
+        <span className="text-xs text-zinc-500 tabular-nums text-right">
           {isFolder(file) ? "—" : humanFileSize(file.size)}
         </span>
       </div>

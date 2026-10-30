@@ -57,7 +57,7 @@ export function PublicShareGate({ token }: { token: string }) {
   if (loading) {
     return (
       <Shell>
-        <Loader2 className="w-6 h-6 animate-spin text-zinc-400 dark:text-zinc-100 mx-auto" />
+        <Loader2 className="w-6 h-6 animate-spin text-zinc-400 mx-auto" />
       </Shell>
     );
   }
@@ -65,9 +65,9 @@ export function PublicShareGate({ token }: { token: string }) {
   if (missing || !link) {
     return (
       <Shell>
-        <Link2 className="w-8 h-8 text-zinc-300 dark:text-zinc-100 mx-auto mb-3" />
+        <Link2 className="w-8 h-8 text-zinc-300 mx-auto mb-3" />
         <h1 className="text-base font-semibold text-zinc-900 dark:text-zinc-100">Link not found</h1>
-        <p className="text-sm text-zinc-500 dark:text-zinc-100 mt-2">
+        <p className="text-sm text-zinc-500 mt-2">
           This {APP_NAME} share link is invalid, or it was created on another device and hasn&apos;t synced yet.
         </p>
       </Shell>
@@ -89,13 +89,13 @@ export function PublicShareGate({ token }: { token: string }) {
 
   return (
     <Shell>
-      <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-zinc-400 dark:text-zinc-100 mb-3">Shared file</p>
+      <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-zinc-400 mb-3">Shared file</p>
       <h1 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 break-words">{link.fileName}</h1>
       <div className="mt-3">
         <StatusPill status={link.status} />
       </div>
       {blocked ? (
-        <p className="text-sm text-zinc-500 dark:text-zinc-100 mt-4">
+        <p className="text-sm text-zinc-500 mt-4">
           {link.status === "revoked" ? "This link has been revoked." : "This link has expired."}
         </p>
       ) : (
@@ -114,18 +114,18 @@ export function PublicShareGate({ token }: { token: string }) {
               <button
                 type="button"
                 onClick={() => void handleDownload()}
-                className="inline-flex items-center gap-1.5 h-10 px-4 rounded-lg border border-zinc-200 dark:border-zinc-700 text-sm font-medium text-zinc-700 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800"
+                className="inline-flex items-center gap-1.5 h-10 px-4 rounded-lg border border-zinc-200 dark:border-zinc-700 text-sm font-medium text-zinc-700 dark:text-zinc-200 hover:bg-zinc-50 dark:hover:bg-zinc-800"
               >
                 <Download className="w-4 h-4" />
                 Download
               </button>
             )}
           </div>
-          <p className="mt-4 text-xs text-zinc-400 dark:text-zinc-100 flex items-center gap-3">
+          <p className="mt-4 text-xs text-zinc-400 flex items-center gap-3">
             <span className="inline-flex items-center gap-1"><Eye className="w-3.5 h-3.5" /> {link.viewCount} views</span>
             <span className="inline-flex items-center gap-1"><Download className="w-3.5 h-3.5" /> {link.downloadCount} downloads</span>
           </p>
-          <p className="mt-3 text-[11px] text-zinc-400 dark:text-zinc-100">
+          <p className="mt-3 text-[11px] text-zinc-400">
             Recipients need permission on the Google Drive file itself. This page only tracks the {APP_NAME} link.
           </p>
         </>

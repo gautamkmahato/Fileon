@@ -102,7 +102,7 @@ export function BulkRenameModal({
       footer={
         <>
           <button onClick={onClose} disabled={busy}
-            className="text-sm font-medium px-4 py-2 rounded-lg text-zinc-700 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800">
+            className="text-sm font-medium px-4 py-2 rounded-lg text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800">
             Cancel
           </button>
           <button
@@ -124,7 +124,7 @@ export function BulkRenameModal({
             className={`text-xs font-medium px-3 py-1.5 rounded-lg border transition-colors ${
               mode === t.id
                 ? "bg-zinc-900 text-white border-zinc-900 hover:bg-zinc-800 dark:bg-zinc-900 dark:border-zinc-700 dark:hover:bg-zinc-800"
-                : "border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800"
+                : "border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800"
             }`}
           >
             {t.label}
@@ -145,7 +145,7 @@ export function BulkRenameModal({
           <input value={pattern} onChange={(e) => setPattern(e.target.value)}
             placeholder="Pattern e.g. Vacation-{index:02}{ext}"
             className="text-sm px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 outline-none focus:ring-2 focus:ring-zinc-100 w-full" />
-          <p className="text-[11px] text-zinc-500 dark:text-zinc-100 mt-1">
+          <p className="text-[11px] text-zinc-500 mt-1">
             Tokens: {"{index}"}, {"{index:03}"}, {"{date}"}, {"{ext}"}, {"{original}"}
           </p>
         </div>
@@ -162,15 +162,15 @@ export function BulkRenameModal({
       )}
       {mode === "sequence" && (
         <div className="grid grid-cols-3 gap-3 mb-4">
-          <label className="text-xs text-zinc-500 dark:text-zinc-100">Start
+          <label className="text-xs text-zinc-500">Start
             <input type="number" value={seqStart} onChange={(e) => setSeqStart(Number(e.target.value))}
               className="text-sm px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 outline-none w-full mt-1" min={0} />
           </label>
-          <label className="text-xs text-zinc-500 dark:text-zinc-100">Zero pad
+          <label className="text-xs text-zinc-500">Zero pad
             <input type="number" value={seqPad} onChange={(e) => setSeqPad(Number(e.target.value))}
               className="text-sm px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 outline-none w-full mt-1" min={0} max={6} />
           </label>
-          <label className="text-xs text-zinc-500 dark:text-zinc-100">Position
+          <label className="text-xs text-zinc-500">Position
             <select value={seqPos} onChange={(e) => setSeqPos(e.target.value as "prefix" | "suffix")}
               className="text-sm px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 outline-none w-full mt-1">
               <option value="suffix">Suffix</option>
@@ -181,14 +181,14 @@ export function BulkRenameModal({
       )}
 
       <div className="border border-zinc-200 dark:border-zinc-700 rounded-lg overflow-hidden max-h-64 overflow-y-auto scrollbar-custom">
-        <div className="grid grid-cols-2 gap-px bg-zinc-200 dark:bg-zinc-700 text-[11px] font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-100">
+        <div className="grid grid-cols-2 gap-px bg-zinc-200 dark:bg-zinc-700 text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
           <div className="bg-zinc-50 dark:bg-zinc-800 px-3 py-2">Current</div>
           <div className="bg-zinc-50 dark:bg-zinc-800 px-3 py-2">New name</div>
         </div>
         {previews.map((row) => (
           <div key={row.file.id} className="grid grid-cols-2 gap-px bg-zinc-100 dark:bg-zinc-800 text-sm">
-            <div className="bg-white dark:bg-zinc-900 px-3 py-2 truncate text-zinc-600 dark:text-zinc-100">{row.file.name}</div>
-            <div className={`bg-white dark:bg-zinc-900 px-3 py-2 truncate ${row.error ? "text-red-600" : row.newName !== row.file.name ? "text-zinc-900 dark:text-zinc-100 font-medium" : "text-zinc-400 dark:text-zinc-100"}`}>
+            <div className="bg-white dark:bg-zinc-900 px-3 py-2 truncate text-zinc-600 dark:text-zinc-400">{row.file.name}</div>
+            <div className={`bg-white dark:bg-zinc-900 px-3 py-2 truncate ${row.error ? "text-red-600" : row.newName !== row.file.name ? "text-zinc-900 dark:text-zinc-100 font-medium" : "text-zinc-400"}`}>
               {row.error || row.newName}
             </div>
           </div>

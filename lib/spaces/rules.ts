@@ -47,16 +47,16 @@ const ARCHIVE_MIMES = new Set([
   "application/x-tar",
 ]);
 
-export const SPACE_FILE_TYPES: Array<{ value: SpaceFileType; label: string }> = [
-  { value: "pdf", label: "PDF" },
-  { value: "image", label: "Image" },
-  { value: "video", label: "Video" },
-  { value: "audio", label: "Audio" },
-  { value: "document", label: "Document" },
-  { value: "spreadsheet", label: "Spreadsheet" },
-  { value: "presentation", label: "Presentation" },
-  { value: "folder", label: "Folder" },
-  { value: "archive", label: "Archive" },
+export const SPACE_FILE_TYPES: Array<{ value: SpaceFileType; label: string; emoji: string }> = [
+  { value: "pdf", label: "PDF", emoji: "📕" },
+  { value: "image", label: "Image", emoji: "🖼️" },
+  { value: "video", label: "Video", emoji: "🎬" },
+  { value: "audio", label: "Audio", emoji: "🎵" },
+  { value: "document", label: "Document", emoji: "📄" },
+  { value: "spreadsheet", label: "Spreadsheet", emoji: "📊" },
+  { value: "presentation", label: "Presentation", emoji: "📽️" },
+  { value: "folder", label: "Folder", emoji: "📁" },
+  { value: "archive", label: "Archive", emoji: "🗜️" },
 ];
 
 export const SPACE_DATE_PRESETS: Array<{ value: SpaceDatePreset; label: string }> = [

@@ -61,7 +61,7 @@ export function MoveModal({
       open={open} onClose={onClose} title={`Move "${fileName}"`} width="max-w-md"
       footer={
         <>
-          <button onClick={onClose} className="text-sm font-medium px-4 py-2 rounded-lg text-zinc-700 dark:text-zinc-100 hover:bg-zinc-100">
+          <button onClick={onClose} className="text-sm font-medium px-4 py-2 rounded-lg text-zinc-700 hover:bg-zinc-100">
             Cancel
           </button>
           <button
@@ -76,7 +76,7 @@ export function MoveModal({
       }
     >
       <div className="relative mb-3">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-400 dark:text-zinc-100" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-400" />
         <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -87,7 +87,7 @@ export function MoveModal({
 
       {loading ? (
         <div className="flex items-center justify-center py-8">
-          <Loader2 className="w-5 h-5 animate-spin text-zinc-400 dark:text-zinc-100" />
+          <Loader2 className="w-5 h-5 animate-spin text-zinc-400" />
         </div>
       ) : (
         <ul className="max-h-[320px] overflow-y-auto scrollbar-custom -mx-1.5 space-y-0.5">
@@ -100,7 +100,7 @@ export function MoveModal({
             />
           )}
           {filteredFolders.length === 0 && !filteredMyDrive ? (
-            <li className="text-sm text-zinc-500 dark:text-zinc-100 text-center py-6">No folders found</li>
+            <li className="text-sm text-zinc-500 text-center py-6">No folders found</li>
           ) : (
             filteredFolders.map((f) => (
               <FolderRow
@@ -133,15 +133,15 @@ function FolderRow({
         disabled={isCurrent}
         className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-left transition-colors ${
           isCurrent
-            ? "text-zinc-400 dark:text-zinc-100 cursor-not-allowed"
+            ? "text-zinc-400 cursor-not-allowed"
             : selected
               ? "bg-blue-50 text-blue-700"
-              : "text-zinc-700 dark:text-zinc-100 hover:bg-zinc-50"
+              : "text-zinc-700 hover:bg-zinc-50"
         }`}
       >
-        <FolderIcon className="w-4 h-4 text-zinc-400 dark:text-zinc-100 shrink-0" />
+        <FolderIcon className="w-4 h-4 text-zinc-400 shrink-0" />
         <span className="flex-1 truncate">{name}</span>
-        {isCurrent && <span className="text-[10px] uppercase tracking-wider text-zinc-400 dark:text-zinc-100">Current</span>}
+        {isCurrent && <span className="text-[10px] uppercase tracking-wider text-zinc-400">Current</span>}
         {selected && !isCurrent && <Check className="w-4 h-4 text-blue-600" />}
       </button>
     </li>

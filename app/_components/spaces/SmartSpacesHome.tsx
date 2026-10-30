@@ -35,7 +35,7 @@ export function SmartSpacesHome() {
       <div className="flex items-start justify-between gap-4 mb-8">
         <div>
           <h1 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">Smart Spaces</h1>
-          <p className="text-sm text-zinc-500 dark:text-zinc-100 mt-1 max-w-xl">
+          <p className="text-sm text-zinc-500 mt-1 max-w-xl">
             Virtual folders that collect matching files from Drive. Files are not moved or copied.
           </p>
         </div>
@@ -59,11 +59,11 @@ export function SmartSpacesHome() {
 
       {!loading && spaces.length === 0 && (
         <div className="text-center py-20 rounded-2xl border border-dashed border-zinc-200 dark:border-zinc-800">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-100 mb-4">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-400 mb-4">
             <LayoutGrid className="w-5 h-5" />
           </div>
           <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">No Smart Spaces yet</p>
-          <p className="text-xs text-zinc-500 dark:text-zinc-100 mt-1 mb-4">
+          <p className="text-xs text-zinc-500 mt-1 mb-4">
             Example: PDFs tagged Invoice, without moving them in Drive.
           </p>
           <button
@@ -91,7 +91,7 @@ export function SmartSpacesHome() {
                     <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 truncate">
                       {displayLabel(space.name, "Untitled space")}
                     </h2>
-                    <p className="text-xs text-zinc-500 dark:text-zinc-100 mt-1">
+                    <p className="text-xs text-zinc-500 mt-1">
                       {space.cachedFileCount != null
                         ? `${space.cachedFileCount} file${space.cachedFileCount === 1 ? "" : "s"}`
                         : "Open to count"}
@@ -102,25 +102,25 @@ export function SmartSpacesHome() {
                 </div>
                 <div className="mt-3 flex flex-wrap gap-1">
                   {space.rules.length === 0 && (
-                    <span className="text-[11px] px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-100">
+                    <span className="text-[11px] px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-500">
                       No rules
                     </span>
                   )}
                   {space.rules.slice(0, 4).map((rule) => (
                     <span
                       key={rule.id}
-                      className="text-[11px] px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-100 truncate max-w-full"
+                      className="text-[11px] px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 truncate max-w-full"
                     >
                       {describeRule(rule, tags)}
                     </span>
                   ))}
                   {space.rules.length > 4 && (
-                    <span className="text-[11px] px-2 py-0.5 rounded-full text-zinc-400 dark:text-zinc-100">
+                    <span className="text-[11px] px-2 py-0.5 rounded-full text-zinc-400">
                       +{space.rules.length - 4}
                     </span>
                   )}
                 </div>
-                <p className="mt-3 text-[11px] text-zinc-400 dark:text-zinc-100 capitalize">
+                <p className="mt-3 text-[11px] text-zinc-400 capitalize">
                   {space.matchMode === "and" ? "All rules" : "Any rule"} · {space.layout}
                 </p>
               </Link>
@@ -128,7 +128,7 @@ export function SmartSpacesHome() {
                 <button
                   type="button"
                   onClick={() => openEdit(space)}
-                  className="w-8 h-8 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-zinc-500 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-zinc-100"
+                  className="w-8 h-8 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-zinc-500 hover:text-zinc-900"
                   aria-label="Edit space"
                 >
                   <Pencil className="w-3.5 h-3.5" />
@@ -136,7 +136,7 @@ export function SmartSpacesHome() {
                 <button
                   type="button"
                   onClick={() => setDeleteTarget(space.id)}
-                  className="w-8 h-8 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-zinc-500 dark:text-zinc-100 hover:text-red-600"
+                  className="w-8 h-8 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-zinc-500 hover:text-red-600"
                   aria-label="Delete space"
                 >
                   <Trash2 className="w-3.5 h-3.5" />

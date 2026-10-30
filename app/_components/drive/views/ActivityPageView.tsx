@@ -24,7 +24,7 @@ export function ActivityPageView() {
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900">
         <div>
           <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">Activity logging</p>
-          <p className="text-xs text-zinc-500 dark:text-zinc-100 mt-0.5">
+          <p className="text-xs text-zinc-500 mt-0.5">
             {loggingPaused ? "Logging is paused — actions won't be recorded." : "Actions are being recorded locally."}
           </p>
         </div>

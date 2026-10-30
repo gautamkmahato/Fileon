@@ -34,7 +34,7 @@ export function SelectionBar({
     <div className="fixed inset-x-0 bottom-4 sm:bottom-6 z-50 flex justify-center px-3 pointer-events-none">
       <div className="pointer-events-auto flex w-max max-w-full flex-wrap items-center justify-center gap-1 px-2 py-2 bg-zinc-900 dark:bg-zinc-900/90 dark:backdrop-blur-md text-white rounded-xl shadow-2xl border border-zinc-700 dark:border-zinc-700/60">
         {busy ? (
-          <span className="flex items-center gap-2 text-sm font-medium px-3 py-1.5 text-zinc-300 dark:text-zinc-100 whitespace-nowrap">
+          <span className="flex items-center gap-2 text-sm font-medium px-3 py-1.5 text-zinc-300 whitespace-nowrap">
             <Loader2 className="w-4 h-4 animate-spin shrink-0" />
             {busyLabel ?? "Working…"}
           </span>

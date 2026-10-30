@@ -30,7 +30,7 @@ export function ConfirmModal({
       open={open} onClose={onClose} title={title}
       footer={
         <>
-          <button onClick={onClose} className="text-sm font-medium px-4 py-2 rounded-lg text-zinc-700 dark:text-zinc-100 hover:bg-zinc-100">
+          <button onClick={onClose} className="text-sm font-medium px-4 py-2 rounded-lg text-zinc-700 hover:bg-zinc-100">
             Cancel
           </button>
           <button
@@ -54,7 +54,7 @@ export function ConfirmModal({
             <AlertTriangle className="w-5 h-5" />
           </div>
         )}
-        <p className="text-sm text-zinc-700 dark:text-zinc-100 leading-relaxed flex-1">{message}</p>
+        <p className="text-sm text-zinc-700 leading-relaxed flex-1">{message}</p>
       </div>
     </Modal>
   );

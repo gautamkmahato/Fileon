@@ -85,12 +85,12 @@ function BrowseExtra({ route, typeCounts }: SidebarExtrasProps) {
               className={`w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-[13px] transition-colors ${
                 isActive
                   ? `${meta.bgSoft} font-semibold text-zinc-900 dark:text-zinc-100`
-                  : "text-zinc-700 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900"
+                  : "text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900"
               }`}
             >
               <Icon className={`w-4 h-4 shrink-0 ${meta.iconColor}`} strokeWidth={isActive ? 2.25 : 1.75} />
               <span className="truncate flex-1">{meta.label}</span>
-              <span className={`text-[11px] tabular-nums shrink-0 ${isActive ? "text-zinc-600 dark:text-zinc-100 font-semibold" : "text-zinc-400 dark:text-zinc-100"}`}>
+              <span className={`text-[11px] tabular-nums shrink-0 ${isActive ? "text-zinc-600 dark:text-zinc-400 font-semibold" : "text-zinc-400"}`}>
                 {countLabel}
               </span>
             </Link>
@@ -123,7 +123,7 @@ function TagsExtra({ route, tags, tagCounts, onManageTags, onTagClick }: Sidebar
           const capped = collapsible && !showAll ? list.slice(0, TAGS_VISIBLE_CAP) : list;
           return (
             <div key={kind}>
-              <p className="px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.1em] text-zinc-400 dark:text-zinc-100">
+              <p className="px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.1em] text-zinc-400">
                 {TAG_KIND_META[kind].label}
               </p>
               <ul className="space-y-0.5">
@@ -140,7 +140,7 @@ function TagsExtra({ route, tags, tagCounts, onManageTags, onTagClick }: Sidebar
                         className={`w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-[13px] transition-colors ${
                           isActive
                             ? `${getTagBgSoft(tag.colorId)} font-semibold text-zinc-900 dark:text-zinc-100`
-                            : "text-zinc-700 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900"
+                            : "text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900"
                         }`}
                       >
                         {tag.emoji ? (
@@ -151,7 +151,7 @@ function TagsExtra({ route, tags, tagCounts, onManageTags, onTagClick }: Sidebar
                           <Hash className={`w-4 h-4 shrink-0 ${getTagTextClass(tag.colorId)}`} strokeWidth={isActive ? 2.5 : 2} />
                         )}
                         <span className="truncate flex-1 text-left">{displayLabel(displayTagName(tag), "Untitled tag")}</span>
-                        <span className={`text-[11px] tabular-nums shrink-0 ${isActive ? `${getTagTextClass(tag.colorId)} font-semibold` : "text-zinc-400 dark:text-zinc-100"}`}>
+                        <span className={`text-[11px] tabular-nums shrink-0 ${isActive ? `${getTagTextClass(tag.colorId)} font-semibold` : "text-zinc-400"}`}>
                           {count}
                         </span>
                       </button>
@@ -207,7 +207,7 @@ function ViewsExtra({
       >
         <Bookmark className="w-4 h-4 shrink-0" strokeWidth={1.75} />
         <span className="truncate flex-1 text-left">Views</span>
-        <ChevronRight className={`w-3.5 h-3.5 text-zinc-400 dark:text-zinc-100 transition-transform ${expanded ? "rotate-90" : ""}`} strokeWidth={2} />
+        <ChevronRight className={`w-3.5 h-3.5 text-zinc-400 transition-transform ${expanded ? "rotate-90" : ""}`} strokeWidth={2} />
       </button>
       {expanded && (
         <ul className="mt-0.5 space-y-0.5">
@@ -251,7 +251,7 @@ function ViewsExtra({
                   className={navRowClass(isActive, true)}
                 >
                   {!view.builtIn && (
-                    <GripVertical className="w-3.5 h-3.5 shrink-0 text-zinc-300 dark:text-zinc-100 cursor-grab active:cursor-grabbing" />
+                    <GripVertical className="w-3.5 h-3.5 shrink-0 text-zinc-300 cursor-grab active:cursor-grabbing" />
                   )}
                   {view.emoji ? (
                     <span className="w-4 h-4 shrink-0 flex items-center justify-center text-[14px] leading-none">{view.emoji}</span>
@@ -286,12 +286,12 @@ function SpacesExtra({
         >
           <LayoutGrid className="w-4 h-4 shrink-0" strokeWidth={1.75} />
           <span className="truncate flex-1 text-left">Spaces</span>
-          <ChevronRight className={`w-3.5 h-3.5 text-zinc-400 dark:text-zinc-100 transition-transform ${expanded ? "rotate-90" : ""}`} strokeWidth={2} />
+          <ChevronRight className={`w-3.5 h-3.5 text-zinc-400 transition-transform ${expanded ? "rotate-90" : ""}`} strokeWidth={2} />
         </button>
         <button
           type="button"
           onClick={onCreateSpace}
-          className="w-7 h-7 rounded-md flex items-center justify-center text-zinc-400 dark:text-zinc-100 hover:text-zinc-700 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 shrink-0"
+          className="w-7 h-7 rounded-md flex items-center justify-center text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 shrink-0"
           aria-label="New Smart Space"
         >
           <Plus className="w-3.5 h-3.5" />

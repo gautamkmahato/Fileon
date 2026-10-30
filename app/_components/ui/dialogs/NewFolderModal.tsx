@@ -28,7 +28,7 @@ export function NewFolderModal({
       open={open} onClose={onClose} title="New folder"
       footer={
         <>
-          <button onClick={onClose} className="text-sm font-medium px-4 py-2 rounded-lg text-zinc-700 dark:text-zinc-100 hover:bg-zinc-100">
+          <button onClick={onClose} className="text-sm font-medium px-4 py-2 rounded-lg text-zinc-700 hover:bg-zinc-100">
             Cancel
           </button>
           <button
@@ -42,7 +42,7 @@ export function NewFolderModal({
         </>
       }
     >
-      <label className="block text-xs font-medium text-zinc-600 dark:text-zinc-100 mb-1.5">Folder name</label>
+      <label className="block text-xs font-medium text-zinc-600 mb-1.5">Folder name</label>
       <input
         autoFocus value={name}
         onChange={(e) => setName(e.target.value)}

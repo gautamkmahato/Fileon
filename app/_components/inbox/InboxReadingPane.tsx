@@ -31,7 +31,7 @@ function ToolbarButton({
           ? "text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30"
           : active
           ? "bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900"
-          : "text-zinc-700 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+          : "text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
       }`}
     >
       <Icon className="w-3.5 h-3.5" strokeWidth={active ? 2.25 : 1.75} fill={active && Icon === Star ? "currentColor" : "none"} />
@@ -62,8 +62,8 @@ export function InboxReadingPane({
   if (!file) {
     return (
       <div className="h-full flex flex-col items-center justify-center text-center px-8 bg-white dark:bg-zinc-950">
-        <p className="text-sm font-medium text-zinc-700 dark:text-zinc-100">Select a file to preview</p>
-        <p className="text-xs text-zinc-400 dark:text-zinc-100 mt-1 max-w-xs">
+        <p className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Select a file to preview</p>
+        <p className="text-xs text-zinc-400 mt-1 max-w-xs">
           Process incoming files here — archive, move, or tag them when you are ready.
         </p>
       </div>
@@ -111,7 +111,7 @@ function InboxReadingBody({
             <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 truncate">
               {file.name || "Untitled"}
             </h2>
-            <p className="text-[11px] text-zinc-500 dark:text-zinc-100 mt-0.5">
+            <p className="text-[11px] text-zinc-500 mt-0.5">
               {type.label}
               {file.size ? ` · ${humanFileSize(file.size)}` : ""}
               {file.modifiedTime

@@ -45,7 +45,7 @@ export function Modal({ open, onClose, title, children, footer, width = "max-w-m
           <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-100">{title}</h2>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full hover:bg-zinc-100 flex items-center justify-center text-zinc-500 dark:text-zinc-100"
+            className="w-8 h-8 rounded-full hover:bg-zinc-100 flex items-center justify-center text-zinc-500"
             aria-label="Close"
           >
             <X className="w-4 h-4" />

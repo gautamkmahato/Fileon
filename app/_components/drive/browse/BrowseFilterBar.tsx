@@ -49,7 +49,7 @@ export function BrowseFilterBar({
     <div className="flex flex-col gap-3 mb-8 lg:flex-row lg:items-center">
       <div className="w-full lg:flex-1 lg:max-w-md">
         <div className="relative">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 dark:text-zinc-100" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
           <input
             value={draft}
             onChange={(e) => {
@@ -94,7 +94,7 @@ export function BrowseFilterBar({
         {isFiltering && (
           <button
             onClick={() => { onFiltersChange(() => DEFAULT_FILTERS); setDraft(""); onSearchChange(""); }}
-            className="text-xs font-medium text-zinc-500 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-zinc-100 px-2"
+            className="text-xs font-medium text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 px-2"
           >
             Clear
           </button>

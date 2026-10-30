@@ -22,7 +22,7 @@ export function DropOverlay({ visible, folderName, uploading, uploadLabel }: Dro
               Uploading…
             </p>
             {uploadLabel && (
-              <p className="text-sm text-zinc-500 dark:text-zinc-100 text-center max-w-xs truncate">{uploadLabel}</p>
+              <p className="text-sm text-zinc-500 text-center max-w-xs truncate">{uploadLabel}</p>
             )}
           </>
         ) : (
@@ -31,7 +31,7 @@ export function DropOverlay({ visible, folderName, uploading, uploadLabel }: Dro
             <p className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
               Drop files to upload
             </p>
-            <p className="text-sm text-zinc-500 dark:text-zinc-100">to {folderName}</p>
+            <p className="text-sm text-zinc-500">to {folderName}</p>
           </>
         )}
       </div>

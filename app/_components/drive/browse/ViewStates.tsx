@@ -19,7 +19,7 @@ export function ErrorState({ error, onRetry }: { error: string; onRetry: () => v
   return (
     <div className="text-center py-20">
       <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100 mb-1">Something went wrong</p>
-      <p className="text-xs text-zinc-500 dark:text-zinc-100 mb-4 max-w-md mx-auto break-words">{error}</p>
+      <p className="text-xs text-zinc-500 mb-4 max-w-md mx-auto break-words">{error}</p>
       <button
         onClick={onRetry}
         className="text-xs font-medium px-3 py-1.5 rounded-lg bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 hover:opacity-90"
@@ -43,11 +43,11 @@ export function EmptyState({
 }) {
   return (
     <div className="text-center py-20 max-w-md mx-auto">
-      <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-100 mb-4">
+      <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-400 mb-4">
         <HardDrive className="w-5 h-5" />
       </div>
       <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">{label}</p>
-      {hint && <p className="text-xs text-zinc-500 dark:text-zinc-100 mt-1">{hint}</p>}
+      {hint && <p className="text-xs text-zinc-500 mt-1">{hint}</p>}
       {actionLabel && onAction && (
         <button
           type="button"
@@ -65,7 +65,7 @@ export function NoMatchState({ onClear }: { onClear: () => void }) {
   return (
     <div className="text-center py-20">
       <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">No matches</p>
-      <p className="text-xs text-zinc-500 dark:text-zinc-100 mt-1 mb-4">Try a different search or clear filters.</p>
+      <p className="text-xs text-zinc-500 mt-1 mb-4">Try a different search or clear filters.</p>
       <button
         onClick={onClear}
         className="text-xs font-medium px-3 py-1.5 rounded-lg bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900"
@@ -78,7 +78,7 @@ export function NoMatchState({ onClear }: { onClear: () => void }) {
 
 export function InlineLoadingSpinner() {
   return (
-    <div className="mt-6 flex justify-center text-zinc-500 dark:text-zinc-100">
+    <div className="mt-6 flex justify-center text-zinc-500">
       <Loader2 className="w-4 h-4 animate-spin" />
     </div>
   );

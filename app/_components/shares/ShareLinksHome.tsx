@@ -58,7 +58,7 @@ export function ShareLinksHome() {
     <div className="max-w-2xl">
       <div className="mb-8">
         <h1 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">Shared links</h1>
-        <p className="text-sm text-zinc-500 dark:text-zinc-100 mt-1 max-w-xl">
+        <p className="text-sm text-zinc-500 mt-1 max-w-xl">
           {APP_NAME}-managed links with views, downloads, and expiry. Google Drive&apos;s own share links are unchanged.
         </p>
       </div>
@@ -72,7 +72,7 @@ export function ShareLinksHome() {
             className={`px-2.5 py-1 rounded-md text-xs font-medium ${
               filter === f.id
                 ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
-                : "text-zinc-500 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                : "text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
             }`}
           >
             {f.label}
@@ -90,18 +90,18 @@ export function ShareLinksHome() {
 
       {!loading && links.length === 0 && (
         <div className="text-center py-20 rounded-2xl border border-dashed border-zinc-200 dark:border-zinc-800">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-100 mb-4">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-400 mb-4">
             <Link2 className="w-5 h-5" />
           </div>
           <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">No share links yet</p>
-          <p className="text-xs text-zinc-500 dark:text-zinc-100 mt-1 max-w-sm mx-auto">
+          <p className="text-xs text-zinc-500 mt-1 max-w-sm mx-auto">
             Open a file&apos;s Share menu and create a {APP_NAME} link. Drive&apos;s &quot;anyone with the link&quot; toggle stays as it is.
           </p>
         </div>
       )}
 
       {!loading && links.length > 0 && grouped.length === 0 && (
-        <p className="text-sm text-zinc-500 dark:text-zinc-100 py-10 text-center">Nothing in this filter.</p>
+        <p className="text-sm text-zinc-500 py-10 text-center">Nothing in this filter.</p>
       )}
 
       <div className="space-y-3">
@@ -203,7 +203,7 @@ function ShareLinkCard({
           <button
             type="button"
             onClick={() => setMenuOpen((v) => !v)}
-            className="w-8 h-8 rounded-lg text-zinc-400 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center"
+            className="w-8 h-8 rounded-lg text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center"
             aria-label="Link actions"
           >
             <MoreHorizontal className="w-4 h-4" />
@@ -214,7 +214,7 @@ function ShareLinkCard({
               <div className="absolute right-0 top-9 z-20 w-44 py-1 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 shadow-lg">
                 <button
                   type="button"
-                  className="w-full px-3 py-1.5 text-left text-sm text-zinc-700 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800"
+                  className="w-full px-3 py-1.5 text-left text-sm text-zinc-700 dark:text-zinc-200 hover:bg-zinc-50 dark:hover:bg-zinc-800"
                   onClick={() => { setMenuOpen(false); onCopy(); }}
                 >
                   Copy {APP_NAME} link
@@ -230,7 +230,7 @@ function ShareLinkCard({
                 )}
                 <button
                   type="button"
-                  className="w-full px-3 py-1.5 text-left text-sm text-zinc-700 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800 inline-flex items-center gap-2"
+                  className="w-full px-3 py-1.5 text-left text-sm text-zinc-700 dark:text-zinc-200 hover:bg-zinc-50 dark:hover:bg-zinc-800 inline-flex items-center gap-2"
                   onClick={() => { setMenuOpen(false); onDelete(); }}
                 >
                   <Trash2 className="w-3.5 h-3.5" />
@@ -242,13 +242,13 @@ function ShareLinkCard({
         </div>
       </div>
       <div className="mt-3 border-t border-zinc-100 dark:border-zinc-800" />
-      <div className="mt-3 space-y-1.5 text-sm text-zinc-600 dark:text-zinc-100">
+      <div className="mt-3 space-y-1.5 text-sm text-zinc-600 dark:text-zinc-300">
         <p className="flex items-center gap-2">
-          <Eye className="w-4 h-4 text-zinc-400 dark:text-zinc-100" />
+          <Eye className="w-4 h-4 text-zinc-400" />
           {formatCount(link.viewCount)} {link.viewCount === 1 ? "view" : "views"}
         </p>
         <p className="flex items-center gap-2">
-          <Download className="w-4 h-4 text-zinc-400 dark:text-zinc-100" />
+          <Download className="w-4 h-4 text-zinc-400" />
           {formatCount(link.downloadCount)} {link.downloadCount === 1 ? "download" : "downloads"}
         </p>
         <p>Expires: {formatExpiry(link.expiresAt)}</p>
@@ -273,7 +273,7 @@ function ShareLinkCard({
               if (v) onExpiry(v);
               e.target.value = "";
             }}
-            className="h-8 px-2 rounded-lg text-xs border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-600 dark:text-zinc-100"
+            className="h-8 px-2 rounded-lg text-xs border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-600 dark:text-zinc-300"
           >
             <option value="" disabled>Change expiry</option>
             {EXPIRY_PRESETS.map((p) => (
@@ -281,7 +281,7 @@ function ShareLinkCard({
             ))}
           </select>
         )}
-        <p className="text-[11px] text-zinc-400 dark:text-zinc-100 ml-auto">
+        <p className="text-[11px] text-zinc-400 ml-auto">
           Google Drive share is separate
         </p>
       </div>

@@ -133,11 +133,11 @@ function FallbackPreview({ file, variant }: PreviewRenderProps) {
         ? "flex-1 min-h-0 flex flex-col items-center justify-center px-6 text-center"
         : "px-5 py-12 text-center border-b border-zinc-200 bg-zinc-50 dark:bg-zinc-900"
     }>
-      <FileQuestion className="w-10 h-10 text-zinc-300 dark:text-zinc-100 mb-3" strokeWidth={1.5} />
-      <p className={`text-sm font-medium ${variant === "quicklook" ? "text-zinc-300 dark:text-zinc-100" : "text-zinc-700 dark:text-zinc-100"}`}>
+      <FileQuestion className="w-10 h-10 text-zinc-300 mb-3" strokeWidth={1.5} />
+      <p className={`text-sm font-medium ${variant === "quicklook" ? "text-zinc-300" : "text-zinc-700 dark:text-zinc-300"}`}>
         No preview available
       </p>
-      <p className="text-xs text-zinc-400 dark:text-zinc-100 mt-1">This file type can be opened in Drive.</p>
+      <p className="text-xs text-zinc-400 mt-1">This file type can be opened in Drive.</p>
       {file.webViewLink && (
         <a
           href={file.webViewLink}
@@ -162,7 +162,7 @@ function PreviewLoading({ variant }: { variant: PreviewVariant }) {
         ? "flex-1 min-h-0 flex items-center justify-center"
         : "aspect-[4/3] bg-zinc-100 border-b border-zinc-200 flex items-center justify-center"
     }>
-      <Loader2 className="w-8 h-8 animate-spin text-zinc-400 dark:text-zinc-100" />
+      <Loader2 className="w-8 h-8 animate-spin text-zinc-400" />
     </div>
   );
 }

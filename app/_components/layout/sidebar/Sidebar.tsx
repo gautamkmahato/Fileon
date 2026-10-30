@@ -196,7 +196,7 @@ export function Sidebar({
                 className={`w-full flex items-center justify-center p-2 rounded-lg transition-colors ${
                   isActive
                     ? "bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900"
-                    : "text-zinc-500 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900"
+                    : "text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-900"
                 }`}
               >
                 <Icon className="w-4 h-4" strokeWidth={isActive ? 2 : 1.75} />
@@ -224,7 +224,7 @@ export function Sidebar({
                   if (item.kind === "heading") {
                     return (
                       <li key={item.id} className="pt-3 first:pt-0">
-                        <p className="px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.1em] text-zinc-400 dark:text-zinc-100">
+                        <p className="px-3 pb-1 text-[10px] font-bold uppercase tracking-[0.1em] text-zinc-400">
                           {item.label}
                         </p>
                       </li>

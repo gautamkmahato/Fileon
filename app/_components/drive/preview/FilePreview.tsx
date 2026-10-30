@@ -211,17 +211,17 @@ export function FilePreview({ file, onClose, onFileChanged, onFileDeleted, fileT
             ) : (
               <button
                 onClick={() => setRenaming(true)}
-                className="text-base font-semibold text-zinc-900 dark:text-zinc-100 hover:bg-zinc-50 rounded px-2 -mx-2 py-0.5 text-left group/title flex items-center gap-2"
+                className="text-base font-semibold text-zinc-900 hover:bg-zinc-50 rounded px-2 -mx-2 py-0.5 text-left group/title flex items-center gap-2"
               >
                 <span className="truncate">{file.name}</span>
                 <Pencil className="w-3.5 h-3.5 opacity-0 group-hover/title:opacity-50 shrink-0" />
               </button>
             )}
-            <p className="text-xs text-zinc-500 dark:text-zinc-100 mt-1">{type.label} · {humanFileSize(file.size)}</p>
+            <p className="text-xs text-zinc-500 mt-1">{type.label} · {humanFileSize(file.size)}</p>
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full hover:bg-zinc-100 flex items-center justify-center text-zinc-500 dark:text-zinc-100"
+            className="w-8 h-8 rounded-full hover:bg-zinc-100 flex items-center justify-center text-zinc-500"
             aria-label="Close"
           >
             <X className="w-4 h-4" />
@@ -236,7 +236,7 @@ export function FilePreview({ file, onClose, onFileChanged, onFileDeleted, fileT
               href={file.webViewLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg border border-zinc-200 text-zinc-700 dark:text-zinc-100 hover:bg-zinc-50"
+              className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg border border-zinc-200 text-zinc-700 hover:bg-zinc-50"
             >
               <ExternalLink className="w-3.5 h-3.5" />
               Open in Drive
@@ -263,48 +263,48 @@ export function FilePreview({ file, onClose, onFileChanged, onFileDeleted, fileT
 
           {/* Metadata */}
           <dl className="px-5 py-4 grid grid-cols-[120px_1fr] gap-x-4 gap-y-3 text-sm">
-            <dt className="text-zinc-500 dark:text-zinc-100">Type</dt>
-            <dd className="text-zinc-900 dark:text-zinc-100">{type.label}</dd>
+            <dt className="text-zinc-500">Type</dt>
+            <dd className="text-zinc-900">{type.label}</dd>
 
             {file.modifiedTime && (
               <>
-                <dt className="text-zinc-500 dark:text-zinc-100">Modified</dt>
-                <dd className="text-zinc-900 dark:text-zinc-100">{formatFull(file.modifiedTime)}</dd>
+                <dt className="text-zinc-500">Modified</dt>
+                <dd className="text-zinc-900">{formatFull(file.modifiedTime)}</dd>
               </>
             )}
             {file.createdTime && (
               <>
-                <dt className="text-zinc-500 dark:text-zinc-100">Created</dt>
-                <dd className="text-zinc-900 dark:text-zinc-100">{formatFull(file.createdTime)}</dd>
+                <dt className="text-zinc-500">Created</dt>
+                <dd className="text-zinc-900">{formatFull(file.createdTime)}</dd>
               </>
             )}
             {file.size && (
               <>
-                <dt className="text-zinc-500 dark:text-zinc-100">Size</dt>
-                <dd className="text-zinc-900 dark:text-zinc-100 font-mono">{humanFileSize(file.size)}</dd>
+                <dt className="text-zinc-500">Size</dt>
+                <dd className="text-zinc-900 font-mono">{humanFileSize(file.size)}</dd>
               </>
             )}
             {file.owners && file.owners.length > 0 && (
               <>
-                <dt className="text-zinc-500 dark:text-zinc-100">Owner</dt>
-                <dd className="text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+                <dt className="text-zinc-500">Owner</dt>
+                <dd className="text-zinc-900 flex items-center gap-2">
                   {file.owners[0].photoLink ? (
                     /* eslint-disable-next-line @next/next/no-img-element */
                     <img src={file.owners[0].photoLink} alt="" className="w-5 h-5 rounded-full" />
                   ) : (
-                    <User className="w-4 h-4 text-zinc-400 dark:text-zinc-100" />
+                    <User className="w-4 h-4 text-zinc-400" />
                   )}
                   <span>{file.owners[0].displayName}</span>
-                  <span className="text-zinc-500 dark:text-zinc-100 text-xs">({file.owners[0].emailAddress})</span>
+                  <span className="text-zinc-500 text-xs">({file.owners[0].emailAddress})</span>
                 </dd>
               </>
             )}
-            <dt className="text-zinc-500 dark:text-zinc-100">Tags</dt>
+            <dt className="text-zinc-500">Tags</dt>
             <dd>
               {fileTags.length > 0 ? (
                 <TagPills tags={fileTags} max={8} />
               ) : (
-                <span className="text-zinc-400 dark:text-zinc-100 text-sm">None</span>
+                <span className="text-zinc-400 text-sm">None</span>
               )}
               {onEditTags && (
                 <button
@@ -315,8 +315,8 @@ export function FilePreview({ file, onClose, onFileChanged, onFileDeleted, fileT
                 </button>
               )}
             </dd>
-            <dt className="text-zinc-500 dark:text-zinc-100">ID</dt>
-            <dd className="text-zinc-500 dark:text-zinc-100 font-mono text-xs break-all">{file.id}</dd>
+            <dt className="text-zinc-500">ID</dt>
+            <dd className="text-zinc-500 font-mono text-xs break-all">{file.id}</dd>
           </dl>
         </div>
       </div>
@@ -348,7 +348,7 @@ function ActionButton({
       className={`inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg border disabled:opacity-50 ${
         danger
           ? "border-red-200 text-red-700 hover:bg-red-50"
-          : "border-zinc-200 text-zinc-700 dark:text-zinc-100 hover:bg-zinc-50"
+          : "border-zinc-200 text-zinc-700 hover:bg-zinc-50"
       }`}
     >
       {busy ? (

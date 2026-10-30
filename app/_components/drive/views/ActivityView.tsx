@@ -128,7 +128,7 @@ export function ActivityView({ onOpenFile }: ActivityViewProps) {
         <h1 className="text-base font-semibold text-zinc-900 dark:text-zinc-100">Activity</h1>
         <button
           onClick={() => setClearConfirm(true)}
-          className="text-sm font-medium text-zinc-500 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-zinc-100"
+          className="text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100"
         >
           Clear history
         </button>
@@ -139,7 +139,7 @@ export function ActivityView({ onOpenFile }: ActivityViewProps) {
       </div>
 
       {showOnboarding && (
-        <div className="mb-4 px-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-sm text-zinc-700 dark:text-zinc-100 flex items-start justify-between gap-3">
+        <div className="mb-4 px-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-sm text-zinc-700 dark:text-zinc-300 flex items-start justify-between gap-3">
           <p>
             Activity tracks actions you take in this app — renames, moves, uploads, and more.
             Everything stays on this device. You can pause logging or clear history anytime.
@@ -174,18 +174,18 @@ export function ActivityView({ onOpenFile }: ActivityViewProps) {
 
       {loading ? (
         <div className="flex justify-center py-20">
-          <Loader2 className="w-6 h-6 animate-spin text-zinc-400 dark:text-zinc-100" />
+          <Loader2 className="w-6 h-6 animate-spin text-zinc-400" />
         </div>
       ) : entries.length === 0 ? (
         <div className="text-center py-20">
           <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">No activity yet</p>
-          <p className="text-xs text-zinc-500 dark:text-zinc-100 mt-1">Actions you take will appear here.</p>
+          <p className="text-xs text-zinc-500 mt-1">Actions you take will appear here.</p>
         </div>
       ) : (
         <div className="space-y-6">
           {groups.map((group) => (
             <section key={group.label}>
-              <h2 className="text-[11px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-100 mb-2 px-1">
+              <h2 className="text-[11px] font-semibold uppercase tracking-wider text-zinc-400 mb-2 px-1">
                 {group.label}
               </h2>
               <ul className="rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 overflow-hidden divide-y divide-zinc-100 dark:divide-zinc-800">
@@ -205,7 +205,7 @@ export function ActivityView({ onOpenFile }: ActivityViewProps) {
             </section>
           ))}
           <div ref={sentinelRef} className="h-4 flex justify-center">
-            {loadingMore && <Loader2 className="w-4 h-4 animate-spin text-zinc-400 dark:text-zinc-100" />}
+            {loadingMore && <Loader2 className="w-4 h-4 animate-spin text-zinc-400" />}
           </div>
         </div>
       )}
@@ -252,7 +252,7 @@ function ActivityRow({
             {entry.description}
           </p>
           {expanded && entry.fileNames.length > 0 && !isTagMeta && (
-            <p className="text-xs text-zinc-500 dark:text-zinc-100 mt-1 truncate">
+            <p className="text-xs text-zinc-500 mt-1 truncate">
               {entry.fileNames.length === 1
                 ? entry.fileNames[0]
                 : `${entry.fileNames.length} files: ${entry.fileNames.slice(0, 3).join(", ")}${entry.fileNames.length > 3 ? "…" : ""}`}
@@ -281,7 +281,7 @@ function ActivityRow({
               Undo
             </button>
           )}
-          <span className="text-xs text-zinc-400 dark:text-zinc-100 whitespace-nowrap">{formatRelative(entry.timestamp)}</span>
+          <span className="text-xs text-zinc-400 whitespace-nowrap">{formatRelative(entry.timestamp)}</span>
         </div>
       </div>
     </li>
@@ -299,7 +299,7 @@ function FilterSelect({
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="h-9 px-3 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-sm text-zinc-700 dark:text-zinc-100 outline-none"
+      className="h-9 px-3 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-sm text-zinc-700 dark:text-zinc-300 outline-none"
     >
       {options.map((o) => (
         <option key={o.value} value={o.value}>{o.label}</option>
@@ -334,9 +334,9 @@ function activityIcon(type: ActivityType): { el: ReactNode; bg: string } {
     case "upload":
       return { el: <Upload className={`${cls} text-violet-500`} />, bg: "bg-violet-50 dark:bg-violet-950/40" };
     case "create-folder":
-      return { el: <FolderPlus className={`${cls} text-zinc-500 dark:text-zinc-100`} />, bg: "bg-zinc-100 dark:bg-zinc-800" };
+      return { el: <FolderPlus className={`${cls} text-zinc-500`} />, bg: "bg-zinc-100 dark:bg-zinc-800" };
     case "download":
-      return { el: <Download className={`${cls} text-zinc-500 dark:text-zinc-100`} />, bg: "bg-zinc-100 dark:bg-zinc-800" };
+      return { el: <Download className={`${cls} text-zinc-500`} />, bg: "bg-zinc-100 dark:bg-zinc-800" };
     case "tag-create":
     case "tag-update":
     case "tag-add":

@@ -81,7 +81,7 @@ export const FileRow = memo(function FileRow({
     >
       <div className="flex items-center gap-3 min-w-0">
         {showDragHandle && (
-          <GripVertical className="w-4 h-4 text-zinc-400 dark:text-zinc-100 shrink-0 cursor-grab" />
+          <GripVertical className="w-4 h-4 text-zinc-400 shrink-0 cursor-grab" />
         )}
         <input
           type="checkbox"
@@ -101,13 +101,13 @@ export const FileRow = memo(function FileRow({
           <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate" title={file.name}>
             {file.name}
           </p>
-          <p className="text-xs text-zinc-500 dark:text-zinc-100 truncate mt-0.5 lg:hidden">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 truncate mt-0.5 lg:hidden">
             {modifiedLabel} · {sizeLabel}
           </p>
         </div>
         <TagPills tags={fileTags} max={2} className="shrink-0 hidden lg:flex" />
         {file.shared && (
-          <Users className="w-4 h-4 text-zinc-400 dark:text-zinc-100 shrink-0 hidden lg:block" strokeWidth={2} />
+          <Users className="w-4 h-4 text-zinc-400 shrink-0 hidden lg:block" strokeWidth={2} />
         )}
       </div>
       <div className="hidden lg:flex items-center">
@@ -121,12 +121,12 @@ export const FileRow = memo(function FileRow({
           />
         ) : (
           <div className="w-8 h-8 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center" title={owner?.displayName || "Unknown"}>
-            <User className="w-4 h-4 text-zinc-500 dark:text-zinc-100" />
+            <User className="w-4 h-4 text-zinc-500" />
           </div>
         )}
       </div>
-      <span className="hidden lg:block text-sm text-zinc-600 dark:text-zinc-100">{modifiedLabel}</span>
-      <span className="hidden lg:block text-sm text-zinc-600 dark:text-zinc-100">{sizeLabel}</span>
+      <span className="hidden lg:block text-sm text-zinc-600 dark:text-zinc-400">{modifiedLabel}</span>
+      <span className="hidden lg:block text-sm text-zinc-600 dark:text-zinc-400">{sizeLabel}</span>
       <div className="flex items-center justify-end gap-1">
         {isTrash && !bulkSelectionActive ? (
           <>
@@ -138,7 +138,7 @@ export const FileRow = memo(function FileRow({
             </button>
             <button
               onClick={(e) => { e.stopPropagation(); onDeleteForever?.(file); }}
-              className="w-7 h-7 rounded-full text-zinc-400 dark:text-zinc-100 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 flex items-center justify-center"
+              className="w-7 h-7 rounded-full text-zinc-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 flex items-center justify-center"
               aria-label="Delete forever"
             >
               <Trash2 className="w-4 h-4" />
@@ -147,7 +147,7 @@ export const FileRow = memo(function FileRow({
         ) : onMenu && !bulkSelectionActive ? (
           <button
             onClick={(e) => { e.stopPropagation(); onMenu(file, e.currentTarget); }}
-            className={`w-7 h-7 rounded-full text-zinc-400 dark:text-zinc-100 hover:text-zinc-700 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center ${
+            className={`w-7 h-7 rounded-full text-zinc-400 hover:text-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center ${
               selected ? "opacity-100" : "opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
             }`}
             aria-label="More actions"

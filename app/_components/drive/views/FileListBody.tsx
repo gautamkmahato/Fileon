@@ -143,7 +143,7 @@ export const FileListBody = memo(function FileListBody({
   return (
     <>
       {(isHiddenView || showHidden) && !isTrashView && (
-        <div className="mb-6 px-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800/60 border border-zinc-200 dark:border-zinc-700 text-sm text-zinc-600 dark:text-zinc-100">
+        <div className="mb-6 px-4 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800/60 border border-zinc-200 dark:border-zinc-700 text-sm text-zinc-600 dark:text-zinc-300">
           Hidden items remain visible in Google Drive itself. This is a local view filter only — not a privacy or security control.
         </div>
       )}
@@ -184,7 +184,7 @@ export const FileListBody = memo(function FileListBody({
               </div>
             )
           ) : (
-            <p className="text-sm text-zinc-500 dark:text-zinc-100 py-6">
+            <p className="text-sm text-zinc-500 dark:text-zinc-400 py-6">
               No files modified in the last month.
             </p>
           )}
@@ -261,7 +261,7 @@ export const FileListBody = memo(function FileListBody({
           <button
             onClick={loadMore}
             disabled={loadingMore}
-            className="inline-flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800 disabled:opacity-60"
+            className="inline-flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 disabled:opacity-60"
           >
             {loadingMore && <Loader2 className="w-4 h-4 animate-spin" />}
             {loadingMore ? "Loading…" : "Load more"}

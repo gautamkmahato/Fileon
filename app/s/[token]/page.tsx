@@ -10,7 +10,7 @@ export default async function PublicSharePage({
   const decoded = decodeURIComponent(token);
   if (!isShareToken(decoded)) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6 text-sm text-zinc-500 dark:text-zinc-100">
+      <div className="min-h-screen flex items-center justify-center p-6 text-sm text-zinc-500">
         Invalid share link.
       </div>
     );

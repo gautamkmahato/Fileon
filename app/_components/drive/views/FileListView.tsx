@@ -63,7 +63,7 @@ export function FileListView() {
                 if (isSpace) router.push(driveRoutes.spaces);
                 else b.goBack();
               }}
-              className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 transition-colors bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800"
+              className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 transition-colors bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800"
               aria-label="Back"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -78,7 +78,7 @@ export function FileListView() {
               )}
               <h1 className="text-base font-semibold text-zinc-900 dark:text-zinc-100 truncate">{b.pageTitle}</h1>
               {isSpace && (
-                <span className="text-xs text-zinc-500 dark:text-zinc-100 shrink-0">
+                <span className="text-xs text-zinc-500 shrink-0">
                   {b.files.length} file{b.files.length === 1 ? "" : "s"}
                   {spaceBytes > 0 ? ` · ${humanFileSize(spaceBytes)}` : ""}
                 </span>
@@ -90,7 +90,7 @@ export function FileListView() {
                     className={`px-2 py-1 rounded text-xs font-medium ${
                       b.scopeTagMode === "or"
                         ? "bg-zinc-900 text-white"
-                        : "text-zinc-500 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                        : "text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
                     }`}
                   >
                     Any
@@ -100,7 +100,7 @@ export function FileListView() {
                     className={`px-2 py-1 rounded text-xs font-medium ${
                       b.scopeTagMode === "and"
                         ? "bg-zinc-900 text-white"
-                        : "text-zinc-500 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                        : "text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
                     }`}
                   >
                     All
@@ -108,7 +108,7 @@ export function FileListView() {
                 </div>
               )}
               {b.isTagsView && b.scopeTagIds.length > 1 && b.isSavedView && (
-                <span className="text-xs text-zinc-500 dark:text-zinc-100 shrink-0">
+                <span className="text-xs text-zinc-500 shrink-0">
                   {b.scopeTagMode === "and" ? "All tags" : "Any tag"}
                 </span>
               )}
@@ -118,7 +118,7 @@ export function FileListView() {
         <div className="flex items-center gap-2 shrink-0 overflow-x-auto max-w-full pb-0.5 lg:pb-0 [-webkit-overflow-scrolling:touch]">
           <ClipboardStatus />
           {revalidating && (
-            <Loader2 className="w-4 h-4 animate-spin text-zinc-400 dark:text-zinc-100" aria-label="Refreshing" />
+            <Loader2 className="w-4 h-4 animate-spin text-zinc-400" aria-label="Refreshing" />
           )}
           {!b.isTrashView && !b.isActivityView && !b.isHiddenView && !b.isDashboardView && (
             <button
@@ -126,7 +126,7 @@ export function FileListView() {
               className={`inline-flex items-center gap-1.5 text-sm font-medium px-3.5 py-2 rounded-lg border shadow-sm dark:shadow-none transition-colors ${
                 showHidden
                   ? "bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 border-zinc-900 dark:border-zinc-100"
-                  : "bg-white dark:bg-zinc-900 border-zinc-200/80 dark:border-zinc-700 text-zinc-700 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800"
+                  : "bg-white dark:bg-zinc-900 border-zinc-200/80 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800"
               }`}
               title="Show items hidden in this app only"
             >
@@ -137,7 +137,7 @@ export function FileListView() {
           {b.isViewSavable && !b.isDashboardView && (
             <button
               onClick={() => b.setSaveViewOpen(true)}
-              className="inline-flex items-center gap-1.5 text-sm font-medium px-3.5 py-2 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-700 text-zinc-700 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800 shadow-sm dark:shadow-none"
+              className="inline-flex items-center gap-1.5 text-sm font-medium px-3.5 py-2 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 shadow-sm dark:shadow-none"
               title="Save current filters, sort, and scope"
             >
               <Bookmark className="w-4 h-4" />
@@ -147,7 +147,7 @@ export function FileListView() {
           {isSpace && space && (
             <button
               onClick={() => openEdit(space)}
-              className="inline-flex items-center gap-1.5 text-sm font-medium px-3.5 py-2 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-700 text-zinc-700 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800 shadow-sm dark:shadow-none"
+              className="inline-flex items-center gap-1.5 text-sm font-medium px-3.5 py-2 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 shadow-sm dark:shadow-none"
               title="Edit rules and layout"
             >
               <Pencil className="w-4 h-4" />
@@ -176,7 +176,7 @@ export function FileListView() {
               </button>
               <button
                 onClick={() => b.setShowNewFolder(true)}
-                className="inline-flex items-center gap-1.5 text-sm font-medium px-3.5 py-2 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-700 text-zinc-700 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800 shadow-sm dark:shadow-none"
+                className="inline-flex items-center gap-1.5 text-sm font-medium px-3.5 py-2 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 shadow-sm dark:shadow-none"
               >
                 <FolderPlus className="w-4 h-4" />
                 New folder
@@ -205,7 +205,7 @@ export function FileListView() {
             <button
               onClick={() => isSpace ? setSpaceView("grid") : setView("grid")}
               className={`w-8 h-8 rounded-md flex items-center justify-center ${
-                view === "grid" ? "bg-zinc-900 text-white" : "text-zinc-500 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                view === "grid" ? "bg-zinc-900 text-white" : "text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
               }`}
               aria-label="Grid view"
             >
@@ -214,7 +214,7 @@ export function FileListView() {
             <button
               onClick={() => isSpace ? setSpaceView("list") : setView("list")}
               className={`w-8 h-8 rounded-md flex items-center justify-center ${
-                view === "list" ? "bg-zinc-900 text-white" : "text-zinc-500 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                view === "list" ? "bg-zinc-900 text-white" : "text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
               }`}
               aria-label="List view"
             >
@@ -224,7 +224,7 @@ export function FileListView() {
               <button
                 onClick={() => setSpaceView("gallery")}
                 className={`w-8 h-8 rounded-md flex items-center justify-center ${
-                  view === "gallery" ? "bg-zinc-900 text-white" : "text-zinc-500 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                  view === "gallery" ? "bg-zinc-900 text-white" : "text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800"
                 }`}
                 aria-label="Gallery view"
               >
@@ -240,12 +240,12 @@ export function FileListView() {
           {space.rules.map((rule) => (
             <span
               key={rule.id}
-              className="text-[11px] px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-100"
+              className="text-[11px] px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300"
             >
               {describeRule(rule, b.tags)}
             </span>
           ))}
-          <span className="text-[11px] px-2 py-0.5 text-zinc-400 dark:text-zinc-100">
+          <span className="text-[11px] px-2 py-0.5 text-zinc-400">
             {space.matchMode === "and" ? "All rules" : "Any rule"} · files stay in Drive
           </span>
         </div>
@@ -256,7 +256,7 @@ export function FileListView() {
         </div>
       )}
       {isSpace && space?.cachedTruncated && (
-        <div className="mb-3 px-4 py-2.5 rounded-xl bg-zinc-100 dark:bg-zinc-800/60 border border-zinc-200 dark:border-zinc-700 text-sm text-zinc-600 dark:text-zinc-100">
+        <div className="mb-3 px-4 py-2.5 rounded-xl bg-zinc-100 dark:bg-zinc-800/60 border border-zinc-200 dark:border-zinc-700 text-sm text-zinc-600 dark:text-zinc-300">
           Showing the first matches. Narrow the rules if you need a smaller set.
         </div>
       )}
