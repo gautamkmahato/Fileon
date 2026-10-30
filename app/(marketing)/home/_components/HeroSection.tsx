@@ -79,8 +79,8 @@ export default function HeroSection() {
           </p>
 
           <div className="mt-7 flex flex-col items-center">
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <Link href="/signin" className={`${homeCta} h-11 gap-2 py-0 pl-6 pr-2`}>
+            <div className="inline-grid grid-cols-2 gap-3">
+              <Link href="/signin" className={`${homeCta} h-11 w-full gap-2 py-0 pl-6 pr-2`}>
                 <span>Get Started</span>
                 <span className="flex h-[24px] w-[24px] items-center justify-center rounded-full bg-[#1A1A1A]/10">
                   <ChevronRight className="h-[13px] w-[13px] text-[#1A1A1A]" strokeWidth={3} />
@@ -91,7 +91,7 @@ export default function HeroSection() {
                 href="https://github.com/gautamkmahato/Fileon"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#24292F] pl-6 pr-6 text-[14px] font-semibold leading-none text-white transition-transform hover:-translate-y-0.5 hover:bg-[#1B1F23]"
+                className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-[#24292F] pl-6 pr-6 text-[14px] font-semibold leading-none text-white transition-transform hover:-translate-y-0.5 hover:bg-[#1B1F23]"
               >
                 <GitHubMark className="h-4 w-4" />
                 GitHub
