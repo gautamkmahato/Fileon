@@ -52,43 +52,7 @@ Open http://localhost:3000.
 | `npm run start`     | Serve the production build         |
 | `npm run typecheck` | `tsc --noEmit`                     |
 
-## Project structure
-
-```
-app/
-  (marketing)/        Landing page, sign-in, privacy, terms
-  (app)/              Signed-in shell; each page.tsx is a route anchor,
-                      the UI is rendered by AppShell based on the parsed route
-    providers.tsx     Feature providers composed in one place
-  api/share-links/    Public share-link endpoints (view, hit, manage, stats)
-  s/[token]/          Public share-link landing page
-  _components/        Feature-organized React components
-    auth/ brand/ cleanup/ drive/ favorites/ folder-covers/ hidden/
-    inbox/ layout/ pins/ shares/ spaces/ tags/ ui/ views/
-    drive/context/    DriveBrowseProvider + hooks; actions/ holds the
-                      action groups (files, trash, move, clipboard, …)
-  _hooks/             Cross-feature hooks that depend on providers
-
-lib/
-  activity/           Activity log + undo stack
-  cache/              In-memory / IndexedDB caches (folder tree, thumbnails, counts)
-  cleanup/            Cleanup scan, analyzers, and persistence
-  collections/        Favorites, pins, hidden, inbox, folder covers, recent folders
-  config/             Brand + shared constants
-  db/                 IndexedDB engines (local-db for app metadata, engine/schema
-                      for the table-shaped cleanup / spaces / share-link stores)
-  drive/              Google Drive REST client and helpers
-  navigation/         Route definitions, route parsing, sidebar model
-  preview/            Thumbnail + preview pipelines (PDF, CSV, Markdown)
-  shares/             Share-link domain: types, status, tokens, repository, API client
-  spaces/             Smart-space rules, query, and repository
-  stores/             Zustand stores (files, selection, browse, clipboard)
-  tags/               Tag kinds, colors, repository, activity
-  views/              Saved views
-  hooks/ types/ ui/ utils/
-```
-
-### Architecture notes
+## Architecture notes
 
 - **Route anchors.** Pages under `app/(app)` render `null`; `AppShell` decides what to show from `useDriveRoute()`. This keeps the file list mounted across navigation and avoids refetching.
 - **Two persistence layers.** `lib/db/local-db.ts` is a simple key/value IndexedDB for tags, pins, views, activity, etc. `lib/db/engine.ts` + `schema.ts` is a table-shaped IndexedDB (with an in-memory fallback) used by cleanup, smart spaces, and share links; every row is scoped by the Google account `sub`.
